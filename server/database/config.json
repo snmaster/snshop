@@ -1,0 +1,39 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "",
+    "database": "Phoewa",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "define":{
+      "freezeTableName": true
+    }
+  },
+  "test": {
+    "username": "shopkeeper",
+    "password": "shopkeeper",
+    "database": "shopkeeper",
+    "host": "127.0.0.1",
+    "dialect": "postgres",
+    "define":{
+      "freezeTableName": true
+    }
+  },
+  "production": {
+    "username": "spynwaixkspcrl",
+    "password": "9036ee730ee9b350f6894c1383e51d93656e42a32ffb1e3aa51ecd2effd74bf6",
+    "database": "d60lr05bi4ld7v",
+    "host": "ec2-54-227-244-122.compute-1.amazonaws.com",
+    "dialect": "postgres",
+    "ssl":true,
+    "dialectOptions":{
+      "ssl":{
+         "require":true
+      }
+    },
+    "define":{
+      "freezeTableName": true
+    }
+  }
+}
+

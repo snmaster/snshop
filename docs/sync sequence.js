@@ -1,0 +1,1 @@
+SELECT 'SELECT setval(''"' || table_name || '_id_seq"'',(select max(id) from "' || TABLE_NAME || '"));' FROM information_schema.tables WHERE table_type='BASE TABLE' and table_schema='public';

@@ -1,0 +1,258 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <title>Register - Phoewa Online Shopping</title>
+  <style type="text/css">
+    @font-face {
+      font-family: 'Sanpya';
+      src: url('../font/Sanpya.ttf');
+  }
+
+  button,.button{
+    margin-left: 5px;
+    background-color:purple;
+    border-radius: 3px;
+    border:none;
+    color:#fff;
+    text-align: center;
+  }
+  .button{
+    text-decoration: none;
+    padding-top:8px;
+  }
+  .form{
+    width:300px;
+    display: flex;
+    flex-wrap: wrap;
+    border:1px solid rgba(0,0,0,.35);
+    padding:24px 8px 32px 250px;
+  }
+  .formRegister{
+    border:1px solid rgba(0,0,0,.35);
+    padding:24px 8px 32px 20px;
+  }
+  .formLogin{
+    width:300px;
+    display: flex;
+    flex-wrap: wrap;
+    border:0px solid rgba(0,0,0,.35);
+    padding:24px 10px 10px 10px;
+  }
+  .container{
+    display: inline-block;
+    margin:0 auto;
+  }
+    body,html{
+      height:100%;
+      background-color: white;
+    }
+    body{
+      display: flex;
+      align-items: center;
+    }
+    .header{
+      background-color: #F44336;
+      text-align: center;
+      padding:12px;
+    }
+    .header span{
+      color:#fff;
+      font-size: 18px;
+    }
+  .message{
+    font-size: 12px;
+    font-style: italic;
+    padding:0 0 8px 8px;
+    color:#F44336;
+  }
+  .guide{
+    font-style: 10px;
+    color:black;
+    padding:8px 8px 0 8px;
+  }
+  .login{
+    background-color: gray;
+    width: 50%;    
+    margin-left: 100px;
+  }
+  .register{
+    background-color: gray;
+  }
+  .continue{
+    background-color: gray;
+    width: 50%;
+    margin-left: 100px;
+  }
+  .smslogin{
+    background-color: gray;
+    width: 50%;    
+    margin-left: 100px;
+  }
+  .cancel{
+    background-color: gray;
+    width: 50%;    
+    margin-left: 100px;
+  }
+  </style>
+	<script src="https://sdk.accountkit.com/en_US/sdk.js"></script>
+	<script>
+  // initialize Account Kit with CSRF protection
+  AccountKit_OnInteractive = function(){
+    AccountKit.init(
+      {
+        appId:"{{appId}}", 
+        state:"{{csrf}}", 
+        version:"{{version}}",
+        fbAppEventsEnabled:true,
+        debug:true
+      }
+    );
+  };
+
+  // login callback
+  function loginCallback(response) {
+  	console.log(response);
+    if (response.status === "PARTIALLY_AUTHENTICATED") {
+      var code = response.code;
+      document.getElementById("auth_code").value=code;
+      document.getElementById("formRegister").submit();
+    }
+    else if (response.status === "NOT_AUTHENTICATED") {
+    }
+    else if (response.status === "BAD_PARAMS") {
+    }
+  }
+ function validate(){
+ 	var phoneNumber = document.getElementById("phone_number").value;
+    var name=document.getElementById("user_name").value;
+    var fullname=document.getElementById("fullname").value;
+    var password=document.getElementById("password").value;
+    var confirm_password = document.getElementById("confirm_password").value;
+    var isValid = true;
+    if(!name){
+    	isValid = false;
+    	showMessage("user_name_message","Name is required!");
+    }else{
+    	hideMessage("user_name_message");
+    }
+    if(!fullname){
+    	isValid = false;
+    	showMessage("fullname_message","FullName is required!");
+    }else{
+    	hideMessage("fullname_message");
+    }
+    if(!password){
+    	isValid = false;
+    	showMessage("password_message","Password is required!");
+    	hideMessage("confirm_password_message");
+    }else if(!confirm_password){
+    	isValid =false;
+    	showMessage("confirm_password_message","Confirm password is required!");
+    	hideMessage("password_message");
+    }else if( password !== confirm_password){
+    	isValid = false;
+    	showMessage("password_message","Not match with confirm password!");
+    	showMessage("confirm_password_message","Not match with password!");
+    }else{
+    	hideMessage("password_message");
+    	hideMessage("confirm_password_message");
+    }
+
+    if(!phoneNumber){
+    	isValid =false;
+    	showMessage('phone_number_message',"Phone number is required!");
+    }else if(isNaN(phoneNumber)){
+    	isValid = false;
+    	showMessage("phone_number_message","Phone number is invalid!");
+    }else
+    	hideMessage("phone_number_message");
+
+    return isValid;
+
+ }
+
+ function showMessage(id,message){
+ 	var element = document.getElementById(id);
+ 	element.className  = "message show";
+ 	element.textContent=message;
+ }
+ function hideMessage(id){
+ 	var element = document.getElementById(id);
+ 	element.className  = "message";
+ 	element.textContent = "";
+ }
+  // phone form submission handler
+  function smsLogin() {
+    var countryCode = "+95";
+    var phoneNumber = document.getElementById("phone_number").value;
+   
+    if(!validate())
+		return;
+    AccountKit.login(
+      'PHONE', 
+      {countryCode: countryCode, phoneNumber: phoneNumber}, // will use default values if not specified
+      loginCallback
+    );
+  }
+</script>
+</head>
+
+<body>
+  	<div class="container-fluid"> 
+          <div class="col-xs-12" style="text-align:center;height:30px;border:1px solid black;margin-bottom:10px;background:purple;color:white;font-size:16px">Register New User</div>      
+          <form method="post" id="formRegister" action="/register" class="form-horizontal formRegister">
+            <div class="form-group">
+                <label class="control-label col-sm-2 col-md-3" for="username">UserName:</label>
+                <div class="col-xs-12 col-md-5">
+                    <input id="user_name" class="form-control" onchange="validate()" placeholder="UserName" name="user_name"/>
+                </div>
+                <label class="col-xs-12 col-md-4 message" id="user_name_message">UserName is required!</label>                
+            </div>
+            <div class="form-group">
+                    <label class="control-label col-sm-2 col-md-3" for="phonenumber">PhoneNo:</label>
+                    <div class="col-xs-12 col-md-5">
+                            <input id="phone_number" class="form-control" onchange="validate()" type="tel" placeholder="Phone no" name="phone_number" onkeypress="return isNumber(event)"/>
+                    </div>
+                    <label class="col-xs-12 col-md-4 message" id="phone_number_message">PhoneNo is required!</label>                
+            </div>
+            <div class="form-group">
+                    <label class="control-label col-sm-2 col-md-3" for="fullname">FullName:</label>
+                    <div class="col-xs-12 col-md-5">
+                            <input type="text" id="fullname" class="form-control" onchange="validate()" name="fullname" placeholder="Name" id="name">
+                    </div>
+                    <label class="col-xs-12 col-md-4 message" id="fullname_message">FullName is required!</label>                
+            </div>
+            <div class="form-group">
+                    <label class="control-label col-sm-2 col-md-3" for="password">Password:</label>
+                    <div class="col-xs-12 col-md-5">
+                            <input type="password" class="form-control" onchange="validate()" name="password" placeholder="Password" id="password"/>
+                    </div>
+                    <label class="col-xs-12 col-md-4 message" id="password_message">Not match with confirm password!</label>                
+            </div>
+            <div class="form-group">
+                    <label class="control-label col-sm-2 col-md-3" for="confirm_password">Confirm Password:</label>
+                    <div class="col-xs-12 col-md-5">
+                            <input type="password" class="form-control" onchange="validate()" name="confirm_password" placeholder="Confirm Password" id="confirm_password"/>
+                    </div>
+                    <label class="col-xs-12 col-md-4 message" id="confirm_password_message">Not match with password</label>
+            </div>
+            <div class="row">
+                    <span class="col-sm-12" style="color:#F44336;text-align:center" >{{message}}</span>
+            </div>
+            <div class="form-group">
+                <input type="hidden" name="auth_code" id="auth_code" />
+                <input type="hidden" name="_csrf" value={{csrf}}>
+                <div class="col-sm-3"></div>
+                <button type="button" class="col-xs-5 col-sm-4 col-md-3 btn btn-default button" onclick="smsLogin()">Register </button>
+                <a class="col-xs-5 col-sm-4 col-md-3 btn btn-default button" href="/">Back</a>                    
+            </div>
+	  		
+          </form>
+          
+  	</div>
+</body>

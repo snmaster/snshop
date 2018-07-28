@@ -1,0 +1,328 @@
+<!doctype html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LogIn And Registeration</title>
+  <style type="text/css">
+    @font-face {
+      font-family: 'Sanpya';
+      src: url('../font/Sanpya.ttf');
+  }
+  input[type="text"],
+  input[type="tel"],
+  input[type="password"],button,.button{
+
+  -webkit-box-sizing: border-box;
+
+  -moz-box-sizing: border-box;
+
+  box-sizing: border-box;
+
+  -webkit-background-clip: padding;
+
+  -moz-background-clip: padding;
+
+  background-clip:padding-box;
+
+  -webkit-border-radius:0;
+
+  -moz-border-radius:0;
+
+  -ms-border-radius:0;
+
+  -o-border-radius:0;
+
+  border-radius:0;
+
+  -webkit-appearance:none;
+
+  background-color:#fff;
+
+  color:#000;
+
+  outline:0;
+
+  margin:0;
+
+  padding:0;
+
+  text-align: left;
+
+  font-size:1em;
+
+  height: 1em;
+
+
+  border:1px solid black;
+  border-radius: 1px;
+  box-shadow: none;
+  box-sizing: border-box;
+  color:rgb(103, 106, 108);
+  font-size: 14px;
+  height:34px;
+  line-height: 20px;
+  padding:6px 12px;
+  transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+  display: block;
+  width:100%;
+  margin:8px;
+  }
+  *{
+        font-family:Sanpya,Zawgyi-One,Roboto, sans-serif !important;
+    }
+
+  button,.button{
+    background-color:purple;
+    border-radius: 3px;
+    border:none;
+    color:#fff;
+    text-align: center;
+  }
+  .button{
+    text-decoration: none;
+    padding-top:8px;
+  }
+  .form{
+    width:300px;
+    display: flex;
+    flex-wrap: wrap;
+    border:1px solid rgba(0,0,0,.35);
+    padding:24px 8px 32px 250px;
+  }
+  .formRegister{
+    width:300px;
+    display: flex;
+    flex-wrap: wrap;
+    border:0px solid rgba(0,0,0,.35);
+    padding:24px 8px 32px 200px;
+  }
+  .formLogin{
+    width:300px;
+    display: flex;
+    flex-wrap: wrap;
+    border:0px solid rgba(0,0,0,.35);
+    padding:24px 10px 10px 10px;
+  }
+  .container{
+    display: inline-block;
+    margin:0 auto;
+  }
+    body,html{
+      height:100%;
+      background-color: white;
+    }
+    body{
+      display: flex;
+      align-items: center;
+    }
+    .header{
+      background-color: #F44336;
+      text-align: center;
+      padding:12px;
+    }
+    .header span{
+      color:#fff;
+      font-size: 18px;
+    }
+  .message{
+    font-size: 12px;
+    font-style: italic;
+    padding:0 0 8px 8px;
+    color:#F44336;
+  }
+  .guide{
+    font-style: 10px;
+    color:black;
+    padding:8px 8px 0 8px;
+  }
+  .login{
+    background-color: gray;
+    width: 50%;    
+    margin-left: 100px;
+  }
+  .register{
+    background-color: gray;
+  }
+  .continue{
+    background-color: gray;
+    width: 50%;
+    margin-left: 100px;
+  }
+  .smslogin{
+    background-color: gray;
+    width: 50%;    
+    margin-left: 100px;
+  }
+  .cancel{
+    background-color: gray;
+    width: 50%;    
+    margin-left: 100px;
+  }
+  </style>
+<script src="https://sdk.accountkit.com/en_US/sdk.js"></script>
+  <script>
+  // initialize Account Kit with CSRF protection
+  AccountKit_OnInteractive = function(){
+    AccountKit.init(
+      {
+        appId:"{{appId}}", 
+        state:"{{csrf}}", 
+        version:"{{version}}",
+        fbAppEventsEnabled:true,
+        debug:true
+      }
+    );
+  };
+
+  // login callback
+  function loginCallback(response) {
+    console.log(response);
+    if (response.status === "PARTIALLY_AUTHENTICATED") {
+      var code = response.code;
+      //var phone_number = document.getElementById("phone_number").value;
+      var username = document.getElementById("username").value;
+      document.getElementById("auth_code").value=code;
+      //document.getElementById('phone_number_hidden').value=phone_number;
+      document.getElementById('username_hidden').value=username;
+      document.getElementById("form").submit();
+    }
+    else if (response.status === "NOT_AUTHENTICATED") {
+    }
+    else if (response.status === "BAD_PARAMS") {
+    }
+  }
+  function smsLogin() {
+    var countryCode = "+95";
+    var phoneNumber = document.getElementById("username").value;
+    AccountKit.login(
+      'PHONE', 
+      {countryCode: countryCode, phoneNumber: phoneNumber}, // will use default values if not specified
+      loginCallback
+    );
+  }
+  function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
+function requestRegister(){
+  window.location = "/register?redirectUrlOnSuccess=" + encodeURIComponent('{{{redirectUrlOnSuccess}}}');
+}
+
+  </script>
+</head>
+
+<body>
+    <script>
+        function statusChangeCallback(response) {
+          console.log('statusChangeCallback');
+          console.log(response);
+          // The response object is returned with a status field that lets the
+          // app know the current login status of the person.
+          // Full docs on the response object can be found in the documentation
+          // for FB.getLoginStatus().
+          if (response.status === 'connected') {
+            // Logged into your app and Facebook.
+            testAPI();
+          } else {
+            // The person is not logged into your app or we are unable to tell.
+            document.getElementById('status').innerHTML = 'Please log ' +
+              'into this app.';
+          }
+        }
+
+        // This function is called when someone finishes with the Login
+        // Button.  See the onlogin handler attached to it in the sample
+        // code below.
+        function checkLoginState() {
+          FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+          });
+        }
+
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '591144387904544',
+            cookie     : true,  // enable cookies to allow the server to access 
+                                // the session
+            xfbml      : true,  // parse social plugins on this page
+            version    : 'v2.8' // use graph api version 2.8
+          });
+
+        };
+
+        // Load the SDK asynchronously
+        (function(d, s, id) {
+          var js, fjs = d.getElementsByTagName(s)[0];
+          if (d.getElementById(id)) return;
+          js = d.createElement(s); js.id = id;
+          js.src = "https://connect.facebook.net/en_US/sdk.js";
+          fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        function testAPI() {
+          console.log('Welcome!  Fetching your information.... ');
+          FB.api('/me',{fields: ['name','gender','first_name','last_name']}, function(response) {
+            console.log(response);
+            document.getElementById('fb_userid').value=response.id;
+            document.getElementById('fb_username').value=response.first_name.toLowerCase() + response.last_name.toLowerCase();
+            document.getElementById("frmfacebook").submit();
+          });
+        }
+      </script>
+    <div class="container">
+      <div>  
+        <img src="http://res.cloudinary.com/djir3ki08/image/upload/v1517590917/phoewa-yote_owpgih.png" style="width:100px;height:100px;"/><br/>
+        <span>LogIn</span>
+      </div>
+      <FORM method="post" action="/login" class="formLogin">
+        <div class="form-fields">
+            <div class="inputs">
+                <label for="Username">Username:</label>
+                <input autofocus="autofocus" class="username" id="username" name="username" type="text" value="" />
+                <span class="field-validation-valid" data-valmsg-for="Username" data-valmsg-replace="true"></span>
+            </div>
+            <div class="inputs">
+                <label for="Password">Password:</label>
+                <input class="password" id="password" name="password" type="password" />
+                <span class="field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default col-sm-1" style="margin-left:10px">Log in </button>
+                <button type="button" class="btn btn-default col-sm-1" style="margin-left:10px" onclick="smsLogin()">SMS Log in </button>
+                <fb:login-button style="margin-left:10px" class="btn btn-default col-sm-1" scope="public_profile" onlogin="checkLoginState();">
+                  Login Or Register with Facebook
+                </fb:login-button>
+                <a class="button" href="/register">Register new Account</a>
+            </div>
+            <input type="hidden" name="_csrf" value={{csrf}}>
+            <input type="hidden" name="redirectUrlOnSuccess" value={{redirectUrlOnSuccess}}/>
+            <span style="color:#F44336" >{{message}}</span>
+          </div> 
+      </FORM>
+      <form style="display:none;" id="form" method="post" action="/smslogin">
+        <input type="hidden" name="auth_code" id="auth_code" />
+        <input type="hidden" name="username" id="username_hidden"/>
+        <input type="hidden" name="redirectUrlOnSuccess" value={{redirectUrlOnSuccess}}/>
+      <input type="hidden" name="_csrf" value={{csrf}}>
+      </form>
+      <form style="display:none;" id="frmfacebook" method="post" action="/fblogin">
+        <input type="hidden" name="username" id="fb_username"/>
+          <input type="hidden" name="userid" id="fb_userid"/>
+          <input type="hidden" name="redirectUrlOnSuccess" value={{redirectUrlOnSuccess}}/>
+          <input type="hidden" name="_csrf" value={{csrf}}>
+        </form>
+    </div>
+</body>
