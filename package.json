@@ -119,9 +119,5 @@
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.16.2"
   },
-  "main": "admin.bundle.js",
-  "directories": {
-    "doc": "docs"
-  },
   "keywords": []
 }
