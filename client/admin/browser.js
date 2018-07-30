@@ -43,13 +43,14 @@ networkInterface.use([{
 }]);
 
 networkInterface.useAfter([{
-  applyAfterware({ response }, next) {
-    if (response.status === 401) {
-      console.log('Un authorize');
+    applyAfterware({response}, next) {
+      if ([401, 403].includes(response.status)) {
+        document.location = response.headers.get('Location');
+      } else {
+        next();
+      }
     }
-    next();
-  }
-}]);
+  }]);
 
 const client = createApolloClient({
     networkInterface: networkInterface,

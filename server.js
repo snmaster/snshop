@@ -8,6 +8,7 @@ import Accounting from 'accounting';
 import Preference from './common/Preference';
 import db from './server/models';
 import { apolloExpress, graphiqlExpress } from 'apollo-server';
+import { formatError } from 'apollo-errors';
 import { makeExecutableSchema } from 'graphql-tools';
 import Schema from './server/data/schema';
 import Resolver from './server/data/resolver';
@@ -122,6 +123,12 @@ if(env==="development"){
 const {account_kit} = fbaccountkit;
 
 const csrfProtection = csrf({ cookie: true })
+
+const schema = makeExecutableSchema({
+    typeDefs: Schema,
+    resolvers:Resolver,
+    allowUndefinedInResolve: true,
+});
 
 app.post('/graphql',passport.authenticate('bearer-graphql',{session:false}), apolloExpress( (req,res) => {
     return {

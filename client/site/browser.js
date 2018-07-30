@@ -47,18 +47,16 @@ window.setTitle=title=>{
     document.title = `${title} - ${window.siteName}`;
 }
 
-networkInterface.useAfter([{
-    applyAfterware({ response }, next) {
-      switch(response.status){
-          case 401:
-              window.location="/login";
-              break;
-          default:
-              next();
+  networkInterface.useAfter([{
+    applyAfterware({response}, next) {
+      if ([401, 403].includes(response.status)) {
+        window.location="/login";
+      } else {
+        next();
       }
     }
   }]);
-  
+
 render(
     <MuiThemeProvider muiTheme={getMuiTheme(theme)}>
         <ApolloProvider client={client} store={store}>

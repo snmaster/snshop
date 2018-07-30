@@ -1,8 +1,8 @@
 {
-  "name": "sn_school",
+  "name": "shoppylife",
   "version": "0.0.1",
-  "description": "School Management System",
-  "author": "naingtun",
+  "description": "Shoppylife Online Shopping",
+  "author": "sourcenet",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.14.0",
@@ -38,14 +38,12 @@
     "build:dist": "webpack --config webpack.prod.js --env=prod --progress --profile --colors",
     "build:test": "webpack --config webpack.test.js --env=test --progress --profile --colors"
   },
-  "engines": {
-    "node": "6.12.0",
-    "npm": "3.10.10"
-  },
   "dependencies": {
     "accounting": "^0.4.1",
     "apollo-client": "^1.9.0-0",
-    "apollo-server": "^0.3.3",
+    "apollo-errors": "^1.4.0",
+    "apollo-fetch": "^0.7.0",
+    "apollo-server": "0.3.3",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
