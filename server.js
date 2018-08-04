@@ -53,6 +53,7 @@ import fs from 'fs';
 import Mustache from 'mustache';
 import path from 'path';
 import {Helmet} from "react-helmet";
+import favicon from "serve-favicon";
 //require('./public/img/favicon.ico');
 global.appRoot = path.resolve(__dirname);
 
@@ -158,6 +159,7 @@ appRouter.get('/student',(req,res)=>{
     })
 });
 app.use(Express.static('public'));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use('/api',appRouter);
 function renderHtml(req,res,renderProps,isAdminSite){
     

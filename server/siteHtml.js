@@ -21,9 +21,9 @@ const siteHtml = ({ content, state,title,muiTheme }) => (
         <link rel="stylesheet" href="/style/flexboxgrid.min.css"  />
         <link rel="stylesheet" href="/style/sitestyle.css"/>
         <link rel="stylesheet" type="text/css" href="/style/csgrid.css"/>
-        <link rel="shortcut icon" href="/favicon/favicon.ico" />
+        {/* <link rel="shortcut icon" href="/favicon/favicon.ico" /> */}
 
-        <title>Phoewa Online Shopping</title>
+        <title>Shoppylife - Online Store</title>
         {/* {helmet.title.toComponent()} */}
 
     </head>

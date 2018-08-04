@@ -42,7 +42,7 @@ const client = createApolloClient({
 });
 
 const store = createSiteStore({client});
-window.siteName="Phoewa Online Shopping";
+window.siteName="Shoppylife - Online Store";
 window.setTitle=title=>{
     document.title = `${title} - ${window.siteName}`;
 }

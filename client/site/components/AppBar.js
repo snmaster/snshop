@@ -170,40 +170,37 @@ class AppBar extends React.Component{
 
 	let searchBar = 
 	<div className="container-fluid">
-		<div className="row justify-content-center">
+		{/* <div className="row justify-content-center">
 			<div className="col-3">
-				{/* <a href="#" onClick={(e)=>{e.preventDefault();router.push(`/`);}} style={{textDecoration:"none"}}> */}
-					<img className="img-responsive" src="https://res.cloudinary.com/djir3ki08/image/upload/v1517590917/phoewa-yote_owpgih.png" style={{width:"100px",height:'80px'}} />						
-				{/* </a>	 */}
+				<img className="img-responsive" src="https://res.cloudinary.com/djir3ki08/image/upload/v1517590917/phoewa-yote_owpgih.png" style={{width:"100px",height:'80px'}} />										
 			</div>
-		</div>
+		</div> */}
 		<div className="row justify-content-between">
-			<div className="col-sm-2 col-xs-3">
-				<div className="row">					
-					<div className="col-xs-6 d-block d-sm-none">
-						<IconButton
-							onClick={this.handleCategoryClick}
-							style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
-							primary={true}>
-							<ViewList width='100%' height='100%' color='purple'/>
-						</IconButton>
-					</div>	
-					<div className="col-xs-6 col-sm-2">
-						<IconButton
-							onClick={(e)=>{router.push('/');}}
-							className=""
-							style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
-							primary={true}>
-							<ActionHome width='100%' height='100%' color='purple'/>
-						</IconButton>
-					</div>				
-				</div>		
+			<div className="col-xs-12 col-sm-3 ml-xs-auto">
+				<a href="#" onClick={(e)=>{e.preventDefault();router.push(`/`);}} style={{textDecoration:"none"}}>
+					<img className="img-responsive" src="https://res.cloudinary.com/djir3ki08/image/upload/v1517590917/shoppylife_vx8usq.png" style={{width:"100px",height:'80px'}} />						
+				</a>	
+				{/* <IconButton
+					onClick={(e)=>{router.push('/');}}
+					className=""
+					style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
+					primary={true}>
+					<ActionHome width='100%' height='100%' color='purple'/>
+				</IconButton> */}
 			</div>		
 			{/* <div className="hidden-xs">				 */}
-			<div className="col-xs-6 col-sm-5 col-md-4 col-lg-3">
+			<div className="col-xs-12 col-sm-5 col-md-4 col-lg-3">
 				{userName ? 
 					<div className="row">
-						<div className="col-2">
+						<div className="col-xs-3 d-block d-sm-none">
+							<IconButton
+								onClick={this.handleCategoryClick}
+								style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
+								primary={true}>
+								<ViewList width='100%' height='100%' color='purple'/>
+							</IconButton>
+						</div>
+						<div className="col-xs-3">
 							<IconButton
 								onClick={this.handleSearchClick}
 								style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
@@ -211,7 +208,7 @@ class AppBar extends React.Component{
 								<ActionSearch width='100%' height='100%' color='purple'/>
 							</IconButton>
 						</div>
-						<div className="col-xs-4 col-3">
+						<div className="col-xs-3">
 							<Badge
 								badgeContent={cartItemsCount}
 								primary={true}
@@ -227,7 +224,7 @@ class AppBar extends React.Component{
 						{/* <div className="col-md-3 col-sm-2" style={{fontSize:'14px',height:'15px',marginTop:'30px',marginBottom:'15px',width:'80px'}}>
 							{userName ? userName : ''}
 						</div> */}	
-						<div className="col-xs-6 col-6">
+						<div className="col-xs-3">
 							<FlatButton
 								onClick={()=>{logout();window.location="/login"}}
 								labelPosition="after"
@@ -243,7 +240,15 @@ class AppBar extends React.Component{
 					</div>
 					:
 					<div className="row">
-						<div className="col-2">
+						<div className="col-xs-3 d-block d-sm-none">
+							<IconButton
+								onClick={this.handleCategoryClick}
+								style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
+								primary={true}>
+								<ViewList width='100%' height='100%' color='purple'/>
+							</IconButton>
+						</div>
+						<div className="col-xs-3">
 							<IconButton
 								onClick={this.handleSearchClick}
 								style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
@@ -251,7 +256,7 @@ class AppBar extends React.Component{
 								<ActionSearch width='100%' height='100%' color='purple'/>
 							</IconButton>
 						</div>
-						<div className="col-3">
+						<div className="col-xs-3">
 							<Badge
 								badgeContent={cartItemsCount}
 								primary={true}
@@ -273,7 +278,7 @@ class AppBar extends React.Component{
 								primary={true}
 								/>
 						</div> */}
-						<div className="col-6">
+						<div className="col-xs-3">
 							<FlatButton
 								onClick={()=>{window.location="/login"}}
 								labelPosition="after"
@@ -454,7 +459,7 @@ class AppBar extends React.Component{
 
 	return (		
 	    <Paper zDepth={3} style={{zIndex:1}}>
-	    	<Favicon url="../../../public/img/favicon.ico" />
+	    	{/* <Favicon url="../../../public/img/favicon.ico" /> */}
 	        {searchBar}
 	    </Paper>
 	);
