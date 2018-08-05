@@ -159,7 +159,7 @@ appRouter.get('/student',(req,res)=>{
     })
 });
 app.use(Express.static('public'));
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public','img', 'shoppylife.ico')));
 app.use('/api',appRouter);
 function renderHtml(req,res,renderProps,isAdminSite){
     

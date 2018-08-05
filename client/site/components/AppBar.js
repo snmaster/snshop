@@ -3,10 +3,12 @@ import {Toolbar,ToolbarGroup,ToolbarTitle} from 'material-ui/Toolbar';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import ActionSearch from 'material-ui/svg-icons/action/search';
 import SocialPerson from 'material-ui/svg-icons/social/person';
+import SocialPersonAdd from 'material-ui/svg-icons/social/person-add';
+import CommuKey from 'material-ui/svg-icons/communication/vpn-key';
 import ActionShop from 'material-ui/svg-icons/action/shopping-cart';
 import ActionHome from 'material-ui/svg-icons/action/home';
-import {gray, purple200, purple900} from 'material-ui/styles/colors';
-import {purple100} from 'material-ui/styles/colors';
+import {gray, blue200, blue900} from 'material-ui/styles/colors';
+import {blue100} from 'material-ui/styles/colors';
 import Paper from 'material-ui/Paper';
 import Chip from 'material-ui/Chip';
 import Badge from 'material-ui/Badge';
@@ -40,6 +42,7 @@ class AppBar extends React.Component{
         };
         this.state={
 			open:false,
+			openAccount:false,
 			openSearch:false,
 			openCategory:false,
         	searchText:''
@@ -76,6 +79,10 @@ class AppBar extends React.Component{
 			anchorEl: event.currentTarget,
 		});
 	};
+
+	handleAccountRequestClose = () => {
+		this.setState({openAccount:false});
+	}
 	
 	handleCategoryRequestClose = () => {
 		this.setState({
@@ -178,126 +185,59 @@ class AppBar extends React.Component{
 		<div className="row justify-content-between">
 			<div className="col-xs-12 col-sm-3 ml-xs-auto">
 				<a href="#" onClick={(e)=>{e.preventDefault();router.push(`/`);}} style={{textDecoration:"none"}}>
-					<img className="img-responsive" src="https://res.cloudinary.com/djir3ki08/image/upload/v1517590917/shoppylife_vx8usq.png" style={{width:"100px",height:'80px'}} />						
+					<img className="img-responsive" src="https://res.cloudinary.com/djir3ki08/image/upload/v1517590917/shoppylife1_pxxz0z.png" style={{width:"100px",height:'80px'}} />						
 				</a>	
-				{/* <IconButton
-					onClick={(e)=>{router.push('/');}}
-					className=""
-					style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
-					primary={true}>
-					<ActionHome width='100%' height='100%' color='purple'/>
-				</IconButton> */}
 			</div>		
-			{/* <div className="hidden-xs">				 */}
-			<div className="col-xs-12 col-sm-5 col-md-4 col-lg-3">
-				{userName ? 
-					<div className="row">
-						<div className="col-xs-3 d-block d-sm-none">
-							<IconButton
-								onClick={this.handleCategoryClick}
-								style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
-								primary={true}>
-								<ViewList width='100%' height='100%' color='purple'/>
-							</IconButton>
-						</div>
-						<div className="col-xs-3">
-							<IconButton
-								onClick={this.handleSearchClick}
-								style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
-								primary={true}>
-								<ActionSearch width='100%' height='100%' color='purple'/>
-							</IconButton>
-						</div>
-						<div className="col-xs-3">
-							<Badge
-								badgeContent={cartItemsCount}
-								primary={true}
-								badgeStyle={{top: 20, right: 20,background:cartItemsCount==0? 'white':'MediumPurple'}}
-								style={{marginRight:'5px',marginLeft:'5px'}}
-								onClick={()=>{router.push("/cart");}}
-								>
-								<IconButton tooltip="ShoppingCart" touch={true} >
-									<ActionShop color={purple900}/>					
-								</IconButton>				
-							</Badge>
-						</div>
-						{/* <div className="col-md-3 col-sm-2" style={{fontSize:'14px',height:'15px',marginTop:'30px',marginBottom:'15px',width:'80px'}}>
-							{userName ? userName : ''}
-						</div> */}	
-						<div className="col-xs-3">
-							<FlatButton
-								onClick={()=>{logout();window.location="/login"}}
-								labelPosition="after"
-								label="Log Out"
-								style={{color:'black',marginTop:'25px',marginBottom:'15px'}}
-								primary={true}
-								icon={<SocialPerson color={purple900}/>}
-								/>
-							<span style={{marginLeft:'10px'}}>
-							{userName ? userName : ''}
-							</span>
-						</div>
+			<div className="col-xs-12 col-sm-5 col-md-4 col-lg-3">				
+				<div className="row">
+					<div className="col-xs-2 d-block d-sm-none">
+						<IconButton
+							onClick={this.handleCategoryClick}
+							style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
+							primary={true}>
+							<ViewList width='100%' height='100%' color='blue'/>
+						</IconButton>
 					</div>
-					:
-					<div className="row">
-						<div className="col-xs-3 d-block d-sm-none">
-							<IconButton
-								onClick={this.handleCategoryClick}
-								style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
-								primary={true}>
-								<ViewList width='100%' height='100%' color='purple'/>
-							</IconButton>
-						</div>
-						<div className="col-xs-3">
-							<IconButton
-								onClick={this.handleSearchClick}
-								style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
-								primary={true}>
-								<ActionSearch width='100%' height='100%' color='purple'/>
-							</IconButton>
-						</div>
-						<div className="col-xs-3">
-							<Badge
-								badgeContent={cartItemsCount}
-								primary={true}
-								badgeStyle={{top: 20, right: 20,background:cartItemsCount==0? 'white':'MediumPurple'}}
-								style={{marginRight:'5px',marginLeft:'5px'}}
-								onClick={()=>{router.push("/cart");}}
-								>
-								<IconButton tooltip="ShoppingCart" touch={true} >
-									<ActionShop color={purple900}/>					
-								</IconButton>				
-							</Badge>
-						</div>
-						{/* <div className="col">
-							<FlatButton
-								onClick={()=>{window.location="/Register"}}
-								labelPosition="before"
-								label="Register"
-								style={{color:'purple',marginTop:'25px',marginBottom:'15px'}}
-								primary={true}
-								/>
-						</div> */}
-						<div className="col-xs-3">
-							<FlatButton
-								onClick={()=>{window.location="/login"}}
-								labelPosition="after"
-								label="Log In"
-								style={{color:'purple',marginTop:'25px',marginBottom:'15px'}}
-								primary={true}
-								icon={<SocialPerson color={purple900}/>}
-								/>
-						</div>						
+					<div className="col-xs-1">
+						<IconButton
+							onClick={this.handleSearchClick}
+							style={{background:'white',marginLeft:'5px',marginTop:'25px',marginBottom:'15px'}}
+							primary={true}>
+							<ActionSearch width='100%' height='100%' color='blue'/>
+						</IconButton>
 					</div>
-					
-				}
+					<div className="col-xs-3">
+						<Badge
+							badgeContent={cartItemsCount}
+							primary={true}
+							badgeStyle={{top: 20, right: 20,background:cartItemsCount==0? 'white':'Mediumblue'}}
+							style={{marginRight:'5px',marginLeft:'5px'}}
+							onClick={()=>{router.push("/cart");}}
+							>
+							<IconButton tooltip="ShoppingCart" touch={true} >
+								<ActionShop color={blue900}/>					
+							</IconButton>				
+						</Badge>
+					</div>
+					<div className="col-xs-5">
+						<FlatButton
+							onClick={(event)=>{this.setState({openAccount:true,anchorEl:event.currentTarget,});}}
+							labelPosition="after"
+							labelStyle={{paddingRight:'2px'}}
+							label={userName ? userName : 'My Account'}
+							style={{background:'white',marginTop:'30px',marginBottom:'15px',width:'100%'}}
+							primary={true}
+							icon={<SocialPerson color={blue900}/>}
+							/>
+					</div>
+				</div>
 			</div> 
 			{/* <div className="hidden-xs hidden-md hidden-sm hidden-lg">
 				<IconButton
 					onClick={this.handleClick}
 					style={{background:'white',marginLeft:'15px',marginTop:'20px',marginBottom:'15px'}}
 					primary={true}>
-					<AppButton width='100%' height='100%' color='purple'/>
+					<AppButton width='100%' height='100%' color='blue'/>
 				</IconButton>
 				<Popover
 					open={this.state.open}
@@ -312,12 +252,12 @@ class AppBar extends React.Component{
 						<Badge
 							badgeContent={cartItemsCount}
 							primary={true}
-							badgeStyle={{top: 20, right: 20,background:cartItemsCount==0? 'white':'MediumPurple'}}
+							badgeStyle={{top: 20, right: 20,background:cartItemsCount==0? 'white':'Mediumblue'}}
 							style={{marginRight:'5px',marginLeft:'5px'}}
 							onClick={()=>{router.push("/cart");}}
 							>
 							<IconButton tooltip="ShoppingCart" touch={true} >
-								<ActionShop color={purple900}/>					
+								<ActionShop color={blue900}/>					
 							</IconButton>				
 						</Badge><br/>
 						<div style={{fontSize:'14px',height:'15px',marginLeft:'10px',textAlign:'center',marginTop:'5px',marginBottom:'5px',width:'80px'}}>{userName ? userName : ''}</div><br/>
@@ -327,7 +267,7 @@ class AppBar extends React.Component{
 							label="Log Out"
 							style={{color:'black',marginTop:'5px',marginBottom:'5px'}}
 							primary={true}
-							icon={<SocialPerson color={purple900}/>}
+							icon={<SocialPerson color={blue900}/>}
 							/>
 					</div>
 					:
@@ -335,28 +275,28 @@ class AppBar extends React.Component{
 						<Badge
 							badgeContent={cartItemsCount}
 							primary={true}
-							badgeStyle={{top: 20, right: 20,background:cartItemsCount==0? 'white':'MediumPurple'}}
+							badgeStyle={{top: 20, right: 20,background:cartItemsCount==0? 'white':'Mediumblue'}}
 							style={{marginRight:'5px',marginLeft:'5px'}}
 							onClick={()=>{router.push("/cart");}}
 							>
 							<IconButton tooltip="ShoppingCart" touch={true} >
-								<ActionShop color={purple900}/>					
+								<ActionShop color={blue900}/>					
 							</IconButton>				
 						</Badge><br/>
 						<FlatButton
 							onClick={()=>{window.location="/Register"}}
 							labelPosition="before"
 							label="Register"
-							style={{color:'purple',marginTop:'5px',marginBottom:'5px'}}
+							style={{color:'blue',marginTop:'5px',marginBottom:'5px'}}
 							primary={true}
 							/><br/>
 						<FlatButton
 							onClick={()=>{window.location="/login"}}
 							labelPosition="after"
 							label="Log In"
-							style={{color:'purple',marginTop:'5px',marginBottom:'5px'}}
+							style={{color:'blue',marginTop:'5px',marginBottom:'5px'}}
 							primary={true}
-							icon={<SocialPerson color={purple900}/>}
+							icon={<SocialPerson color={blue900}/>}
 							/>						
 					</div>
 					
@@ -364,6 +304,42 @@ class AppBar extends React.Component{
 				</Popover>
 			</div> */}
   		</div>
+		<Popover
+			open={this.state.openAccount}
+			anchorEl={this.state.anchorEl}
+			style={{width:'150px'}}
+			anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+			targetOrigin={{horizontal: 'left', vertical: 'top'}}
+			onRequestClose={this.handleAccountRequestClose}>			
+				{userName ? 
+					<FlatButton
+						onClick={()=>{logout();window.location="/login"}}
+						labelPosition="after"
+						label="Log Out"
+						style={{color:'black',width:'100%'}}
+						primary={true}
+						icon={<CommuKey color={blue900}/>}
+						/> :
+					<div>
+						<FlatButton
+							onClick={()=>{window.location="/Register"}}
+							labelPosition="after"
+							label="Register"
+							style={{color:'blue',width:'100%'}}
+							primary={true}
+							icon={<SocialPersonAdd color={blue900}/>}
+							/><br/>
+						<FlatButton
+							onClick={()=>{window.location="/login"}}
+							labelPosition="after"
+							label="Log In"
+							style={{color:'blue',width:'100%'}}
+							primary={true}
+							icon={<CommuKey color={blue900}/>}
+							/><br/>
+					</div>
+				}			
+		</Popover>
 		<Popover
 			open={this.state.openCategory}
 			anchorEl={this.state.anchorEl}
