@@ -41,7 +41,7 @@ class ProductCard extends React.Component{
 								<span className="text-price">{Accounting.formatMoney(Price)}</span>
 								<IconButton
 									onClick={this.addCartItem.bind(this)}
-									style={{background:'purple',color:'white',marginLeft:'10px',marginTop:'5px',marginBottom:'10px'}}
+									style={{background:'blue',color:'white',marginLeft:'10px',marginTop:'5px',marginBottom:'10px'}}
 									primary={true}>
 									<AddCart color='white'/>
 								</IconButton>

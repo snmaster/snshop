@@ -17,11 +17,11 @@ class Layout extends React.Component{
     componentDidMount(){
         //this.setState({loading:false});
         let {setUserProfile,loadCartItems} = this.props;
-        let {user_id,user_name,full_name} = getUserProfile();
+        let {user_id,user_name,full_name,account_type} = getUserProfile();
         setUserProfile({
             userId:user_id,
             userName:user_name,
-            // accountType:account_type,
+            accountType:account_type,
             // profilePic:profile_pic,
             fullName:full_name,
             // entityId:entity_id

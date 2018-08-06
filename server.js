@@ -250,7 +250,7 @@ function renderHtml(req,res,renderProps,isAdminSite){
 //     });
 // });
 
-app.get('/admin/Login',csrfProtection,(req,res)=>{
+app.get('/authorize/Login',csrfProtection,(req,res)=>{
     match({ routes, location: req.originalUrl }, (error, redirectLocation, renderProps) => {
         renderHtml(req,res,renderProps,true);
     });
@@ -298,7 +298,7 @@ app.get('/ping',passport.authenticate('bearer-graphql',{session:false}),(req,res
         res.status(401).send("Not authenticated");
 });
 
-app.get('/admin*',csrfProtection,passport.authenticate('cookie-admin',{session:false,failureRedirect:'/admin/Login'}),(req, res) => {
+app.get('/authorize*',csrfProtection,passport.authenticate('cookie-admin',{session:false,failureRedirect:'/authorize/Login'}),(req, res) => {
     req.headers.authorization =  `Bearer ${req.cookies.access_token}`;
     match({ routes, location: req.originalUrl }, (error, redirectLocation, renderProps) => {
         if (redirectLocation) {

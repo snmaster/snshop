@@ -6,9 +6,9 @@ import ProductCategory from "./components/Category/index";
 import Login from "./components/login";
 
 export default (
-    <Route component={Layout} path="/admin">
+    <Route component={Layout} path="/authorize">
         <IndexRoute component={Home}/>
-        <Route component={ProductCategory} path="/admin/category"/>
-        <Route component={Login} path="/admin/login"/>
+        <Route component={ProductCategory} path="/authorize/category"/>
+        <Route component={Login} path="/authorize/login"/>
     </Route>
 );

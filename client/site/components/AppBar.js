@@ -176,17 +176,15 @@ class AppBar extends React.Component{
 	// </Toolbar>;
 
 	let searchBar = 
-	<div className="container-fluid">
+	<div className="container">
 		{/* <div className="row justify-content-center">
 			<div className="col-3">
 				<img className="img-responsive" src="https://res.cloudinary.com/djir3ki08/image/upload/v1517590917/phoewa-yote_owpgih.png" style={{width:"100px",height:'80px'}} />										
 			</div>
 		</div> */}
 		<div className="row justify-content-between">
-			<div className="col-xs-12 col-sm-3 ml-xs-auto">
-				<a href="#" onClick={(e)=>{e.preventDefault();router.push(`/`);}} style={{textDecoration:"none"}}>
-					<img className="img-responsive" src="https://res.cloudinary.com/djir3ki08/image/upload/v1517590917/shoppylife1_pxxz0z.png" style={{width:"100px",height:'80px'}} />						
-				</a>	
+			<div className="col-xs-12 col-sm-3 ml-xs-auto">				
+				<img className="img-responsive" onClick={(e)=>{e.preventDefault();router.push(`/`);}} src="https://res.cloudinary.com/djir3ki08/image/upload/v1517590917/shoppylife1_pxxz0z.png" style={{width:"100px",height:'80px'}} />										
 			</div>		
 			<div className="col-xs-12 col-sm-5 col-md-4 col-lg-3">				
 				<div className="row">
@@ -194,7 +192,7 @@ class AppBar extends React.Component{
 						<IconButton
 							onClick={this.handleCategoryClick}
 							style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
-							primary={true}>
+							>
 							<ViewList width='100%' height='100%' color='blue'/>
 						</IconButton>
 					</div>
@@ -202,14 +200,13 @@ class AppBar extends React.Component{
 						<IconButton
 							onClick={this.handleSearchClick}
 							style={{background:'white',marginLeft:'5px',marginTop:'25px',marginBottom:'15px'}}
-							primary={true}>
+							>
 							<ActionSearch width='100%' height='100%' color='blue'/>
 						</IconButton>
 					</div>
 					<div className="col-xs-3">
 						<Badge
 							badgeContent={cartItemsCount}
-							primary={true}
 							badgeStyle={{top: 20, right: 20,background:cartItemsCount==0? 'white':'Mediumblue'}}
 							style={{marginRight:'5px',marginLeft:'5px'}}
 							onClick={()=>{router.push("/cart");}}
@@ -219,14 +216,13 @@ class AppBar extends React.Component{
 							</IconButton>				
 						</Badge>
 					</div>
-					<div className="col-xs-5">
+					<div className="col-xs-6">
 						<FlatButton
 							onClick={(event)=>{this.setState({openAccount:true,anchorEl:event.currentTarget,});}}
 							labelPosition="after"
 							labelStyle={{paddingRight:'2px'}}
 							label={userName ? userName : 'My Account'}
 							style={{background:'white',marginTop:'30px',marginBottom:'15px',width:'100%'}}
-							primary={true}
 							icon={<SocialPerson color={blue900}/>}
 							/>
 					</div>
@@ -317,7 +313,6 @@ class AppBar extends React.Component{
 						labelPosition="after"
 						label="Log Out"
 						style={{color:'black',width:'100%'}}
-						primary={true}
 						icon={<CommuKey color={blue900}/>}
 						/> :
 					<div>
@@ -326,7 +321,6 @@ class AppBar extends React.Component{
 							labelPosition="after"
 							label="Register"
 							style={{color:'blue',width:'100%'}}
-							primary={true}
 							icon={<SocialPersonAdd color={blue900}/>}
 							/><br/>
 						<FlatButton
@@ -334,7 +328,6 @@ class AppBar extends React.Component{
 							labelPosition="after"
 							label="Log In"
 							style={{color:'blue',width:'100%'}}
-							primary={true}
 							icon={<CommuKey color={blue900}/>}
 							/><br/>
 					</div>

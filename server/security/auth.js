@@ -113,8 +113,7 @@ async function verifySession(token){
   let decoded = undefined;
   try{
     decoded= jwt.decode(token,secret.auth_secret);
-  }catch(e){
-      
+  }catch(e){      
   }
   if(!decoded)
     return {isAuthenticated:false,error:"Invalid token."};
@@ -128,11 +127,11 @@ async function verifySession(token){
   }
 
   const userAccount = await db.UserAccount.findById(user_id);
-  if(userAccount.TokenVersion != TokenVersion)
-    return {isAuthenticated:false, error:"Already logout!."};
-  else{
-    return {isAuthenticated:true,userAccount,account_type,type:account_type,EntityId:entity_id};
-  }
+  // if(userAccount.TokenVersion != TokenVersion)
+  //   return {isAuthenticated:false, error:"Already logout!."};
+  // else{
+  return {isAuthenticated:true,userAccount,account_type,type:account_type,EntityId:entity_id};
+  // }
 }
 
 
@@ -174,7 +173,7 @@ passport.use('cookie-admin',new CustomStrategy(
         const sessionData = await verifySession(req.cookies.access_token);
         if(sessionData.error)
           done(null,false);
-        else if(sessionData && sessionData.account_type !== "USER"){
+        else if(sessionData && sessionData.account_type.toUpperCase() !== "USER"){
           done(null,false);//if not user force to login
         }else 
           done(null,sessionData);

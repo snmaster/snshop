@@ -82,8 +82,9 @@ function loginHandler(req,res){
 	let {username,password,remember,redirectUrlOnSuccess} = req.body;
 	redirectUrlOnSuccess =redirectUrlOnSuccess? redirectUrlOnSuccess.replace('/',''):null;
 	login(username,password,remember)
-	.then(({user_id,user_name,full_name,success,access_token,account_type})=>{
+	.then(({sessionData,success})=>{
 		if(success){
+			let {user_id,user_name,full_name,success,access_token,account_type} = sessionData;
 			res.cookie('access_token',access_token,{encode:m=>(m)});
 			res.cookie('user_id',user_id,{encode:m=>(m)});
 			res.cookie('user_name', user_name,{encode:m=>(m)});
@@ -113,7 +114,7 @@ function adminSiteLoginHandler(req,res){
 }
 
 async function generateToken({id,account_type,FullName,expiredIn}){
-    expiredIn = expiredIn? expiredIn: 7200;        
+    //expiredIn = expiredIn? expiredIn: 7200;        
     const data = {
         user_id:id,
         TokenVersion:1,
