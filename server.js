@@ -256,7 +256,7 @@ app.get('/authorize/Login',csrfProtection,(req,res)=>{
     });
 });
 
-app.get('/register',csrfProtection, function(request, response){
+app.get('/customer/register',csrfProtection, function(request, response){
     var view = {
       appId: account_kit.app_id,
       csrf: request.csrfToken(),
@@ -267,17 +267,17 @@ app.get('/register',csrfProtection, function(request, response){
     response.send(html);
   });
 
-app.post('/register',csrfProtection,registerHandler);
+app.post('/customer/register',csrfProtection,registerHandler);
   
-app.post('/login',csrfProtection,loginHandler);
+app.post('/customer/login',csrfProtection,loginHandler);
 
-app.post('/fblogin',csrfProtection,fbloginHandler);
+app.post('/customer/fblogin',csrfProtection,fbloginHandler);
 
-app.post('/smslogin',csrfProtection,smsloginHandler);
+app.post('/customer/smslogin',csrfProtection,smsloginHandler);
 
-app.post('/adminLogin',adminSiteLoginHandler);
+app.post('/authorize/adminLogin',adminSiteLoginHandler);
 
-app.get('/login',csrfProtection, function(request, response){
+app.get('/customer/login',csrfProtection, function(request, response){
   var view = {
     appId: account_kit.app_id,
     csrf: request.csrfToken(),

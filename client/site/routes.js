@@ -16,8 +16,8 @@ export default (
         <IndexRoute component={Home}/>
         <Route component={ProductBrowser} path="/Product(/:id)"/>
         <Route component={ProductDetail} path="/detail(/:id)"/>
-        <Route component={Cart} path="/cart" />
-        <Route component={CheckOut} path="/checkout"/>
-        <Route component={OrderBrowser} path="/order"/>
+        <Route component={Cart} path="/checkout/cart" />
+        <Route component={CheckOut} path="/checkout/process"/>
+        <Route component={OrderBrowser} path="/customer/order"/>
     </Route>
 );

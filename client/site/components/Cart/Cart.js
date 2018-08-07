@@ -20,11 +20,11 @@ class Cart extends React.Component{
 		let {userId} = userProfile;
 		if(userId == "")
 		{
-			window.location=`/login?redirectUrlOnSuccess=${encodeURIComponent("/checkout")}`;
+			window.location=`/customer/login?redirectUrlOnSuccess=${encodeURIComponent("/checkout/process")}`;
 		}	
 		else
 		{
-			router.push(`/checkout`);
+			router.push(`/checkout/process`);
 		}		
 	}
 	

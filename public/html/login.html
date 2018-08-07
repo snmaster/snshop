@@ -218,7 +218,7 @@ function isNumber(evt) {
 }
 
 function requestRegister(){
-  window.location = "/register?redirectUrlOnSuccess=" + encodeURIComponent('{{{redirectUrlOnSuccess}}}');
+  window.location = "/customer/register?redirectUrlOnSuccess=" + encodeURIComponent('{{{redirectUrlOnSuccess}}}');
 }
 
   </script>
@@ -287,7 +287,7 @@ function requestRegister(){
         <img src="http://res.cloudinary.com/djir3ki08/image/upload/v1517590917/shoppylife1_pxxz0z.png" style="width:100px;height:100px;"/><br/>
         <!-- <span>LogIn</span> -->
       </div>
-      <FORM method="post" action="/login" class="formLogin">
+      <FORM method="post" action="/customer/login" class="formLogin">
         <div class="form-fields">
             <div class="inputs">
                 <label for="Username">Username:</label>
@@ -305,20 +305,20 @@ function requestRegister(){
                 <fb:login-button style="margin-left:10px" class="btn btn-default col-sm-1" scope="public_profile" onlogin="checkLoginState();">
                   Login Or Register with Facebook
                 </fb:login-button>
-                <a class="button" href="/register">Register new Account</a>
+                <a class="button" href="/customer/register">Register new Account</a>
             </div>
             <input type="hidden" name="_csrf" value={{csrf}}>
             <input type="hidden" name="redirectUrlOnSuccess" value={{redirectUrlOnSuccess}}/>
             <span style="color:#F44336" >{{message}}</span>
           </div> 
       </FORM>
-      <form style="display:none;" id="form" method="post" action="/smslogin">
+      <form style="display:none;" id="form" method="post" action="/customer/smslogin">
         <input type="hidden" name="auth_code" id="auth_code" />
         <input type="hidden" name="username" id="username_hidden"/>
         <input type="hidden" name="redirectUrlOnSuccess" value={{redirectUrlOnSuccess}}/>
       <input type="hidden" name="_csrf" value={{csrf}}>
       </form>
-      <form style="display:none;" id="frmfacebook" method="post" action="/fblogin">
+      <form style="display:none;" id="frmfacebook" method="post" action="/customer/fblogin">
         <input type="hidden" name="username" id="fb_username"/>
           <input type="hidden" name="userid" id="fb_userid"/>
           <input type="hidden" name="redirectUrlOnSuccess" value={{redirectUrlOnSuccess}}/>

@@ -31,7 +31,7 @@ class CheckOut extends React.Component{
                 if(instance){
                     showSnackbar(`You have already submitted order.`);
                     clearCart();
-                    router.push('/order');
+                    router.push('/customer/order');
                 }
                     
             });
@@ -48,46 +48,52 @@ class CheckOut extends React.Component{
         }
 
         return (
-            <div className="fullheight">
-                <div className="col align-self-center">
-					<div className="row justify-content-center" style={{margin:'10px'}}>
-                        <div className="col-auto">
+            <div className="layout fullheight">
+                <AppBar title="Product Browser"/>
+                <div className="fullheight">
+					<div className="row justify-content-center" style={{marginTop:'50px'}}>
+                        {/* <div className="col-xs-2" /> */}
+                        <div className="col-xs-3" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
                             FullName
                         </div>
-                        <div className="col">
+                        <div className="col-xs-3" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
                         {FullName}
                         </div>
                     </div>
-                    <div className="row justify-content-center" style={{margin:'10px'}}>
-                        <div className="col-auto">
+                    <div className="row justify-content-center">
+                        {/* <div className="col-xs-2"/> */}
+                        <div className="col-xs-3" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
                             PhoneNo
                         </div>
-                        <div className="col">
+                        <div className="col-xs-3" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
                         {PhoneNo}
                         </div>
                     </div>
-                    <div className="row justify-content-center" style={{margin:'10px'}}>
-                        <div className="col-auto">
+                    <div className="row justify-content-center">
+                        {/* <div className="col-xs-2"/> */}
+                        <div className="col-xs-3" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
                             TotalAmount
                         </div>
-                        <div className="col">
+                        <div className="col-xs-3" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
                             {Accounting.formatMoney(totalAmount)}
                         </div>
                     </div>                    
-                    <div className="row justify-content-center" style={{margin:'10px'}}>
-                        <div className="col-auto">
+                    <div className="row justify-content-center">
+                        {/* <div className="col-xs-2"/> */}
+                        <div className="col-xs-3" style={{border:'1px solid #ccc',padding:'10px',height:'120px'}}>
                             Address
                         </div>
-                        <div className="col">
-                            <TextField style={{width:'300px',textAlign:'left'}} multiLine={true} rows={3}  hintText="Shipping Address"  id="Address" multiLine={true} rows={5} floatingLabelText="Shipping Address" value={shippingAddress} onChange={(e)=>{this.props.edit({shippingAddress:e.target.value});}}/>
+                        <div className="col-xs-3" style={{border:'1px solid #ccc',padding:'10px',height:'120px'}}>
+                            <textarea style={{width:'300px',height:'100px',textAlign:'left'}} rows={4}  id="Address" cols="100" value={shippingAddress} onChange={(e)=>{this.props.edit({shippingAddress:e.target.value});}}/>
                         </div>
                     </div>
-                    <div className="row justify-content-center" style={{margin:'10px'}}>
-                        <div className="col-auto">
-                            <FlatButton label="Checkout" primary={true} onClick={this.checkOut.bind(this)}/>
+                    <div className="row justify-content-center" style={{margin:'10px',height:'50px'}}>
+                        {/* <div className="col-xs-2"/> */}
+                        <div className="col-xs-3">
+                            
                         </div>
-                        <div className="col">
-                        
+                        <div className="col-xs-3">
+                            <button type="button" style={{background:'darkblue',color:'white',width:'150px'}} onClick={this.checkOut.bind(this)}>CheckOut</button>    
                         </div>
                     </div>
                 </div>

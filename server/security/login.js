@@ -63,7 +63,7 @@ function login(username,password,remember){
 				.catch(error=>({message:error,success:false}));
 }
 
-async function populateSessionData({id,UserName,account_type,FullName,token}){
+export async function populateSessionData({id,UserName,account_type,FullName,token}){
 	
 	return {
         access_token:token,
@@ -80,7 +80,7 @@ async function populateSessionData({id,UserName,account_type,FullName,token}){
 function loginHandler(req,res){
 	console.log(req.body);
 	let {username,password,remember,redirectUrlOnSuccess} = req.body;
-	redirectUrlOnSuccess =redirectUrlOnSuccess? redirectUrlOnSuccess.replace('/',''):null;
+	//redirectUrlOnSuccess =redirectUrlOnSuccess? redirectUrlOnSuccess.replace('/',''):null;
 	login(username,password,remember)
 	.then(({sessionData,success})=>{
 		if(success){
@@ -113,7 +113,7 @@ function adminSiteLoginHandler(req,res){
 	});
 }
 
-async function generateToken({id,account_type,FullName,expiredIn}){
+export async function generateToken({id,account_type,FullName,expiredIn}){
     //expiredIn = expiredIn? expiredIn: 7200;        
     const data = {
         user_id:id,

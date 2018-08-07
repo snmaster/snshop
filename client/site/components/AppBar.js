@@ -209,7 +209,7 @@ class AppBar extends React.Component{
 							badgeContent={cartItemsCount}
 							badgeStyle={{top: 20, right: 20,background:cartItemsCount==0? 'white':'Mediumblue'}}
 							style={{marginRight:'5px',marginLeft:'5px'}}
-							onClick={()=>{router.push("/cart");}}
+							onClick={()=>{router.push("/checkout/cart");}}
 							>
 							<IconButton tooltip="ShoppingCart" touch={true} >
 								<ActionShop color={blue900}/>					
@@ -309,7 +309,7 @@ class AppBar extends React.Component{
 			onRequestClose={this.handleAccountRequestClose}>			
 				{userName ? 
 					<FlatButton
-						onClick={()=>{logout();window.location="/login"}}
+						onClick={()=>{logout();window.location="/customer/login"}}
 						labelPosition="after"
 						label="Log Out"
 						style={{color:'black',width:'100%'}}
@@ -317,14 +317,14 @@ class AppBar extends React.Component{
 						/> :
 					<div>
 						<FlatButton
-							onClick={()=>{window.location="/Register"}}
+							onClick={()=>{window.location="/customer/register"}}
 							labelPosition="after"
 							label="Register"
 							style={{color:'blue',width:'100%'}}
 							icon={<SocialPersonAdd color={blue900}/>}
 							/><br/>
 						<FlatButton
-							onClick={()=>{window.location="/login"}}
+							onClick={()=>{window.location="/customer/login"}}
 							labelPosition="after"
 							label="Log In"
 							style={{color:'blue',width:'100%'}}
