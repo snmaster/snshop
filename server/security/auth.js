@@ -157,7 +157,7 @@ passport.use('cookie-site',new CustomStrategy(
           const sessionData = await verifySession(req.cookies.access_token);
           if(sessionData. error)
             done(null,{isAuthenticated:false});
-          else if(sessionData && sessionData.account_type.toUpperCase() !== "CUSTOMER"){
+          else if(sessionData && sessionData.account_type && sessionData.account_type.toUpperCase() !== "CUSTOMER"){
             done(null,false);//if not customer force to login
           }else 
             done(null,sessionData);
@@ -173,7 +173,7 @@ passport.use('cookie-admin',new CustomStrategy(
         const sessionData = await verifySession(req.cookies.access_token);
         if(sessionData.error)
           done(null,false);
-        else if(sessionData && sessionData.account_type.toUpperCase() !== "USER"){
+        else if(sessionData && sessionData.account_type && sessionData.account_type.toUpperCase() !== "USER"){
           done(null,false);//if not user force to login
         }else 
           done(null,sessionData);
