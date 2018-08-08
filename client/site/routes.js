@@ -10,7 +10,7 @@ import ProductDetail from './components/Product/ProductDetail';
 import Cart from './components/Cart/Cart';
 import CheckOut from './components/Checkout/index';
 import OrderBrowser from './components/CustomerOrder/index';
-
+import ConfirmOrder from './components/CustomerOrder/confirmOrder';
 export default (
     <Route component={Layout} path="/">
         <IndexRoute component={Home}/>
@@ -19,5 +19,6 @@ export default (
         <Route component={Cart} path="/checkout/cart" />
         <Route component={CheckOut} path="/checkout/process"/>
         <Route component={OrderBrowser} path="/customer/order"/>
+        <Route component={ConfirmOrder} path="/customer/confirmOrder(/:id)"/>
     </Route>
 );

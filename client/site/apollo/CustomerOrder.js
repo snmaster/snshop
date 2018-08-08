@@ -68,7 +68,44 @@ const customerOrderQuery = graphql(CUSTOMER_ORDER_QUERY,{
         }
     }
 
-})
+});
+
+const CUSTOMER_ORDER_BYID_QUERY = gql `
+query customerOrderById($id:Int!){
+    CustomerOrder:customerOrderById(id:$id){
+        id
+        OrderNo
+        OrderDate
+        UserAccountId
+        ShippingAddress
+        TotalAmount
+        TotalQty
+        detail{
+            id
+            Product{
+                Name
+            }
+            Qty
+            Price
+        }
+    }
+}
+`;
+
+const customerOrderByIdQuery = graphql(
+	CUSTOMER_ORDER_BYID_QUERY,{
+		options:({id})=>({
+				variables:{id},
+				skip:!id
+		}),
+		props:({data:{CustomerOrder,loading,refetch,fetchMore}})=>{
+			return{
+				loading,
+				CustomerOrder
+			};
+		}
+	}
+);
 
 const CREATE_CUSTOMERORDER_MUTATION = gql `
     mutation createCustomerOrder($order:InputCustomerOrder){
@@ -106,4 +143,4 @@ const createCustomerOrderMutation = graphql(CREATE_CUSTOMERORDER_MUTATION,{
 
 export default customerOrderQuery;
 
-export {createCustomerOrderMutation}
+export {createCustomerOrderMutation,customerOrderByIdQuery}

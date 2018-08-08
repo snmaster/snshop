@@ -31,15 +31,14 @@ class CheckOut extends React.Component{
                 if(instance){
                     showSnackbar(`You have already submitted order.`);
                     clearCart();
-                    router.push('/customer/order');
-                }
-                    
+                    router.push(`/customer/confirmOrder/${instance.id}`);
+                }                    
             });
 
     }
 
     render(){
-        let {ShippingAddress,UserAccount,shipping,cartItems} = this.props;
+        let {ShippingAddress,UserAccount,shipping,cartItems,router} = this.props;
         let {shippingAddress} = shipping ? shipping : {};
         let {FullName,PhoneNo} = UserAccount ? UserAccount : {};
         let totalAmount = 0;
@@ -50,6 +49,9 @@ class CheckOut extends React.Component{
         return (
             <div className="layout fullheight">
                 <AppBar title="Product Browser"/>
+                <div style={{width:'100%',height:'50px',textAlign:'center',marginTop:'50px'}}>
+                    <h3>Confirm Checkout</h3>
+                </div>
                 <div className="fullheight">
 					<div className="row justify-content-center" style={{marginTop:'50px'}}>
                         {/* <div className="col-xs-2" /> */}
@@ -88,14 +90,13 @@ class CheckOut extends React.Component{
                         </div>
                     </div>
                     <div className="row justify-content-center" style={{margin:'10px',height:'50px'}}>
-                        {/* <div className="col-xs-2"/> */}
                         <div className="col-xs-3">
                             
                         </div>
                         <div className="col-xs-3">
                             <button type="button" style={{background:'darkblue',color:'white',width:'150px'}} onClick={this.checkOut.bind(this)}>CheckOut</button>    
                         </div>
-                    </div>
+                    </div>                    
                 </div>
                 {/* <div className="fullheight"
                     style={{flexWrap:'nowrap'}}>

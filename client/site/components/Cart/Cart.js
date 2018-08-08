@@ -41,29 +41,39 @@ class Cart extends React.Component{
 		return (
 			<div className="fullheight layout">
                 <AppBar title="ShoppingCart"/>
+				<div style={{width:'100%',height:'50px',background:'#0000',textAlign:'center'}}>
+                    <h3>Review & Checkout</h3>
+                </div>
 				<div className="fullheight scrollable">
-					<div className="cart-grid">
-						<div >
-							<div className="row" style={{height:'80px',border:'1px solid'}}>
-								<div className="col-xs-6 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Product Name</div>
-                                <div className="col-xs-2 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Unit Price</div>
-                                <div className="col-xs-2 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Qty</div>                                
-                                <div className="col-xs-2 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Subtotal</div>
+					{
+						items && items.length > 0 ? 
+							<div className="cart-grid">
+								<div >
+									<div className="row" style={{height:'80px',border:'1px solid'}}>
+										<div className="col-xs-6 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Product Name</div>
+										<div className="col-xs-2 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Unit Price</div>
+										<div className="col-xs-2 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Qty</div>                                
+										<div className="col-xs-2 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Subtotal</div>
+									</div>
+									{items? items.length > 0 ? items.map((i,index)=>(<CartItem key ={i.id} index={index} item={i}/>)):<div><h3>Your Cart is empty.</h3></div> : null}
+								</div>
+								<div className="summary-row row">
+									<div className="col-md-10 col-sm-8 col-xs-6">
+										Total
+									</div>
+									<div className="col-xs-6 col-sm-2">
+										{Accounting.formatMoney(totalAmount)}
+									</div>
+								</div>								
 							</div>
-							{items? items.map((i,index)=>(<CartItem key ={i.id} index={index} item={i}/>)):null}
+						: 
+						<div style={{border:'1px solid black',width:'100%',height:'100px',verticalAlign:'middle'}}>
+							<span style={{marginTop:'50px',marginBottom:'50px',textAlign:'center'}}><h3>Your Cart is empty.</h3></span>
 						</div>
-						<div className="summary-row row">
-							<div className="col-md-10 col-sm-8 col-xs-6">
-								Total
-							</div>
-							<div className="col-xs-6 col-sm-2">
-								{Accounting.formatMoney(totalAmount)}
-							</div>
-						</div>
-						<div className="row between-xs cart-actions-row" >
-							<FlatButton label="Continue Shopping" primary={true} onClick={()=>{router.push("/");}}/>
-							<FlatButton label="Checkout" primary={true} onClick={this.cartCheckOut.bind(this)}/>
-						</div>
+					}
+					<div className="row between-xs cart-actions-row" >
+						<FlatButton label="Continue Shopping" primary={true} onClick={()=>{router.push("/");}}/>
+						<FlatButton label="Checkout" primary={true} onClick={this.cartCheckOut.bind(this)}/>
 					</div>
 				</div>
 

@@ -39,7 +39,7 @@ export const type=`
 
 export const query=`
     CustomerOrder(customerId:Int,page:Int!,pageSize:Int):CustomerOrders
-    CustomerOrderById(id:Int!):CustomerOrder
+    customerOrderById(id:Int!):CustomerOrder
 `;
 
 export const mutation=`
@@ -73,6 +73,9 @@ export const resolver ={
             if(customerId)where ={UserAccountId:customerId};
 			page = page? page: 1;
 			return PaginationHelper.getResult({db,baseQuery:db.CustomerOrder,where,page,pageSize,listKey:'CustomerOrder',paranoid:false});
+        },
+        customerOrderById(_,{id}){
+            return db.CustomerOrder.findById(id);
         }
     },
     mutation:{

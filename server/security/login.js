@@ -80,7 +80,7 @@ export async function populateSessionData({id,UserName,account_type,FullName,tok
 function loginHandler(req,res){
 	console.log(req.body);
 	let {username,password,remember,redirectUrlOnSuccess} = req.body;
-	//redirectUrlOnSuccess =redirectUrlOnSuccess? redirectUrlOnSuccess.replace('/',''):null;
+	//redirectUrlOnSuccess =redirectUrlOnSuccess? redirectUrlOnSuc	cess.replace('/',''):null;
 	login(username,password,remember)
 	.then(({sessionData,success})=>{
 		if(success){
@@ -100,7 +100,7 @@ function loginHandler(req,res){
 				res.redirect("/");
 		}
 		else{	
-			res.redirect(`/login?message=${encodeURIComponent("Phone number or password is incorrect!")}&redirectUrlOnSuccess=${redirectUrlOnSuccess?redirectUrlOnSuccess:''}`);
+			res.redirect(`/customer/login?message=${encodeURIComponent("Phone number or password is incorrect!")}&redirectUrlOnSuccess=${redirectUrlOnSuccess?redirectUrlOnSuccess:''}`);
 		}
 		return null;
 	});
