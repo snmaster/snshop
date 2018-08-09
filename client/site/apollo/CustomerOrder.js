@@ -71,8 +71,8 @@ const customerOrderQuery = graphql(CUSTOMER_ORDER_QUERY,{
 });
 
 const CUSTOMER_ORDER_BYID_QUERY = gql `
-query customerOrderById($id:Int!){
-    CustomerOrder:customerOrderById(id:$id){
+query customerOrderById($id:Int!,$customerId:Int){
+    CustomerOrder:customerOrderById(id:$id,customerId:$customerId){
         id
         OrderNo
         OrderDate

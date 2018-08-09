@@ -19,6 +19,6 @@ export default (
         <Route component={Cart} path="/checkout/cart" />
         <Route component={CheckOut} path="/checkout/process"/>
         <Route component={OrderBrowser} path="/customer/order"/>
-        <Route component={ConfirmOrder} path="/customer/confirmOrder(/:id)"/>
+        <Route component={ConfirmOrder} path="/customer/confirmOrder"/>
     </Route>
 );

@@ -12,13 +12,13 @@ import { customerOrderById, customerOrderByIdQuery } from '../../apollo/Customer
 class ConfirmOrderPage extends React.Component{
 
     render(){
-        let {CustomerOrder,router} = this.props;
-        let {OrderNo} = CustomerOrder ? CustomerOrder : {};
+        let {CustomerOrderEdit,router} = this.props;
+        let {OrderNo} = CustomerOrderEdit ? CustomerOrderEdit : {};
 
         return (
             <div className="layout fullheight">
                 <AppBar title="Product Browser"/>                
-                <div className="row justify-content-center" >                    
+                <div className="row justify-content-center" style={OrderNo ? {display:'block'}:{display:'none'}}>                    
                     <div className="col-md-6 col-md-offset-3" style={{textAlign:'center'}}>
                         <div style={{width:'100%',height:'50px',textAlign:'center',marginTop:'50px'}}>
                             <h3>Order Confirmation</h3>
@@ -66,11 +66,16 @@ class ConfirmOrderPage extends React.Component{
     }
 }
 
-const TheComponent = compose(
-    customerOrderByIdQuery,
-    withRouter
+export default compose(
+    withRouter,
+    connect(
+        state=>({CustomerOrderEdit:state.CustomerOrder}),
+        dispatch=>({
+
+        })
+    )
 )(ConfirmOrderPage);
 
-export default ({params:{id}})=>{
-    return (<TheComponent id={id} />);
-};
+// export default ({params:{id}})=>{
+//     return (<TheComponent id={id} />);
+// };

@@ -30,8 +30,10 @@ class CheckOut extends React.Component{
                 let{instance,errors} = createCustomerOrder?createCustomerOrder:{};
                 if(instance){
                     showSnackbar(`You have already submitted order.`);
+                    let {id,OrderDate,OrderNo,UserAccountId,ShippingAddress,TotalAmount,TotalQty,detail} = instance ? instance : {};
+                    this.props.editOrder({id,OrderDate,OrderNo,UserAccountId,ShippingAddress,TotalAmount,TotalQty,orderStatus:'A',detail});
                     clearCart();
-                    router.push(`/customer/confirmOrder/${instance.id}`);
+                    router.push(`/customer/confirmOrder`);
                 }                    
             });
 
@@ -131,6 +133,9 @@ export default compose(
         dispatch=>({
             edit:(edit)=>{
 				dispatch({type:'SHIPPING_EDIT',edit});
+            },
+            editOrder:(edit)=>{
+                dispatch({type:'CUSTOMER_ORDER_EDIT',edit});
             },
             showSnackbar:(message)=>{
                 dispatch({type:'SITE_SNACKBAR_OPEN',message});
