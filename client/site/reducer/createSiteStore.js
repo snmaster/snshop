@@ -6,6 +6,7 @@ import Site from './Site';
 import UserProfile from './UserProfile';
 import ProductDetail from './ProductDetail';
 import Shipping from './Shipping';
+import CustomerOrder from './CustomerOrder';
 
 export default ({client})=>{
     const store = createStore(
@@ -14,6 +15,7 @@ export default ({client})=>{
             UserProfile,
             ProductDetail,
             Shipping,
+            CustomerOrder,
             apollo: client.reducer()
         }),
         client.initialState, // initial state

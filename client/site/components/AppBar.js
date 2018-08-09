@@ -17,8 +17,10 @@ import muiThemeable from 'material-ui/styles/muiThemeable';
 import IconButton from 'material-ui/IconButton';
 import FlatButton from 'material-ui/FlatButton';
 import AppButton from 'material-ui/svg-icons/navigation/apps';
+import OrderIcon from 'material-ui/svg-icons/notification/event-note';
 import ViewList from 'material-ui/svg-icons/action/view-list';
 import Popover, {PopoverAnimationVertical} from 'material-ui/Popover';
+import Drawer from 'material-ui/Drawer';
 import {compose} from 'react-apollo';
 import {connect} from 'react-redux';
 import React from 'react';
@@ -26,10 +28,12 @@ import {logout} from '../../auth';
 import ContentFilterList from 'material-ui/svg-icons/content/filter-list';
 import Favicon from 'react-favicon';
 import {searchProductByKeyWord} from '../apollo/Product';
+import query from '../apollo/ProductCategory';
 import AutoComplete from '../../common/AutoComplete';
 import {withRouter} from 'react-router';
 import { userInfo } from 'os';
 import CategoryMenu from './CategoryMenu';
+import { MenuItem } from 'material-ui/MenuItem';
 
 class AppBar extends React.Component{
 	constructor(){
@@ -45,7 +49,7 @@ class AppBar extends React.Component{
 			openAccount:false,
 			openSearch:false,
 			openCategory:false,
-        	searchText:''
+			searchText:''
         }
 	}
 	queryDataForAutoComplete(searchText){
@@ -107,7 +111,7 @@ class AppBar extends React.Component{
 	};
 
 	render(){
-		let {muiTheme,onSearchChange,onSearchModeChange,isSearchMode,title,toggleDrawer,onFilterDrawerToggle,productSearchResult,searchingProductByKeyWord,router,userProfile,cartItems} = this.props;
+		let {muiTheme,onSearchChange,onSearchModeChange,isSearchMode,title,toggleDrawer,onFilterDrawerToggle,productSearchResult,searchingProductByKeyWord,router,userProfile,cartItems,ProductCategory} = this.props;
 		let {userName} = userProfile? userProfile : {};
 		let {searchText} = this.state;
 		let cartItemsCount = cartItems? cartItems.length: 0;
@@ -199,15 +203,14 @@ class AppBar extends React.Component{
 					<div className="col-xs-1">
 						<IconButton
 							onClick={this.handleSearchClick}
-							style={{background:'white',marginLeft:'5px',marginTop:'25px',marginBottom:'15px'}}
-							>
+							style={{background:'white',marginLeft:'5px',marginTop:'25px',marginBottom:'15px'}}							>
 							<ActionSearch width='100%' height='100%' color='blue'/>
 						</IconButton>
 					</div>
 					<div className="col-xs-3">
 						<Badge
 							badgeContent={cartItemsCount}
-							badgeStyle={{top: 20, right: 20,background:cartItemsCount==0? 'white':'Mediumblue'}}
+							badgeStyle={{top: 20, right: 20,color:'white',background:cartItemsCount==0? 'white':'Mediumblue'}}
 							style={{marginRight:'5px',marginLeft:'5px'}}
 							onClick={()=>{router.push("/checkout/cart");}}
 							>
@@ -308,13 +311,22 @@ class AppBar extends React.Component{
 			targetOrigin={{horizontal: 'left', vertical: 'top'}}
 			onRequestClose={this.handleAccountRequestClose}>			
 				{userName ? 
-					<FlatButton
-						onClick={()=>{logout();window.location="/customer/login"}}
-						labelPosition="after"
-						label="Log Out"
-						style={{color:'black',width:'100%'}}
-						icon={<CommuKey color={blue900}/>}
-						/> :
+					<div>
+						<FlatButton
+							onClick={()=>{window.location="/customer/order"}}
+							labelPosition="after"
+							label="My Orders"
+							style={{color:'blue',width:'100%'}}
+							icon={<OrderIcon color={blue900}/>}
+							/><br/>
+						<FlatButton
+							onClick={()=>{logout();window.location="/customer/login"}}
+							labelPosition="after"
+							label="Log Out"
+							style={{color:'black',width:'100%'}}
+							icon={<CommuKey color={blue900}/>}
+							/> 
+					</div>:
 					<div>
 						<FlatButton
 							onClick={()=>{window.location="/customer/register"}}
@@ -333,6 +345,20 @@ class AppBar extends React.Component{
 					</div>
 				}			
 		</Popover>
+		{/* <Drawer 
+			open={this.state.openCategory}
+			docked={false}
+			width={200}
+			onRequestChange={(open) => this.setState({openCategory:open})}
+		>
+			<div>
+			{
+				ProductCategory ? ProductCategory.map(({id,Name},index)=>{
+					<MenuItem value={id} primaryText={Name} key={index} onClick={()=>{router.route(`/Product/${id}`);this.setState({openCategory:false})}}></MenuItem>
+				}):null
+			}
+			</div>
+        </Drawer> */}
 		<Popover
 			open={this.state.openCategory}
 			anchorEl={this.state.anchorEl}
@@ -460,6 +486,7 @@ class AppBar extends React.Component{
 				// }
 			})
 			),
+		query,
 		searchProductByKeyWord,
 		withRouter,
 			muiThemeable()

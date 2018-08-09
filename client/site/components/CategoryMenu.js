@@ -25,7 +25,7 @@ class CategoryMenu extends React.Component{
 	// 	if(prevProps.ProductCategory!== ProductCategory){
 	// 		const scrollable = document.getElementsByClassName('scrollable');
 	// 		for(let i=0; i<scrollable.length;i++){
-	// 			scrollable[0].scrollTop=0;
+// 			scrollable[0].scrollTop=0;
 	// 		}
 	// 	}
 	// }
