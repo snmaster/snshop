@@ -3,8 +3,8 @@
  */
 import React, { PropTypes } from 'react';
 
-
-const scriptUrl = "/admin.bundle.js";
+const env = process.env.NODE_ENV ? process.env.NODE_ENV: 'production' ;
+const scriptUrl = env ==='production' ? "https://demyov6lprphd.cloudfront.net/admin.bundle.js" : "/admin.bundle.js";
 const adminHtml = ({ content, state }) => (
     <html lang="en">
     <head>

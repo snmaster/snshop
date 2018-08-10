@@ -33,6 +33,7 @@ import AutoComplete from '../../common/AutoComplete';
 import {withRouter} from 'react-router';
 import { userInfo } from 'os';
 import CategoryMenu from './CategoryMenu';
+import Menu from 'material-ui/Menu';
 import { MenuItem } from 'material-ui/MenuItem';
 
 class AppBar extends React.Component{
@@ -351,12 +352,21 @@ class AppBar extends React.Component{
 			width={200}
 			onRequestChange={(open) => this.setState({openCategory:open})}
 		>
-			<div>
-			{
-				ProductCategory ? ProductCategory.map(({id,Name},index)=>{
-					<MenuItem value={id} primaryText={Name} key={index} onClick={()=>{router.route(`/Product/${id}`);this.setState({openCategory:false})}}></MenuItem>
-				}):null
-			}
+			<div className="layout">
+				<div style={{height:'168px',backgroundSize:'cover',backgroundPosition:'center',backgroundRepeat:'no-repeat'}}>
+					<div className="layout fullheight" >
+						<div className="fullheight" style={{padding:'23px 0 0 15px'}}>
+							Helo
+						</div>					
+					</div>
+				</div>
+				<Menu>
+				{
+					ProductCategory ? ProductCategory.map(({id,Name},index)=>{
+						<MenuItem value={id} primaryText={Name} key={index} onClick={()=>{router.route(`/Product/${id}`);this.setState({openCategory:false})}}></MenuItem>
+					}):null
+				}
+				</Menu>
 			</div>
         </Drawer> */}
 		<Popover
