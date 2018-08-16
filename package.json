@@ -36,11 +36,16 @@
     "build": "webpack --config webpack.dev.js --progress --profile --colors",
     "postinstall": "webpack -p --config ./webpack.prod.js --env=prod --progress",
     "build:dist": "webpack --config webpack.prod.js --env=prod --progress --profile --colors",
-    "build:test": "webpack --config webpack.test.js --env=test --progress --profile --colors"
+    "build:test": "webpack --config webpack.test.js --env=test --progress --profile --colors",
+    "deploy": "aws s3 sync --acl public-read --profile default --delete public/ s3://shoppylife.ml && npm run invalidate",
+    "invalidate": "aws cloudfront create-invalidation --distribution-id E1KRF3QW81L9O --paths ''/*''",
+    "s3-upload": "node s3upload.js",
+    "publish:webapp": "node tools/build.js && node s3upload.js"
   },
   "dependencies": {
     "accounting": "^0.4.1",
     "apollo-client": "^1.9.0-0",
+    "s3": "^4.4.0",
     "apollo-errors": "^1.4.0",
     "apollo-fetch": "^0.7.0",
     "apollo-server": "0.3.3",

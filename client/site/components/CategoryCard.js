@@ -7,30 +7,30 @@ class CategoryCard extends React.Component {
 
   render() {
    let {ProductCategory,router} = this.props;
-   let {id,Name,Thumb} = ProductCategory ? ProductCategory : {};
+   let {id,Name,Thumb,SubCategories} = ProductCategory ? ProductCategory : {};
 
    return (
-    <a onClick={()=>{router.push(`/Product/${id}`)}} >
-     <div
-        className="row"
-        style={{
-          cursor:'pointer',margin:'5px',padding:'3px',border:'1px solid',width:'auto'
-        }} 
-        >
-        <img src={Thumb} style={{width:"50px",height:'50px'}}/>
-        <span
+     <div style={{width:'150px',textAlign:'center'}}>
+        <a className="CatMenu"
           style={{
             color:'#000',
+            cursor:'pointer',
             marginTop:'8px',
             marginLeft:'10px',
             padding:'5px',
             textAlign:'center',
             alignSelf:'center',
-            fontSize:'12px'
+            fontSize:'12px',
+            cursor:'pointer'
           }}
-        >{Name}</span>
+          onClick={()=>{router.push(`/Product/${id}`)}}
+        >{Name}</a>
+        <div className="row">
+        {
+          SubCategories ? SubCategories.map((i)=>(<a key={i.id} className="catMenu" style={{width:'150px',textAlign:'center',fontSize:'12px',cursor:'pointer'}} onClick={()=>{router.push(`/product/${i.id}`)}}>{i.Name}</a>)) : null
+        }
+        </div>
       </div>
-      </a>
    );
   }
 

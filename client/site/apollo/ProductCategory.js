@@ -9,6 +9,16 @@ const fragments = {
         id
         Name
         Thumb
+        SubCategories{
+            id
+            Name
+            Thumb
+            SubCategories{
+                id
+                Name
+                Thumb
+            }
+        }
     }
 `
 };

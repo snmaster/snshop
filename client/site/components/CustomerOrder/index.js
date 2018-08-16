@@ -20,6 +20,7 @@ class OrderBrowser extends React.Component{
             <div className="fullheight layout">
                 <AppBar />
                 <div className="fullheight scrollable row">
+                <h3>Customer Order List</h3>
                 {
                     CustomerOrder ? CustomerOrder.map((c)=>{
                         return <CustomerOrderItem key={c.id} order={c}/>

@@ -32,6 +32,13 @@ html,body,#content,#content div[data-reactroot]{
     margin: 0;
 }
 
+.CatMenu highlight:hover{
+    text-decoration:none;
+    color:darkblue;
+    cursor:pointer;
+}
+
+
 .layout{
     display:flex;
     flex-direction: column;

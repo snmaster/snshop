@@ -10,6 +10,7 @@ export const type=`
         Image:String
         ParentCategoryId:Int
         Thumb:String
+        SubCategories:[ProductCategory]
     }
 
     type ProductCategoryMutationResult{
@@ -56,7 +57,10 @@ export const resolver={
             Thumb(group){
                 return group.ImagePath ? cloudinary.thumb(group.ImagePath):``;
             },
-            ParentCategoryId:property('ParentCategoryId')
+            ParentCategoryId:property('ParentCategoryId'),
+            SubCategories:(category)=>{
+                return category.ChildCategory;
+            }
         }
     },
     query:{
@@ -68,7 +72,7 @@ export const resolver={
             let where = true;
             if(parentCategoryId)
                 where = {ParentCategoryId:parentCategoryId};
-            return db.ProductCategory.findAll({where});
+            return db.ProductCategory.findAll({where:{ParentCategoryId:null},include:[{model:db.ProductCategory,as:'ChildCategory',include:[{model:db.ProductCategory,as:'ChildCategory'}]}]});
 			//return PaginationHelper.getResult({db,baseQuery:db.ProductCategory,page,pageSize,where,listKey:'ProductCategory',paranoid:false});
         },
         searchCategoryByKeyWord(_,{keyWord,limit}){
