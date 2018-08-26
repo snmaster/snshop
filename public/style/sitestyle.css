@@ -32,12 +32,57 @@ html,body,#content,#content div[data-reactroot]{
     margin: 0;
 }
 
-.CatMenu highlight:hover{
-    text-decoration:none;
-    color:darkblue;
+.subCat{
+    color:#000;
     cursor:pointer;
+    margin-top:10px;
+    margin-bottom: 10px;
+    text-transform:uppercase;
+    margin-left:5px;
+    line-height:11px;
+    text-align:left;
+    font-size:14px
 }
 
+.catHead{
+    text-align:center;
+    vertical-align: middle;
+    background: darkblue;
+    color:white;
+    height: 50px;
+    font-size:18px;
+    padding-top: 10px;
+}
+.CatItem{
+    text-align:'left';
+    width:'100%';
+    margin-left: 5px;
+    font-size:12px;
+    line-height: 12px;
+    cursor:'pointer';
+}
+
+.subCatItem{
+    text-align:'left';
+    margin-left: 20px;
+    font-size:14px;
+    cursor:'pointer'
+}
+
+.subCatItem:hover{
+    text-decoration:none;
+    color:red;
+    margin-left: 20px;
+    cursor:pointer;
+    font-size: 14px;
+}
+
+a:hover{
+    color:red;
+    font-size: 14px;
+    font-style: bold;
+    cursor: pointer;
+}
 
 .layout{
     display:flex;
@@ -132,6 +177,13 @@ html,body,#content,#content div[data-reactroot]{
     font-weight:500;
     color:rgba(0,0,0,0.87);
     display: block;
+}
+
+.text-title:hover{
+    text-decoration:none;
+    color:darkblue;
+    cursor:pointer;
+    font-size: 14px;
 }
 
 .text-subtitle{
