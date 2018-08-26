@@ -45,7 +45,6 @@
   "dependencies": {
     "accounting": "^0.4.1",
     "apollo-client": "^1.9.0-0",
-    "s3": "^4.4.0",
     "apollo-errors": "^1.4.0",
     "apollo-fetch": "^0.7.0",
     "apollo-server": "0.3.3",
@@ -107,6 +106,7 @@
     "react-hot-loader": "^3.0.0-beta.3",
     "react-infinite-scroll": "^0.1.5",
     "react-materialize": "^1.1.2",
+    "react-messenger-plugin": "^2.1.0",
     "react-redux": "^5.0.2",
     "react-router": "^2.8.0",
     "react-tap-event-plugin": "^2.0.0",
@@ -114,6 +114,7 @@
     "react-waypoint": "^7.0.3",
     "redux": "^3.6.0",
     "request": "^2.83.0",
+    "s3": "^4.4.0",
     "sequelize": "^3.24.8",
     "sequelize-cli": "^2.7.0",
     "serve-favicon": "^2.5.0",

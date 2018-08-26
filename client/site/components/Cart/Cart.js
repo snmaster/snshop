@@ -3,7 +3,9 @@ import CartItem from './CartItem';
 import {compose} from 'react-apollo';
 import {connect} from 'react-redux';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import Accounting from 'accounting';
+import { white, blue800 } from 'material-ui/styles/colors';
 import {withRouter} from 'react-router';
 import AppBar from '../AppBar';
 import Loader from '../../../common/Loader';
@@ -58,10 +60,10 @@ class Cart extends React.Component{
 									{items? items.length > 0 ? items.map((i,index)=>(<CartItem key ={i.id} index={index} item={i}/>)):<div><h3>Your Cart is empty.</h3></div> : null}
 								</div>
 								<div className="summary-row row">
-									<div className="col-md-10 col-sm-8 col-xs-6">
+									<div className="col-md-10 col-sm-8 col-xs-6" stye={{float:'right'}}>
 										Total
 									</div>
-									<div className="col-xs-6 col-sm-2">
+									<div className="col-sm-2">
 										{Accounting.formatMoney(totalAmount)}
 									</div>
 								</div>								
@@ -72,11 +74,30 @@ class Cart extends React.Component{
 						</div>
 					}				
 				</div>
-				<div className="row justify-content-center">
-					<div className="col-md-10 col-md-offset-3">
-						<FlatButton label="Continue Shopping" primary={true} onClick={()=>{router.push("/");}}/>
-						<FlatButton label="Checkout" primary={true} onClick={this.cartCheckOut.bind(this)}/>
-					</div>
+				<div className="row justify-content-center" style={{marginTop:'30px'}}>
+						<RaisedButton
+							onClick={()=>{router.push("/");}}
+							labelPosition="before"
+							label="Continue Shopping"
+							backgroundColor={blue800}
+							labelColor={white}
+							primary={true}
+							className="col-xs-2 offset-xs-2"
+							style={{marginLeft:'20px'}}
+							/>
+						<RaisedButton
+							onClick={this.cartCheckOut.bind(this)}
+							labelPosition="before"
+							label="Proceed To Checkout"
+							backgroundColor={blue800}
+							labelColor={white}
+							primary={true}
+							className="col-xs-2 offset-xs-2"
+							style={{marginLeft:'20px'}}
+							/>
+						{/* <FlatButton label="Continue Shopping" primary={true} onClick={()=>{router.push("/");}}/>
+						<FlatButton label="Checkout" primary={true} onClick={this.cartCheckOut.bind(this)}/> */}
+					
 				</div>
 
 			</div>

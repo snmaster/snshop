@@ -17,6 +17,7 @@ import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import productQuery from '../apollo/Product';
 import ProductCard from './Product/ProductCard';
 import AppFooter from './AppFooter';
+import MessengerCustomerChat from 'react-messenger-customer-chat';
 //import AppBar from 'material-ui/AppBar';
 
 class Home extends React.Component{
@@ -44,7 +45,7 @@ class Home extends React.Component{
 					<div className="fullheight scrollable">
 						<div className="row justify-content-md-center">	
 							<div className="col-sm-3 d-none d-sm-block" style={{height:'300px'}}>
-								<CategoryMenu style={{height:'300xp',width:'100%',marginRight:'10px'}} parentCategoryId={null} />
+								<CategoryMenu style={{height:'300xp',width:'100%',marginRight:'10px'}} className="fullheight scrollable" targetOrigin={{vertical:'top',horizontal:'left'}} anchorOrigin={{vertical:'top',horizontal:'right'}}  parentCategoryId={null} />
 							</div>	
 							<div id="carouselExampleIndicators" className="col-sm-9 carousel slide" data-ride="carousel">
 								<ol className="carousel-indicators">
@@ -111,7 +112,12 @@ class Home extends React.Component{
 									<ProductCard key={p.id} Product={p} style={{width:'auto'}} />)) : ''
 								}
 								</div>
-							
+								<div style={{width:'200px',height:'60px'}}>
+									<MessengerCustomerChat
+										pageId="549458708738758"
+										appId="168492710596978"
+										/>
+								</div>
 						</div>
 
 						

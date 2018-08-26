@@ -8,7 +8,8 @@ import React, { PropTypes } from 'react';
 import Favicon from 'react-favicon';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 const env = process.env.NODE_ENV ? process.env.NODE_ENV: 'production' ;
-const scriptUrl = env ==='production' ? "https://demyov6lprphd.cloudfront.net/site.bundle.js" : "/site.bundle.js";
+//const scriptUrl = env ==='production' ? "https://demyov6lprphd.cloudfront.net/site.bundle.js" : "/site.bundle.js";
+const scriptUrl = "/site.bundle.js";
 const siteHtml = ({ content, state,title,muiTheme }) => (
     <html lang="en">
     <head>
@@ -29,6 +30,16 @@ const siteHtml = ({ content, state,title,muiTheme }) => (
 
     </head>
     <body>
+    <div className="row" style={{background:'blue',height:'30px'}}>
+        <div className="col-1"></div>   
+        <div className="col-2" style={{fontSize:'14px',color:'white',borderRight:'1px solid',borderColor:'black'}}>
+        Welcome to Shoppylife!! 
+        </div>
+        <div className="col-6" style={{fontSize:'14px',color:'white',borderRight:'1px solid',borderColor:'black'}}>
+            (+959448025333)
+        </div>
+    </div>
+
     <div id="content" dangerouslySetInnerHTML={{ __html: content }} />
 
     <script

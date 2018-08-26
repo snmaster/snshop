@@ -9,6 +9,7 @@ import Category from "./Category";
 export default ({client})=>{
     const store = createStore(
         combineReducers({
+            csrf:state=>(state?state:''),
             AdminSite,
             Login,
             Category,

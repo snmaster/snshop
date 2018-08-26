@@ -3,16 +3,21 @@ import ReactDOM from 'react-dom';
 import Paper from 'material-ui/Paper';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
+import {List,ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import RightArrow from 'material-ui/svg-icons/navigation/chevron-right';
+import ArrowDown from 'material-ui/svg-icons/navigation/arrow-drop-down';
 import SmartPhone from 'material-ui/svg-icons/hardware/smartphone';
+import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import query from '../apollo/ProductCategory';
+import propTypes from 'material-ui/utils/propTypes';
 import {connect} from 'react-redux';
 import {compose} from 'react-apollo';
 import CategoryCard from './CategoryCard';
 import FlatButton from 'material-ui/FlatButton';
 import Popover from 'material-ui/Popover';
 import {withRouter} from 'react-router';
+import { Avatar } from 'material-ui';
 
 class CategoryMenu extends React.Component{
 	constructor(){
@@ -20,14 +25,20 @@ class CategoryMenu extends React.Component{
 		this.state = {
 			anchorEl:null,
 			childItems:[],
+			parentName:'',
 			open:false,
 			subMenuFocus:false
 		}
 	}
-	// componentDidMount(){
-	// 	let {updateLoadingStatus,loading} = this.props;
-	// 	updateLoadingStatus(loading);
-	// }
+	
+	static propTypes = {
+		anchorOrigin: propTypes.origin,
+		targetOrigin: propTypes.origin
+	};
+
+	componentDidMount(){
+		this.setState({anchorEl:ReactDOM.findDOMNode(this.refs.menuItem)});
+	}
 	// componentWillReceiveProps({loading,updateLoadingStatus}){
 	// 	if(loading !== this.props.loading){
 	// 		updateLoadingStatus(loading);
@@ -43,14 +54,19 @@ class CategoryMenu extends React.Component{
 	// 	}
 	// }
 	render(){
-		let {ProductCategory,router} = this.props;
+		let {ProductCategory,router,targetOrigin,anchorOrigin,className} = this.props;
 		          
 		return (
-				<div>
-					<div className="fullheight scrollable" ref="menuItem">
+				<div ref="menuItem"  onMouseLeave={()=>{
+					setTimeout(() => {
+						this.setState({open:false})
+					}, 0);
+				}}>
+					{/* <div className="catHead" ref="menuItem">Category</div> */}
+					<div className={className}>
 					{
-						ProductCategory? ProductCategory.map(p=>(<FlatButton key={p.id} value={p.id} label={p.Name} onMouseEnter={()=>{this.setState({open:true,anchorEl:ReactDOM.findDOMNode(this.refs.menuItem),childItems:p.SubCategories ? p.SubCategories : []});}}
-						onMouseLeave={()=>{this.setState({open:false});}} style={{width:'100%'}} onClick={()=>{router.push(`/Product/${p.id}`)}}
+						ProductCategory? ProductCategory.map(p=>(<ListItem key={p.id} leftAvatar={<Avatar src={p.Thumb} size={30} />} primaryText={p.Name} rightIcon={className === "row" ? <ArrowDown/> : <ArrowDropRight />} onMouseEnter={()=>{this.setState({open:true,parentName:p.Name,childItems:p.SubCategories ? p.SubCategories : []});}}
+						 className="CatItem" height={30} onClick={()=>{router.push(`/Product/${p.id}`);this.setState({open:false});}}
 						/>)):null
 					}				
 
@@ -63,18 +79,18 @@ class CategoryMenu extends React.Component{
 					</div>
 					<Popover
 						canAutoPosition={false}
-						targetOrigin={{vertical:'top',horizontal:'left'}}
-						anchorOrigin={{vertical:'top',horizontal:'right'}}
+						targetOrigin={targetOrigin}
+						anchorOrigin={anchorOrigin}
 						popoverProps={{style:{height:'400px',width:'800px'}}}
 						open={this.state.open}
 						anchorEl={this.state.anchorEl}
 						useLayerForClickAway={false}
-						//onRequestClose={this.handleRequestClose}
 					>
-					<div style={{width:'800px',height:'400px'}} onMouseEnter={()=>{if(!this.state.open)this.setState({open:true})}} onMouseLeave={()=>{if(this.state.open)this.setState({open:false});}} >
+					<div style={{width:'800px',height:'400px',marginLeft:'20px'}} onMouseEnter={()=>{this.setState({open:true});}} onMouseLeave={()=>{this.setState({open:false});}}>
+						{/* <div style={{width:'100%',textAlign:'center',fontSize:'18px',color:'darkblue',fontStyle:'bold'}}>{this.state.parentName}</div> */}
 						<div className="row">
 						{
-							this.state.childItems ? this.state.childItems.map((i)=>(<CategoryCard key={i.id} ProductCategory={i} style={{width:'150px',height:'100px'}}/>)) : null
+							this.state.childItems ? this.state.childItems.map((i)=>(<CategoryCard key={i.id} ProductCategory={i} onClosePopup={()=>{this.setState({open:false});}} style={{width:'150px',height:'100px'}}/>)) : null
 						}
 						</div>
 					</div>

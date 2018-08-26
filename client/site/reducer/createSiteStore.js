@@ -11,6 +11,7 @@ import CustomerOrder from './CustomerOrder';
 export default ({client})=>{
     const store = createStore(
         combineReducers({
+            csrf:state=>(state?state:''),
             Site,
             UserProfile,
             ProductDetail,

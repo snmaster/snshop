@@ -4,6 +4,7 @@
 import React,{PropTypes} from 'react';
 import {Link} from 'react-router';
 import SiteSnackbar from './components/SiteSnackbar';
+import NavDrawer from './components/NavDrawer';
 import {getUserProfile} from '../auth';
 import {compose} from 'react-apollo';
 import {connect} from 'react-redux';
@@ -35,8 +36,8 @@ class Layout extends React.Component{
                 <div className={`fullheight layout-root ${this.state.loading? 'hide': ''}`}>
                     {this.props.children}
                     <SiteSnackbar/>
+                    <NavDrawer />
                 </div>
-
                 <img className={`loader-ripple ${this.state.loading? '': 'hide'}`} src="/img/robottt.gif"/>
             </div>
         );

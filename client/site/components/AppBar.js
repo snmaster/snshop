@@ -188,27 +188,48 @@ class AppBar extends React.Component{
 			</div>
 		</div> */}
 		<div className="row justify-content-between">
-			<div className="col-xs-12 col-sm-3 ml-xs-auto">				
+			<div className="col-xs-12 col-sm-2" style={{cursor:'pointer'}}>				
 				<img className="img-responsive" onClick={(e)=>{e.preventDefault();router.push(`/`);}} src="https://res.cloudinary.com/djir3ki08/image/upload/v1517590917/shoppylife1_pxxz0z.png" style={{width:"100px",height:'80px'}} />										
 			</div>		
-			<div className="col-xs-12 col-sm-5 col-md-4 col-lg-3">				
-				<div className="row">
+			<div className="col-xs-12 col-sm-10">				
+				<div className="row justify-content-between">
 					<div className="col-xs-2 d-block d-sm-none">
 						<IconButton
-							onClick={this.handleCategoryClick}
+							onClick={toggleDrawer}
 							style={{background:'white',marginLeft:'5px',marginTop:'20px',marginBottom:'15px'}}
 							>
 							<ViewList width='100%' height='100%' color='blue'/>
 						</IconButton>
 					</div>
-					<div className="col-xs-1">
+					<div className="d-none d-sm-block col-sm-6 col-md-7 col-lg-8 col-xl-9">
+						<AutoComplete
+							textFieldStyle={{width:'100%'}}
+							style={{width:'100%',backgroundColor:'white',border:'1px solid',borderRadius:'10px',marginTop:'20px',marginBottom:'15px',padding:'0 8px 0 8px',borderRadius:'4px'}}
+							hintText="Search Product"
+							searchText={searchText}
+							onUpdateInput={this.queryDataForAutoComplete.bind(this)}
+							onNewRequest={(item)=>{router.push(`/detail/${item.id}`)}}
+							dataSource={productSearchResult? productSearchResult:[]}
+							dataSourceConfig={this.dataSourceConfig}
+							loading={searchingProductByKeyWord}
+							filter={AutoComplete.noFilter}
+							openOnFocus={false}
+							id="searchProduct"
+							name="searchProduct"
+							targetOrigin={{vertical:'top',horizontal:'left'}}
+							anchorOrigin={{vertical:'bottom',horizontal:'left'}}
+							fullWidth={true}
+							popoverProps={{style:{height:'90%'}}}
+						/>
+					</div>
+					<div className="col-xs-2 d-block d-sm-none">
 						<IconButton
 							onClick={this.handleSearchClick}
 							style={{background:'white',marginLeft:'5px',marginTop:'25px',marginBottom:'15px'}}							>
 							<ActionSearch width='100%' height='100%' color='blue'/>
 						</IconButton>
 					</div>
-					<div className="col-xs-3">
+					<div className="col-xs-2 col-sm-2 col-md-2 col-lg-1">
 						<Badge
 							badgeContent={cartItemsCount}
 							badgeStyle={{top: 20, right: 20,color:'white',background:cartItemsCount==0? 'white':'Mediumblue'}}
@@ -220,8 +241,10 @@ class AppBar extends React.Component{
 							</IconButton>				
 						</Badge>
 					</div>
-					<div className="col-xs-6">
+					<div className="col-xs-4 col-sm-3">
 						<FlatButton
+							// onMouseOver={(event)=>{this.setState({openAccount:true,anchorEl:event.currentTarget,});}}
+							// onMouseLeave={(event)=>{this.setState({openAccount:false});}}
 							onClick={(event)=>{this.setState({openAccount:true,anchorEl:event.currentTarget,});}}
 							labelPosition="after"
 							labelStyle={{paddingRight:'2px'}}
@@ -308,6 +331,7 @@ class AppBar extends React.Component{
 			open={this.state.openAccount}
 			anchorEl={this.state.anchorEl}
 			style={{width:'150px'}}
+			onMouseOver={(event)=>{this.setState({openAccount:true});}}
 			anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
 			targetOrigin={{horizontal: 'left', vertical: 'top'}}
 			onRequestClose={this.handleAccountRequestClose}>			
@@ -376,7 +400,7 @@ class AppBar extends React.Component{
 			anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
 			targetOrigin={{horizontal: 'left', vertical: 'top'}}
 			onRequestClose={this.handleCategoryRequestClose}>
-			<CategoryMenu />
+			{/* <CategoryMenu /> */}
 		</Popover>
 		<Popover
 			open={this.state.openSearch}
@@ -481,7 +505,7 @@ class AppBar extends React.Component{
 			dispatch=>({
 				resetUserProfile:()=>{
 					dispatch({type:'USER_PROFILE_RESET'});
-				}
+				},
 				// onSearchModeChange:mode=>{
 				// 	if(mode)
 				// 		dispatch({type:'PRODUCT_BROWSER_SHOW_SEARCH'});
@@ -491,9 +515,9 @@ class AppBar extends React.Component{
 				// onSearchChange:search=>{
 				// 	dispatch({type:'PRODUCT_BROWSER_SEARCH',search});
 				// },
-				// toggleDrawer:()=>{
-				// 	dispatch({type:'SITE_NAV_DRAWER_TOGGLE'});
-				// }
+				toggleDrawer:()=>{
+					dispatch({type:'SITE_NAV_DRAWER_TOGGLE'});
+				}
 			})
 			),
 		query,

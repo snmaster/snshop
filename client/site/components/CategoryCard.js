@@ -6,28 +6,15 @@ import {withRouter} from 'react-router';
 class CategoryCard extends React.Component {
 
   render() {
-   let {ProductCategory,router} = this.props;
+   let {ProductCategory,router,onClosePopup} = this.props;
    let {id,Name,Thumb,SubCategories} = ProductCategory ? ProductCategory : {};
 
    return (
-     <div style={{width:'150px',textAlign:'center'}}>
-        <a className="CatMenu"
-          style={{
-            color:'#000',
-            cursor:'pointer',
-            marginTop:'8px',
-            marginLeft:'10px',
-            padding:'5px',
-            textAlign:'center',
-            alignSelf:'center',
-            fontSize:'12px',
-            cursor:'pointer'
-          }}
-          onClick={()=>{router.push(`/Product/${id}`)}}
-        >{Name}</a>
+     <div style={{width:'200px'}}>
+        <div className="subCat" onClick={()=>{router.push(`/Product/${id}`);onClosePopup();}}>{Name}</div>
         <div className="row">
         {
-          SubCategories ? SubCategories.map((i)=>(<a key={i.id} className="catMenu" style={{width:'150px',textAlign:'center',fontSize:'12px',cursor:'pointer'}} onClick={()=>{router.push(`/product/${i.id}`)}}>{i.Name}</a>)) : null
+          SubCategories ? SubCategories.map((c,index)=>(<div key={c.id} className="subCatItem" onClick={()=>{router.push(`/product/${c.id}`);onClosePopup();}}>> {c.Name}</div>)) : null
         }
         </div>
       </div>
