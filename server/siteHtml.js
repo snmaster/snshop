@@ -8,8 +8,8 @@ import React, { PropTypes } from 'react';
 import Favicon from 'react-favicon';
 import muiThemeable from 'material-ui/styles/muiThemeable';
 const env = process.env.NODE_ENV ? process.env.NODE_ENV: 'production' ;
-//const scriptUrl = env ==='production' ? "https://demyov6lprphd.cloudfront.net/site.bundle.js" : "/site.bundle.js";
-const scriptUrl = "/site.bundle.js";
+const scriptUrl = env ==='production' ? "https://demyov6lprphd.cloudfront.net/site.bundle.js" : "/site.bundle.js";
+//const scriptUrl = "/site.bundle.js";
 const siteHtml = ({ content, state,title,muiTheme }) => (
     <html lang="en">
     <head>
