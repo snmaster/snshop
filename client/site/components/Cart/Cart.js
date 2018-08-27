@@ -64,7 +64,7 @@ class Cart extends React.Component{
 									{items? items.length > 0 ? items.map((i,index)=>(<CartItem key ={i.id} index={index} item={i}/>)):<div><h3>Your Cart is empty.</h3></div> : null}
 								</div>
 								<div className="summary-row row">
-									<div className="col-md-10 col-sm-8 col-xs-6" stye={{float:'right'}}>
+									<div className="col-md-10 col-sm-8 col-xs-6" style={{float:'right'}}>
 										Total
 									</div>
 									<div className="col-sm-2">

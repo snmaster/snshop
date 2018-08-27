@@ -84,6 +84,8 @@ query customerOrderById($id:Int!,$customerId:Int){
             id
             Product{
                 Name
+                Alias
+                Thumb
             }
             Qty
             Price
@@ -94,8 +96,8 @@ query customerOrderById($id:Int!,$customerId:Int){
 
 const customerOrderByIdQuery = graphql(
 	CUSTOMER_ORDER_BYID_QUERY,{
-		options:({id})=>({
-				variables:{id},
+		options:({id,customerId})=>({
+				variables:{id,customerId},
 				skip:!id
 		}),
 		props:({data:{CustomerOrder,loading,refetch,fetchMore}})=>{

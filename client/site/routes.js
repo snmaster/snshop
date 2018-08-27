@@ -10,6 +10,7 @@ import ProductDetail from './components/Product/ProductDetail';
 import Cart from './components/Cart/Cart';
 import CheckOut from './components/Checkout/index';
 import OrderBrowser from './components/CustomerOrder/index';
+import OrderDetail from './components/CustomerOrder/OrderDetail';
 import ConfirmOrder from './components/CustomerOrder/confirmOrder';
 export default (
     <Route component={Layout} path="/">
@@ -19,6 +20,7 @@ export default (
         <Route component={Cart} path="/checkout/cart" />
         <Route component={CheckOut} path="/checkout/process"/>
         <Route component={OrderBrowser} path="/customer/order"/>
+        <Route component={OrderDetail} path="/customer/order/detail(/:id)"/>
         <Route component={ConfirmOrder} path="/customer/confirmOrder"/>
     </Route>
 );

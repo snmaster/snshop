@@ -1,6 +1,7 @@
 import React from "react";
 import {compose} from "react-apollo";
 import {connect} from "react-redux";
+import {withRouter} from 'react-router';
 import {Card,CardText,CardHeader} from "material-ui/Card";
 
 class CustomerOrderItem extends React.Component{
@@ -13,12 +14,12 @@ class CustomerOrderItem extends React.Component{
 
 
     render(){
-        let {order} = this.props;
+        let {order,router} = this.props;
         let {id,OrderDate,OrderNo,TotalAmount,TotalQty} = order ? order : {};
 
         return(
             <div className="col-lg-2 col-md-3 col-sm-4 col-xs-12" >
-               <Card>
+               <Card onClick={()=>{router.push(`/customer/order/detail/${id}`);}}>
                     <CardText>
                         <div>
                             <div className="row">
@@ -41,4 +42,6 @@ class CustomerOrderItem extends React.Component{
     }
 }
 
-export default CustomerOrderItem;
+export default compose(
+    withRouter
+)(CustomerOrderItem);
