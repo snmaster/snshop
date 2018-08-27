@@ -18,7 +18,8 @@ class Cart extends React.Component{
 	}
 
 	cartCheckOut(){
-		let {userProfile,router} = this.props;
+		let {userProfile,router,cart,showSnackbar} = this.props;
+		let {items} = cart? cart:{};
 		let {userId} = userProfile;
 		if(userId == "")
 		{
@@ -26,7 +27,10 @@ class Cart extends React.Component{
 		}	
 		else
 		{
-			router.push(`/checkout/process`);
+			if(items.length > 0)
+				router.push(`/checkout/process`);
+			else
+				showSnackbar("No Items to checkout.");
 		}		
 	}
 	
@@ -41,7 +45,7 @@ class Cart extends React.Component{
 		}
 		
 		return (
-			<div className="fullheight layout">
+			<div className="fullheight scrollable">
                 <AppBar title="ShoppingCart"/>				
 				<div className="row justify-content-center" style={{height:'50px',background:'#0000',textAlign:'center'}}>
 					<h3>Review & Checkout</h3>
@@ -90,10 +94,10 @@ class Cart extends React.Component{
 							labelPosition="before"
 							label="Proceed To Checkout"
 							backgroundColor={blue800}
-							labelColor={white}
+							labelColor={white}							
 							primary={true}
 							className="col-xs-2 offset-xs-2"
-							style={{marginLeft:'20px'}}
+							style={items.length === 0 ? {display:'none'} : {display:'block',marginLeft:'20px'}}
 							/>
 						{/* <FlatButton label="Continue Shopping" primary={true} onClick={()=>{router.push("/");}}/>
 						<FlatButton label="Checkout" primary={true} onClick={this.cartCheckOut.bind(this)}/> */}
@@ -114,6 +118,9 @@ export default compose(
 				cart:state.ProductDetail.cart
 			}),
 			dispatch=>({
+				showSnackbar:(message)=>{
+					dispatch({type:'SITE_SNACKBAR_OPEN',message});
+				},
 			})
 			),
 		withRouter

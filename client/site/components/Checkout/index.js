@@ -56,8 +56,8 @@ class CheckOut extends React.Component{
                 <div style={{width:'100%',height:'50px',textAlign:'center',marginTop:'50px'}}>
                     <h3>Confirm Checkout</h3>
                 </div>
-                <div className="fullheight scrollable">
-					<div className="row justify-content-center" style={{marginTop:'50px'}}>
+                <div className="fullheight scrollable" style={{marginTop:'50px',marginLeft:'10px',marginRight:'10px'}}>
+					<div className="row justify-content-center" >
                         {/* <div className="col-xs-2" /> */}
                         <div className="col-xs-6 col-md-5" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
                             FullName
@@ -101,7 +101,7 @@ class CheckOut extends React.Component{
                             <RaisedButton
                                 onClick={this.checkOut.bind(this)}
                                 labelPosition="before"
-                                label="CheckOut"
+                                label="Process"
                                 backgroundColor={blue800}
                                 labelColor={white}
                                 primary={true}
