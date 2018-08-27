@@ -81,7 +81,7 @@ function login({UserName,Password,Remember}){
 }
 
 function adminSiteLogin({UserName,Password,Remember}){
-	let request = new Request('/adminlogin',{
+	let request = new Request('/authorize/adminLogin',{
 		method:'POST',
 		body:JSON.stringify({
 			username:UserName,

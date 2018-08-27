@@ -14,7 +14,7 @@ class Login extends React.Component{
 		adminSiteLogin(Login.edit).then(result=>{
 			if(result && result.success){
 				saveUserProfile(result.sessionData);
-				window.location.href='/admin/category';
+				window.location.href='/authorize/category';
 			}else if(result)
 				showSnackbar(`Could not login.${result.message}`);
 			else
