@@ -9,6 +9,7 @@ import { white, blue800 } from 'material-ui/styles/colors';
 import {withRouter} from 'react-router';
 import AppBar from '../AppBar';
 import Loader from '../../../common/Loader';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 class Cart extends React.Component{
 	componentDidMount(){
 		
@@ -35,10 +36,11 @@ class Cart extends React.Component{
 	}
 	
 	render(){
-		let {cart,router} = this.props;
+		let {cart,router,muiTheme} = this.props;
 		let {items} = cart? cart:{};
 		let inputFieldStyle = {padding:"0 8px"};
 		let totalAmount =0;
+		let shippingCost = 2000;
 
 		for(let {Qty,Price} of items){
             totalAmount += Qty * Price;
@@ -47,15 +49,15 @@ class Cart extends React.Component{
 		return (
 			<div className="fullheight scrollable">
                 <AppBar title="ShoppingCart"/>				
-				<div className="row justify-content-center" style={{height:'50px',background:'#0000',textAlign:'center'}}>
-					<h3>Review & Checkout</h3>
+				<div className="row justify-content-center" style={{height:'50px',background:muiTheme.palette.primary1Color,textAlign:'center'}}>
+					<h3>ShoppingCart</h3>
 				</div>
 				<div className="row justify-content-center">					
 					{
 						items && items.length > 0 ? 
 							<div className="col-md-10 col-md-offset-3">
 								<div >
-									<div className="row" style={{height:'80px',border:'1px solid'}}>
+									<div className="row" style={{height:'50px',borderTop:'1px solid',borderBottom:'1px solid'}}>
 										<div className="col-xs-6 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Product Name</div>
 										<div className="col-xs-2 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Unit Price</div>
 										<div className="col-xs-2 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Qty</div>                                
@@ -64,11 +66,27 @@ class Cart extends React.Component{
 									{items? items.length > 0 ? items.map((i,index)=>(<CartItem key ={i.id} index={index} item={i}/>)):<div><h3>Your Cart is empty.</h3></div> : null}
 								</div>
 								<div className="summary-row row">
-									<div className="col-md-10 col-sm-8 col-xs-6" style={{float:'right'}}>
-										Total
+									<div className="col-md-10 col-sm-8 col-xs-6" style={{float:'right',height:'30px',verticalAlign:'middle'}}>
+										SubTotal
 									</div>
-									<div className="col-sm-2">
+									<div className="col-sm-2" style={{textAlign:'right'}}>
 										{Accounting.formatMoney(totalAmount)}
+									</div>
+								</div>
+								<div className="summary-row row">
+									<div className="col-md-10 col-sm-8 col-xs-6" style={{float:'right',height:'30px',verticalAlign:'middle'}}>
+										Shipping
+									</div>
+									<div className="col-sm-2" style={{textAlign:'right'}}>
+										{Accounting.formatMoney(shippingCost)}
+									</div>
+								</div>
+								<div className="summary-row row" style={{borderTop:'1px solid',borderBottom:'1px solid'}}>
+									<div className="col-md-10 col-sm-8 col-xs-6" style={{float:'right',height:'30px',verticalAlign:'middle'}}>
+										TotalAmount
+									</div>
+									<div className="col-sm-2" style={{textAlign:'right'}}>
+										{Accounting.formatMoney(shippingCost+totalAmount)}
 									</div>
 								</div>								
 							</div>
@@ -123,5 +141,6 @@ export default compose(
 				},
 			})
 			),
-		withRouter
+		withRouter,
+		muiThemeable()
 	)(Cart);

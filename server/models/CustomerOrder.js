@@ -15,7 +15,8 @@ module.exports=(sequelize,DataTypes)=>{
         },
         OrderDate:DataTypes.DATE,
         UserAccountId:DataTypes.INTEGER,
-        ShippingAddress:DataTypes.STRING(500)
+        ShippingAddress:DataTypes.STRING(500),
+        ShippingCost:DataTypes.DECIMAL(14,2) 
     },{
         paranoid:true,
         classMethods:{

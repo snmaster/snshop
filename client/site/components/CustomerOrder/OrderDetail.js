@@ -36,7 +36,7 @@ class OrderDetail extends React.Component{
                     </CardText>
                     <div className="col-md-10 col-md-offset-3">
                         <div >
-                            <div className="row" style={{height:'80px',border:'1px solid'}}>
+                            <div className="row" style={{height:'50px',border:'1px solid'}}>
                                 <div className="col-xs-6 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Product Name</div>
                                 <div className="col-xs-2 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Unit Price</div>
                                 <div className="col-xs-2 d-none d-sm-block" style={{marginTop:'20px',textAlign:'center',fontSize:'14px',fontStyle:'bold'}}>Qty</div>                                

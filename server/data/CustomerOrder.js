@@ -9,6 +9,7 @@ export const type=`
         OrderNo:String!
         UserAccountId:Int!
         ShippingAddress:String
+        ShippingCost:Float
         TotalAmount:Float
         TotalQty:Int
         detail:[CustomerOrderDetail]
@@ -33,6 +34,7 @@ export const type=`
         OrderNo:String
         UserAccountId:Int
         ShippingAddress:String
+        ShippingCost:Float
         detail:[InputCustomerOrderDetail]
     }
 `;
@@ -54,6 +56,7 @@ export const resolver ={
             OrderNo:property('OrderNo'),
             UserAccountId:property('UserAccountId'),
             ShippingAddress:property('ShippingAddress'),
+            ShippingCost:property('ShippingCost'),
             TotalAmount:(order)=>{
 				return db.CustomerOrderDetail.findAll({raw:true,where:{CustomerOrderId:order.id},attributes:[[db.sequelize.fn('SUM', db.sequelize.literal('"Qty" * "Price"')),'TotalAmount']]})
 				.then(result=>(result.length>0? Number(result[0].TotalAmount):0));
@@ -80,9 +83,9 @@ export const resolver ={
     },
     mutation:{
         createCustomerOrder(_,{order}){
-            let {UserAccountId,ShippingAddress,detail} = order;
+            let {UserAccountId,ShippingAddress,ShippingCost,detail} = order;
             return db.sequelize.transaction(t=>{
-                return db.CustomerOrder.create({OrderDate:new Date(),OrderNo:(new Date()).uniqueNumber(),UserAccountId,ShippingAddress},{fields:['OrderDate','OrderNo','UserAccountId','ShippingAddress'],transaction:t})
+                return db.CustomerOrder.create({OrderDate:new Date(),OrderNo:(new Date()).uniqueNumber(),UserAccountId,ShippingCost,ShippingAddress},{fields:['OrderDate','OrderNo','UserAccountId','ShippingCost','ShippingAddress'],transaction:t})
                      .then(customerOrder=>{
                          let promises =detail.map(({ProductId,Qty,Price})=>{
                              return customerOrder.createCustomerOrderDetail({ProductId,Qty,Price},{fields:['ProductId','Qty','Price'],transaction:t})

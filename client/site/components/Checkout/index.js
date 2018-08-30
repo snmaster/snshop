@@ -19,9 +19,10 @@ class CheckOut extends React.Component{
         let {shippingAddress} = shipping ? shipping :{};
 
         let detail = cartItems.map(({id,Qty,Price})=>({ProductId:id,Qty,Price}));
-
+        let shippingCost = 2000;
         let order ={
             UserAccountId:id,
+            ShippingCost:shippingCost,
             ShippingAddress:shippingAddress,
             detail
         };
@@ -46,6 +47,7 @@ class CheckOut extends React.Component{
         let {shippingAddress} = shipping ? shipping : {};
         let {FullName,PhoneNo} = UserAccount ? UserAccount : {};
         let totalAmount = 0;
+        let shippingCost  = 2000;
         for(let item of cartItems){
             totalAmount += item.Qty * item.Price;
         }
@@ -78,16 +80,34 @@ class CheckOut extends React.Component{
                     <div className="row justify-content-center">
                         {/* <div className="col-xs-2"/> */}
                         <div className="col-xs-6 col-md-5" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
-                            TotalAmount
+                            SubTotal
                         </div>
                         <div className="col-xs-6 col-md-5" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
                             {Accounting.formatMoney(totalAmount)}
                         </div>
-                    </div>                    
+                    </div>          
+                    <div className="row justify-content-center">
+                        {/* <div className="col-xs-2"/> */}
+                        <div className="col-xs-6 col-md-5" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
+                            ShippingCost
+                        </div>
+                        <div className="col-xs-6 col-md-5" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
+                            {Accounting.formatMoney(shippingCost)}
+                        </div>
+                    </div>
+                    <div className="row justify-content-center">
+                        {/* <div className="col-xs-2"/> */}
+                        <div className="col-xs-6 col-md-5" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
+                            TotalAmount
+                        </div>
+                        <div className="col-xs-6 col-md-5" style={{border:'1px solid #ccc',padding:'10px',height:'35px'}}>
+                            {Accounting.formatMoney(shippingCost+totalAmount)}
+                        </div>
+                    </div>          
                     <div className="row justify-content-center">
                         {/* <div className="col-xs-2"/> */}
                         <div className="col-xs-6 col-md-5" style={{border:'1px solid #ccc',padding:'10px',height:'120px'}}>
-                            Address
+                            Shipping Address
                         </div>
                         <div className="col-xs-6 col-md-5" style={{border:'1px solid #ccc',padding:'10px',height:'120px'}}>
                             <textarea style={{width:'100%',height:'100px',textAlign:'left'}} rows={4}  id="Address" cols="100" value={shippingAddress} onChange={(e)=>{this.props.edit({shippingAddress:e.target.value});}}/>

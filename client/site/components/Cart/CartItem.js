@@ -30,10 +30,9 @@ class CartItem extends React.Component{
 					<div className="col-sm-2 col-md-2 d-none d-sm-block ">{Accounting.formatMoney(Price)}</div>
 					<div className="col-sm-3 col-md-2 d-none d-sm-block align-self-center">
 						<div className="row" style={{marginTop:'10px',marginBottom:'30px'}}>
-							<div class="col-auto">
+							<div className="col-4">
 								<IconButton
 									onClick={()=>{addCartItem({id,Alias,Name,Thumb,Price,UOM,Qty:Qty+1});}}
-									labelPosition="before"
 									style={{color:'black'}}
 									primary={true}>
 									<AddItem color='red'/>					
@@ -42,10 +41,9 @@ class CartItem extends React.Component{
 							<div className="col-auto" style={{textAlign:'center',marginTop:'10px'}}>
 								{Qty} 
 							</div>
-							<div className="col-auto">
+							<div className="col-4">
 								<IconButton
 									onClick={()=>{removeItem(index);}}
-									labelPosition="before"
 									style={{color:'black'}}
 									primary={true}>
 									<RemoveItem color='red'/>					
@@ -53,13 +51,13 @@ class CartItem extends React.Component{
 							</div>							
 						</div>						
 					</div>                                
-					<div className="col-sm-2 col-md-2 d-none d-sm-block">{Accounting.formatMoney(Price*Qty)}</div>
+					<div className="col-sm-2 col-md-2 d-none d-sm-block" style={{textAlign:'right'}}>{Accounting.formatMoney(Price*Qty)}</div>
 					<div className="col-xs-7 d-block d-sm-none">
 						<div className="row align-items-center">
 							<div className="col-xs-4">
 								Unit Price
 							</div>
-							<div className="col-xs-7">{Accounting.formatMoney(Price)}</div>
+							<div className="col-xs-7" style={{textAlign:'right'}}>{Accounting.formatMoney(Price)}</div>
 						</div>
 						<div className="row align-items-center">
 							<div className="col-xs-4">
@@ -91,7 +89,7 @@ class CartItem extends React.Component{
 							<div className="col-xs-5">
 								SubTotal
 							</div>
-							<div className="col-xs-7">{Accounting.formatMoney(Price*Qty)}</div>
+							<div className="col-xs-7" style={{textAlign:'right'}}>{Accounting.formatMoney(Price*Qty)}</div>
 						</div>					
 					</div>
 				</div>

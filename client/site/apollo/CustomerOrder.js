@@ -11,6 +11,7 @@ const CUSTOMER_ORDER_QUERY = gql `
                 OrderDate
                 UserAccountId
                 ShippingAddress
+                ShippingCost
                 TotalAmount
                 TotalQty
                 detail{
@@ -78,6 +79,7 @@ query customerOrderById($id:Int!,$customerId:Int){
         OrderDate
         UserAccountId
         ShippingAddress
+        ShippingCost
         TotalAmount
         TotalQty
         detail{
@@ -118,6 +120,7 @@ const CREATE_CUSTOMERORDER_MUTATION = gql `
                 OrderNo
                 UserAccountId
                 ShippingAddress
+                ShippingCost
                 detail{
                     id
                     Product{

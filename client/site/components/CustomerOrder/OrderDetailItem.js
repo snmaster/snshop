@@ -28,7 +28,7 @@ class OrderDetailItem extends React.Component{
 							</div>
 						</div>
 					</div>
-					<div className="col-sm-2 col-md-2 d-none d-sm-block ">{Accounting.formatMoney(Price)}</div>
+					<div className="col-sm-2 col-md-2 d-none d-sm-block " style={{textAlign:'right'}}>{Accounting.formatMoney(Price)}</div>
 					<div className="col-sm-3 col-md-2 d-none d-sm-block align-self-center">
                         {Qty} 						
 					</div>                                
@@ -38,7 +38,7 @@ class OrderDetailItem extends React.Component{
 							<div className="col-xs-4">
 								Unit Price
 							</div>
-							<div className="col-xs-7">{Accounting.formatMoney(Price)}</div>
+							<div className="col-xs-7" style={{textAlign:'right'}}>{Accounting.formatMoney(Price)}</div>
 						</div>
 						<div className="row align-items-center">
 							<div className="col-xs-4">
@@ -52,7 +52,7 @@ class OrderDetailItem extends React.Component{
 							<div className="col-xs-5">
 								SubTotal
 							</div>
-							<div className="col-xs-7">{Accounting.formatMoney(Price*Qty)}</div>
+							<div className="col-xs-7" style={{textAlign:'right'}}>{Accounting.formatMoney(Price*Qty)}</div>
 						</div>					
 					</div>
 				</div>
