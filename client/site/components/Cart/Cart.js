@@ -49,7 +49,7 @@ class Cart extends React.Component{
 		return (
 			<div className="fullheight scrollable">
                 <AppBar title="ShoppingCart"/>				
-				<div className="row justify-content-center" style={{height:'50px',background:muiTheme.palette.primary1Color,textAlign:'center'}}>
+				<div className="row justify-content-center" style={{height:'50px',background:'#0000',textAlign:'center'}}>
 					<h3>ShoppingCart</h3>
 				</div>
 				<div className="row justify-content-center">					
