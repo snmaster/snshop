@@ -25,7 +25,7 @@ class CategoryDialog extends React.Component{
         let {saveProductCategory,categoryEdit,onRequestClose} = this.props;
         let {id,Name,ParentCategoryId,ImagePath} = categoryEdit ? categoryEdit : {};
         this.setState({loadin:true,loadingMessage:'Saving Category'});
-        saveProductCategory({id,Name,ParentCategoryId,ImagePath})
+        saveProductCategory({variables:{category:{id,Name,ParentCategoryId,ImagePath}}})
             .then(({data:{saveProductCategory:{instance,errors}}})=>{
                 this.setState({loading:false,loadingMessage:''});
                 if(instance)
@@ -107,6 +107,6 @@ const TheComponent = compose(
     saveProductCategoryQuery
 )(CategoryDialog)
 
-export default (Props)=>{
+    export default (Props)=>{
     return <TheComponent {...Props} limit={10} />;
 }

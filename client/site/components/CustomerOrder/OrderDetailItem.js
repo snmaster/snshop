@@ -29,7 +29,7 @@ class OrderDetailItem extends React.Component{
 						</div>
 					</div>
 					<div className="col-sm-2 col-md-2 d-none d-sm-block " style={{textAlign:'right'}}>{Accounting.formatMoney(Price)}</div>
-					<div className="col-sm-3 col-md-2 d-none d-sm-block align-self-center">
+					<div className="col-sm-3 col-md-2 d-none d-sm-block align-self-center" style={{textAlign:'center'}}>
                         {Qty} 						
 					</div>                                
 					<div className="col-sm-2 col-md-2 d-none d-sm-block">{Accounting.formatMoney(Price*Qty)}</div>
