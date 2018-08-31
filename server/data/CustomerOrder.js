@@ -59,7 +59,7 @@ export const resolver ={
             ShippingCost:property('ShippingCost'),
             TotalAmount:(order)=>{
 				return db.CustomerOrderDetail.findAll({raw:true,where:{CustomerOrderId:order.id},attributes:[[db.sequelize.fn('SUM', db.sequelize.literal('"Qty" * "Price"')),'TotalAmount']]})
-				.then(result=>(result.length>0? Number(result[0].TotalAmount):0));
+				.then(result=>(result.length>0? Number(result[0].TotalAmount)+Number(order.ShippingCost ? order.ShippingCost : 0):0));
             },
             TotalQty:(order)=>{
 				return db.CustomerOrderDetail.findAll({raw:true,where:{CustomerOrderId:order.id},attributes:[[db.sequelize.fn('SUM', db.sequelize.literal('"Qty"')),'TotalQty']]})

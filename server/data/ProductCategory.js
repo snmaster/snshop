@@ -42,7 +42,7 @@ export const query=`
 
 export const  mutation=`   
     saveProductCategory(category:InputProductCategory):ProductCategoryMutationResult
-    deleteProductCategory(id:Int):ProductCategory
+    deleteProductCategory(id:Int!):ProductCategory
 `;
 
 export const resolver={
