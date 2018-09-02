@@ -5,6 +5,7 @@ import React,{PropTypes} from 'react';
 import {Link} from 'react-router';
 import SiteSnackbar from './components/SiteSnackbar';
 import NavDrawer from './components/NavDrawer';
+import ChatPopup from './components/ChatPopup';
 import {getUserProfile} from '../auth';
 import {compose} from 'react-apollo';
 import {connect} from 'react-redux';
@@ -37,6 +38,7 @@ class Layout extends React.Component{
                     {this.props.children}
                     <SiteSnackbar/>
                     <NavDrawer />
+                    <ChatPopup />
                 </div>
                 <img className={`loader-ripple ${this.state.loading? '': 'hide'}`} src="/img/robottt.gif"/>
             </div>

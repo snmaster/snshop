@@ -10,6 +10,9 @@ import db from './server/models';
 import { apolloExpress, graphiqlExpress } from 'apollo-server';
 import { formatError } from 'apollo-errors';
 import { makeExecutableSchema } from 'graphql-tools';
+import { execute, subscribe} from 'graphql';
+import { SubscriptionServer } from 'subscriptions-transport-ws';
+import { createServer } from 'http';
 import Schema from './server/data/schema';
 import Resolver from './server/data/resolver';
 import {default as migration} from './server/database/migration';
@@ -366,8 +369,19 @@ function bundleWebpack(){
 }
 
 migration.up().then((migrations) => {
-    app.listen(port, () => {
-        console.log(`Server is running on port ${port}`);
+    const ws = createServer(app);
+
+    ws.listen(port,()=>{
+        console.log(`Graphql Server is now running on http://localhost:${port}`);
+
+        new SubscriptionServer({
+            execute,
+            subscribe,
+            schema
+        },{
+            server:ws,
+            path:'/subscriptions'
+        });
     });
 });
 

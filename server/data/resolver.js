@@ -14,6 +14,7 @@ import {resolver as resolver_Region} from './Region';
 import {resolver as resolver_UserAccount} from './UserAccount';
 import {resolver as resolver_CustomerOrder} from './CustomerOrder';
 import {resolver as resolver_CustomerOrderDetail} from './CustomerOrderDetail';
+import {resolver as resolver_ChatMessage} from './ChatMessage';
 //import {resolver as resolver_CustomerOrderShipment} from './CustomerOrderShipment';
 const Resolver={
     DateTime:new GraphQLScalarType({
@@ -53,7 +54,9 @@ const Resolver={
     },
     Mutation:{
 
-
+    },
+    Subscription:{
+        
     }
 };
 
@@ -101,5 +104,10 @@ Object.assign(Resolver.Mutation,resolver_CustomerOrder.mutation);
 Object.assign(Resolver,resolver_CustomerOrderDetail.type);
 Object.assign(Resolver.Query,resolver_CustomerOrderDetail.query);
 Object.assign(Resolver.Mutation,resolver_CustomerOrderDetail.mutation);
+
+Object.assign(Resolver,resolver_ChatMessage.type);
+Object.assign(Resolver.Query,resolver_ChatMessage.query);
+Object.assign(Resolver.Mutation,resolver_ChatMessage.mutation);
+Object.assign(Resolver.Subscription,resolver_ChatMessage.subscription);
 
 export default  Resolver;

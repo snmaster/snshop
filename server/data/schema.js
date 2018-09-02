@@ -13,7 +13,7 @@ import {type as type_Township,query as query_Township,mutation as mutation_Towns
 import {type as type_Region,query as query_Region,mutation as mutation_Region} from './Region';
 import {type as type_CustomerOrder,query as query_CustomerOrder,mutation as mutation_CustomerOrder} from './CustomerOrder';
 import {type as type_CustomerOrderDetail,query as query_CustomerOrderDetail,mutation as mutation_CustomerOrderDetail} from './CustomerOrderDetail';
-
+import {type as type_ChatMessage,query as query_ChatMessage,mutation as mutation_ChatMessage,subscription as subscription_ChatMessage} from './ChatMessage';
 const Schema=`
     scalar DateTime
     scalar Date
@@ -58,6 +58,7 @@ const Schema=`
     ${type_Region}
     ${type_CustomerOrder}
     ${type_CustomerOrderDetail}
+    ${type_ChatMessage}
 
     type Query{
         ${query_ProductGroup}
@@ -71,6 +72,7 @@ const Schema=`
         ${query_Region}
         ${query_CustomerOrder}
         ${query_CustomerOrderDetail}
+        ${query_ChatMessage}
     }
     
     type Mutation{
@@ -85,8 +87,12 @@ const Schema=`
         ${mutation_Region}
         ${mutation_CustomerOrder}
         ${mutation_CustomerOrderDetail}
+        ${mutation_ChatMessage}
     }   
 
+    type Subscription{
+        ${subscription_ChatMessage}
+    }
     
     schema{
         query:Query

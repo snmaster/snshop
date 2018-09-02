@@ -2,7 +2,9 @@ import update from 'react-addons-update';
 const initialData={
 	isSnackbarOpen:false,
 	snackbarMessage:'',
-	isNavDrawerOpen:false
+	isNavDrawerOpen:false,
+	isChatPopoverOpen:false,
+	chatPopoverTarget:null
 }
 
 const Site=(state=initialData,action)=>{
@@ -31,6 +33,16 @@ const Site=(state=initialData,action)=>{
 		 case 'SITE_NAV_DRAWER_TOGGLE':
 		 	return update(state,{
 		 		isNavDrawerOpen:{$set:!state.isNavDrawerOpen}
+		 	});
+			 break;
+		case 'CHAT_POPOVER_TOGGLE':
+		 	return update(state,{
+		 		isChatPopoverOpen:{$set:!state.isChatPopoverOpen}
+		 	});
+			 break;
+		case 'CHAT_POPOVER_TARGET':
+		 	return update(state,{
+		 		chatPopoverTarget:{$set:action.target}
 		 	});
 		 	break;
 		 default:

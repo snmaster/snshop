@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {graphql,compose} from 'react-apollo';
 import {connect} from 'react-redux';
 import {GridList,GridTile} from 'material-ui/GridList';
@@ -18,6 +19,11 @@ import productQuery from '../apollo/Product';
 import ProductCard from './Product/ProductCard';
 import AppFooter from './AppFooter';
 import MessengerCustomerChat from 'react-messenger-customer-chat';
+import { FloatingActionButton } from 'material-ui';
+import ChatIcon from 'material-ui/svg-icons/communication/chat';
+import CloseIcon from 'material-ui/svg-icons/navigation/close';
+import { blue600 } from 'material-ui/styles/colors';
+//import ChatPopup from './ChatPopup';
 //import AppBar from 'material-ui/AppBar';
 
 class Home extends React.Component{
@@ -41,7 +47,11 @@ class Home extends React.Component{
 
 		return(
 				<div className="layout fullheight">
-					<AppBar title="Home Screen"/>					
+					<AppBar title="Home Screen"/>									
+					<FloatingActionButton ref="chatButton" style={{margin: 0,top: 'auto',right: 20,bottom: 20,left: 'auto',position: 'fixed'}} 
+						backgroundColor={blue600} onClick={()=>{this.props.setChatPopupTarget(ReactDOM.findDOMNode(this.refs.chatButton));this.props.onPopoverToggle()}}>
+						{this.props.chatOpen ? <CloseIcon /> : <ChatIcon />}
+					</FloatingActionButton>	
 					<div className="fullheight scrollable">
 						<div className="row justify-content-md-center">	
 							<div className="col-sm-3 d-none d-sm-block" style={{height:'300px'}}>
@@ -141,9 +151,14 @@ class Home extends React.Component{
 
 const TheComponet = compose(
 	connect(
-		state=>({}),
+		state=>({chatOpen:state.Site.isChatPopoverOpen}),
 		dispatch=>({
-
+            onPopoverToggle:()=>{
+                dispatch({type:'CHAT_POPOVER_TOGGLE'});
+			},
+			setChatPopupTarget:(target)=>{
+                dispatch({type:'CHAT_POPOVER_TARGET',target});
+            }
 		})
 	),
 	muiThemeable(),
