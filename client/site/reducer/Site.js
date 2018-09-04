@@ -4,6 +4,7 @@ const initialData={
 	snackbarMessage:'',
 	isNavDrawerOpen:false,
 	isChatPopoverOpen:false,
+	isLoginDialogOpen:false,
 	chatPopoverTarget:null
 }
 
@@ -44,7 +45,17 @@ const Site=(state=initialData,action)=>{
 		 	return update(state,{
 		 		chatPopoverTarget:{$set:action.target}
 		 	});
-		 	break;
+			 break;
+		case 'LOGIN_DIALOG_OPEN':
+			 return update(state,{
+				isLoginDialogOpen:{$set:true}
+			 });	
+			 break;
+		case 'LOGIN_DIALOG_CLOSE':
+			 return update(state,{
+				isLoginDialogOpen:{$set:false}
+			 });	
+			 break;
 		 default:
 		 	return state;
 		 	break;

@@ -272,7 +272,7 @@ app.get('/customer/register',csrfProtection, function(request, response){
 
 app.post('/customer/register',csrfProtection,registerHandler);
   
-app.post('/customer/login',csrfProtection,loginHandler);
+app.post('/customer/login',loginHandler);
 
 app.post('/customer/fblogin',csrfProtection,fbloginHandler);
 

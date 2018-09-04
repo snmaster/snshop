@@ -35,7 +35,7 @@ const createChatMessageMutation = graphql(CREATE_CHAT_MESSAGE_MUTATION,{name:'cr
 });
 
 const CHAT_MESSENGE_QUERY = gql`
-    query chatMessengeQuery($senderId:Int,$page:Int,$pageSize:Int){
+    query chatMessageQuery($senderId:Int,$page:Int,$pageSize:Int){
         allMessages:ChatMessage(senderId:$senderId,page:$page,pageSize:$pageSize){
             page
             pageSize
@@ -81,7 +81,8 @@ subscription messageAdded($senderId1:Int!,$senderId2:Int!){
 }
 `
 
-const chatMessageQuery = graphql(CHAT_MESSENGE_QUERY,{name:"allMessageQuery",
+const chatMessageQuery = graphql(CHAT_MESSENGE_QUERY,
+    {name:"allMessagesQuery",
     options({page,pageSize,senderId}){
         return {
             variables:{
@@ -91,7 +92,7 @@ const chatMessageQuery = graphql(CHAT_MESSENGE_QUERY,{name:"allMessageQuery",
             }
         };
     },
-    props({ownProps:{senderId},allMessageQuery,allMessages,loading,fetchMore,refetch,subscribeToMore}){
+    props({ownProps:{senderId},allMessagesQuery:{loading,allMessages,fetchMore,refetch,subscribeToMore}}){
         let {page,pageSize,hasMore,ChatMessage}= allMessages? allMessages: {};
         return {
             loading,
@@ -149,5 +150,4 @@ const chatMessageQuery = graphql(CHAT_MESSENGE_QUERY,{name:"allMessageQuery",
 
 })
 
-export default chatMessageQuery;
-export {createChatMessageMutation};
+export {createChatMessageMutation,chatMessageQuery};

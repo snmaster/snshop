@@ -66,7 +66,7 @@ function getUserProfile(){
 }
 
 function login({UserName,Password,Remember}){
-	let request = new Request('/login',{
+	let request = new Request('/customer/login',{
 		method:'POST',
 		body:JSON.stringify({
 			username:UserName,

@@ -243,9 +243,9 @@ class AppBar extends React.Component{
 					</div>
 					<div className="col-xs-4 col-sm-3">
 						<FlatButton
-							// onMouseOver={(event)=>{this.setState({openAccount:true,anchorEl:event.currentTarget,});}}
+							//onMouseOver={(event)=>{this.setState({openAccount:true,anchorEl:event.currentTarget,});}}
 							// onMouseLeave={(event)=>{this.setState({openAccount:false});}}
-							onClick={(event)=>{this.setState({openAccount:true,anchorEl:event.currentTarget,});}}
+							onClick={(event)=>{this.setState({openAccount:true,anchorEl:event.currentTarget});}}
 							labelPosition="after"
 							labelStyle={{paddingRight:'2px'}}
 							label={userName ? userName : 'My Account'}
@@ -255,85 +255,19 @@ class AppBar extends React.Component{
 					</div>
 				</div>
 			</div> 
-			{/* <div className="hidden-xs hidden-md hidden-sm hidden-lg">
-				<IconButton
-					onClick={this.handleClick}
-					style={{background:'white',marginLeft:'15px',marginTop:'20px',marginBottom:'15px'}}
-					primary={true}>
-					<AppButton width='100%' height='100%' color='blue'/>
-				</IconButton>
-				<Popover
-					open={this.state.open}
-					anchorEl={this.state.anchorEl}
-					anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-					targetOrigin={{horizontal: 'left', vertical: 'top'}}
-					onRequestClose={this.handleRequestClose}
-					animation={PopoverAnimationVertical}
-					>
-					{userName ? 
-					<div>
-						<Badge
-							badgeContent={cartItemsCount}
-							primary={true}
-							badgeStyle={{top: 20, right: 20,background:cartItemsCount==0? 'white':'Mediumblue'}}
-							style={{marginRight:'5px',marginLeft:'5px'}}
-							onClick={()=>{router.push("/cart");}}
-							>
-							<IconButton tooltip="ShoppingCart" touch={true} >
-								<ActionShop color={blue900}/>					
-							</IconButton>				
-						</Badge><br/>
-						<div style={{fontSize:'14px',height:'15px',marginLeft:'10px',textAlign:'center',marginTop:'5px',marginBottom:'5px',width:'80px'}}>{userName ? userName : ''}</div><br/>
-						<FlatButton
-							onClick={()=>{logout();window.location="/login"}}
-							labelPosition="before"
-							label="Log Out"
-							style={{color:'black',marginTop:'5px',marginBottom:'5px'}}
-							primary={true}
-							icon={<SocialPerson color={blue900}/>}
-							/>
-					</div>
-					:
-					<div>
-						<Badge
-							badgeContent={cartItemsCount}
-							primary={true}
-							badgeStyle={{top: 20, right: 20,background:cartItemsCount==0? 'white':'Mediumblue'}}
-							style={{marginRight:'5px',marginLeft:'5px'}}
-							onClick={()=>{router.push("/cart");}}
-							>
-							<IconButton tooltip="ShoppingCart" touch={true} >
-								<ActionShop color={blue900}/>					
-							</IconButton>				
-						</Badge><br/>
-						<FlatButton
-							onClick={()=>{window.location="/Register"}}
-							labelPosition="before"
-							label="Register"
-							style={{color:'blue',marginTop:'5px',marginBottom:'5px'}}
-							primary={true}
-							/><br/>
-						<FlatButton
-							onClick={()=>{window.location="/login"}}
-							labelPosition="after"
-							label="Log In"
-							style={{color:'blue',marginTop:'5px',marginBottom:'5px'}}
-							primary={true}
-							icon={<SocialPerson color={blue900}/>}
-							/>						
-					</div>
-					
-				}
-				</Popover>
-			</div> */}
   		</div>
 		<Popover
 			open={this.state.openAccount}
 			anchorEl={this.state.anchorEl}
 			style={{width:'150px'}}
-			onMouseOver={(event)=>{this.setState({openAccount:true});}}
+			//onMouseOver={(event)=>{this.setState({openAccount:true});}}
 			anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
 			targetOrigin={{horizontal: 'left', vertical: 'top'}}
+			// onMouseLeave={()=>{
+			// 	setTimeout(() => {
+			// 		this.setState({openAccount:false})
+			// 	}, 0);
+			// }}
 			onRequestClose={this.handleAccountRequestClose}>			
 				{userName ? 
 					<div>
@@ -345,7 +279,7 @@ class AppBar extends React.Component{
 							icon={<OrderIcon color={blue900}/>}
 							/><br/>
 						<FlatButton
-							onClick={()=>{logout();window.location="/customer/login"}}
+							onClick={()=>{logout()}}
 							labelPosition="after"
 							label="Log Out"
 							style={{color:'black',width:'100%'}}
@@ -361,7 +295,7 @@ class AppBar extends React.Component{
 							icon={<SocialPersonAdd color={blue900}/>}
 							/><br/>
 						<FlatButton
-							onClick={()=>{window.location="/customer/login"}}
+							onClick={()=>{this.props.openLoginDialog();this.setState({openAccount:false})}}
 							labelPosition="after"
 							label="Log In"
 							style={{color:'blue',width:'100%'}}
@@ -517,6 +451,9 @@ class AppBar extends React.Component{
 				// },
 				toggleDrawer:()=>{
 					dispatch({type:'SITE_NAV_DRAWER_TOGGLE'});
+				},
+				openLoginDialog:()=>{
+					dispatch({type:'LOGIN_DIALOG_OPEN'});
 				}
 			})
 			),

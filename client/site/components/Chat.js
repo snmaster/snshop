@@ -12,7 +12,7 @@ import { FloatingActionButton } from 'material-ui';
 import ChatIcon from 'material-ui/svg-icons/communication/chat';
 import CloseIcon from 'material-ui/svg-icons/navigation/close';
 import { blue600 } from 'material-ui/styles/colors';
-import chatMessageQuery,{createChatMessageMutation} from '../apollo/ChatMessage';
+import {chatMessageQuery,createChatMessageMutation} from '../apollo/ChatMessage';
 class Chat extends React.Component{
     constructor(){
         super(...arguments);
@@ -20,6 +20,31 @@ class Chat extends React.Component{
             message:''
         };
     }
+
+    componentDidMount() {
+        
+            this.unsubscribe=this.props.subscribeToMore(this.props.senderId,2);
+                         
+            let {ChatMessage} = this.props ? this. props : [];
+        
+          }
+        
+          componentWillReceiveProps(nextProps){
+                
+                let {ChatMessage} = this.props;
+                let nextMessage = nextProps.ChatMessage;
+        
+                if(this.props.senderId !== nextProps.senderId)
+                {
+                    if(this.unsubscribe){
+                      console.log('.......un scribe.....');
+                      this.unsubscribe();
+                    }
+                    console.log('..................subscribe......');
+                    this.unsubscribe=this.props.subscribeToMore(nextProps.senderId,2);
+                }    
+            }
+        
 
     render(){
         let {senderId,createChatMessageMutation} = this.props;
@@ -49,7 +74,20 @@ class Chat extends React.Component{
     }
 }
 
-export default compose(
+const CustomerByIdQueryWrapper = compose(
     chatMessageQuery,
     createChatMessageMutation
-)(Chat);
+  )(Chat);
+
+  const TheComponent = ({userProfile,...props})=>{
+    return <CustomerByIdQueryWrapper {...props} userProfile={userProfile} page={1} pageSize={10} />
+  };
+  
+export default compose(
+    connect(
+        state=>({userProfile:state.UserProfile}),
+        dispatch=>({
+
+        })
+    )
+)(TheComponent);
