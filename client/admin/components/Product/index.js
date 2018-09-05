@@ -8,6 +8,8 @@ import NewFolder from 'material-ui/svg-icons/file/create-new-folder';
 import IconButton from "material-ui/IconButton";
 import withRouter from "react-router";
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
+import productQuery from '../../apollo/Product';
+import ProductGrid from "./ProductGrid";
 
 const AppBar = ({muiTheme,onCreateNew,toggleDrawer}) =>{
     return (
@@ -43,16 +45,30 @@ class ProductBrowser extends React.Component{
     }
 
     render(){
+        let {Product} = this.props ? this.props : [];
 
         return(
             <div className="fullheight layout">
                 <ThemeableAppBar />
-                <div className="fullheight">
-                    
+                <div className="fullheight scrollable">
+                    <ProductGrid Product={Product} />
                 </div>
             </div>
         );
     }
 }
 
-export default ProductBrowser;
+const TheComponent = compose(
+    productQuery,
+    connect(
+        state=>({}),
+        dispatch=>({
+
+        })
+    )
+)(ProductBrowser);
+
+export default ({params})=>{
+    let {id} = params ? params : {};
+    return (<TheComponent productCategoryId={id} page={1} pageSize={10}/>)
+}
