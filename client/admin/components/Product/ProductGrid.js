@@ -11,6 +11,10 @@ import {
     TableRowColumn,
   } from 'material-ui/Table';
 import Accounting from 'accounting';
+import { withRouter } from 'react-router';
+import ImageEdit from 'material-ui/svg-icons/Image/edit';
+import DeleteForever from 'material-ui/svg-icons/action/delete-forever';
+import { IconButton } from 'material-ui';
 
   class ProductGrid extends React.Component{
       constructor(){
@@ -22,14 +26,14 @@ import Accounting from 'accounting';
       }
 
       render(){
-          let {Product} = this.props;
+          let {Product,router} = this.props;
 
           return(
             <div className="fullheight scrollable">
                 <Table 
-                    height={80} fixedHeader={true} fixedFooter={true} selectable={true} multiSelectable={false}>
+                    height="500px" fixedHeader={true} fixedFooter={true} selectable={true} multiSelectable={false}>
                     <TableHeader
-                        displaySelectAll={true}
+                        displaySelectAll={false}
                         adjustForCheckbox={true}
                         enableSelectAll={false}
                     >
@@ -38,20 +42,22 @@ import Accounting from 'accounting';
                             <TableHeaderColumn tooltip="Name">Name</TableHeaderColumn>
                             <TableHeaderColumn tooltip="Alias">Alias</TableHeaderColumn>
                             <TableHeaderColumn tooltip="Price">Price</TableHeaderColumn>
+                            <TableHeaderColumn tooltip="Actions"></TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
                     <TableBody
-                        displayRowCheckbox={true}
+                        displayRowCheckbox={false}
                         deselectOnClickaway={true}
                         showRowHover={true}
                         stripedRows={true}
                     >
                         {Product ? Product.map( (p, index) => (
-                        <TableRow key={index}>
-                            <TableRowColumn>{index}</TableRowColumn>
+                        <TableRow key={index} style={{height:'50px'}} onRowClick={()=>{router.push(`/ProductDetail/${p.id}`)}}>
+                            <TableRowColumn>{p.id}</TableRowColumn>
                             <TableRowColumn>{p.Name}</TableRowColumn>
                             <TableRowColumn>{p.Alias}</TableRowColumn>
                             <TableRowColumn>{Accounting.formatMoney(p.Price)}</TableRowColumn>
+                            <TableRowColumn><div className="row"><IconButton onClick={()=>{router.push(`/authorize/ProductDetail/${p.id}`)}}><ImageEdit style={{color:'#fff'}} /></IconButton><IconButton><DeleteForever style={{color:'#fff'}} /></IconButton></div></TableRowColumn>                            
                         </TableRow>
                         )): null}
                     </TableBody>
@@ -62,4 +68,6 @@ import Accounting from 'accounting';
       }
   }
 
-export default ProductGrid;
+export default compose(
+    withRouter    
+)(ProductGrid);

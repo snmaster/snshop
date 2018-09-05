@@ -15,7 +15,7 @@ query Product($productCategoryId:Int,$page:Int,$pageSize:Int,$search:String){
                 Alias
                 Name
                 Thumb
-                Priceindex
+                Price
                 UOM{
                     Name
                 }

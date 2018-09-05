@@ -6,6 +6,7 @@ import {white} from "material-ui/styles/colors";
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
 import NewFolder from 'material-ui/svg-icons/file/create-new-folder';
 import IconButton from "material-ui/IconButton";
+import ContentAdd from 'material-ui/svg-icons/content/add'
 import withRouter from "react-router";
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import productQuery from '../../apollo/Product';
@@ -19,6 +20,11 @@ const AppBar = ({muiTheme,onCreateNew,toggleDrawer}) =>{
                     <NavigationMenu color={white}/>
                 </IconButton> 
                 <ToolbarTitle style={{color:'#fff'}} text="Product"/>               
+            </ToolbarGroup>
+            <ToolbarGroup lastChild={true}>
+                <IconButton touch={true} onClick={onCreateNew} >
+                    <ContectAdd color={white}/>
+                </IconButton>
             </ToolbarGroup>
         </Toolbar>
     );
