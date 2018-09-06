@@ -23,7 +23,7 @@ const AppBar = ({muiTheme,onCreateNew,toggleDrawer}) =>{
             </ToolbarGroup>
             <ToolbarGroup lastChild={true}>
                 <IconButton touch={true} onClick={onCreateNew} >
-                    <ContectAdd color={white}/>
+                    <ContentAdd color={white}/>
                 </IconButton>
             </ToolbarGroup>
         </Toolbar>

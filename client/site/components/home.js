@@ -122,12 +122,12 @@ class Home extends React.Component{
 									<ProductCard key={p.id} Product={p} style={{width:'auto'}} />)) : ''
 								}
 								</div>
-								<div style={{width:'200px',height:'60px'}}>
+								{/* <div style={{width:'200px',height:'60px'}}>
 									<MessengerCustomerChat
 										pageId="549458708738758"
 										appId="168492710596978"
 										/>
-								</div>
+								</div> */}
 						</div>
 
 						

@@ -17,10 +17,10 @@ class CartItem extends React.Component{
 				<div className="row align-items-center" style={{marginTop:'10px',borderBottom:'1px solid'}}>
 					<div className="col-sm-5 col-md-6 col-xs-5">						
 						<div className="row align-items-center" style={{marginLeft:'20px'}}>
-							<div class="col-xs-6">
+							<div className="col-xs-6">
 								<img className="img-responsive" style={{width:'100px',height:'100px'}} src={Thumb} />
 							</div>
-							<div class="col-xs-6">
+							<div className="col-xs-6">
 								<a href="#" onClick={(e)=>{e.preventDefault();router.push(`/detail/${id}`);}} style={{textDecoration:"none",padding:"10px"}}>
 									{Name}
 								</a>	
@@ -30,25 +30,23 @@ class CartItem extends React.Component{
 					<div className="col-sm-2 col-md-2 d-none d-sm-block ">{Accounting.formatMoney(Price)}</div>
 					<div className="col-sm-3 col-md-2 d-none d-sm-block align-self-center">
 						<div className="row" style={{marginTop:'10px',marginBottom:'30px'}}>
-							<div className="col-4">
 								<IconButton
 									onClick={()=>{addCartItem({id,Alias,Name,Thumb,Price,UOM,Qty:Qty+1});}}
 									style={{color:'black'}}
+									className="col-auto	"
 									primary={true}>
 									<AddItem color='red'/>					
 								</IconButton>	
-							</div>	
 							<div className="col-auto" style={{textAlign:'center',marginTop:'10px'}}>
 								{Qty} 
 							</div>
-							<div className="col-4">
-								<IconButton
-									onClick={()=>{removeItem(index);}}
-									style={{color:'black'}}
-									primary={true}>
-									<RemoveItem color='red'/>					
-								</IconButton>	
-							</div>							
+							<IconButton
+								onClick={()=>{removeItem(index);}}
+								style={{color:'black'}}
+								className="col-auto"
+								primary={true}>
+								<RemoveItem color='red'/>					
+							</IconButton>				
 						</div>						
 					</div>                                
 					<div className="col-sm-2 col-md-2 d-none d-sm-block" style={{textAlign:'right'}}>{Accounting.formatMoney(Price*Qty)}</div>
@@ -63,10 +61,9 @@ class CartItem extends React.Component{
 							<div className="col-xs-4">
 								Qty
 							</div>
-							<div class="col-auto">
+							<div className="col-auto">
 								<IconButton
 									onClick={()=>{addCartItem({id,Alias,Name,Thumb,Price,UOM,Qty:Qty+1});}}
-									labelPosition="before"
 									style={{color:'black'}}
 									primary={true}>
 									<AddItem color='red'/>					
@@ -78,7 +75,6 @@ class CartItem extends React.Component{
 							<div className="col-auto">
 								<IconButton
 									onClick={()=>{removeItem(index);}}
-									labelPosition="before"
 									style={{color:'black'}}
 									primary={true}>
 									<RemoveItem color='red'/>					
@@ -107,4 +103,4 @@ export default connect(
                 dispatch({type:'PRODUCT_CART_ADD_ITEM',item});
             }         
 		})
-	)( withRouter(CartItem));
+	)(withRouter(CartItem));

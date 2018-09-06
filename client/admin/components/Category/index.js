@@ -45,7 +45,7 @@ class ProductCategory extends React.Component{
     constructor(){
         super(...arguments);
         this.state ={
-            crateNew:false
+            createNew:false
         };
     }
 

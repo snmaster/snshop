@@ -12,7 +12,7 @@ import {
   } from 'material-ui/Table';
 import Accounting from 'accounting';
 import { withRouter } from 'react-router';
-import ImageEdit from 'material-ui/svg-icons/Image/edit';
+import ImageEdit from 'material-ui/svg-icons/image/edit';
 import DeleteForever from 'material-ui/svg-icons/action/delete-forever';
 import { IconButton } from 'material-ui';
 
