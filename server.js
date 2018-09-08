@@ -95,10 +95,10 @@ app.use(cookieParser());
 app.disable('x-powered-by');
 if(env==="development"){
     app.use(latency({ min: 100, max: 500 }));
-    app.use('/admin.bundle.js',proxy(url.parse('http://localhost:' + proxyPort + '/public/admin.bundle.js')));
-    app.use('/site.bundle.js',proxy(url.parse('http://localhost:' + proxyPort + '/public/site.bundle.js')));
-    app.use('/admin.bundle.js.map',proxy(url.parse('http://localhost:' + proxyPort + '/public/admin.bundle.js.map')));
-    app.use('/site.bundle.js.map',proxy(url.parse('http://localhost:' + proxyPort + '/public/site.bundle.js.map')));
+    app.use('/shoppyautho.js',proxy(url.parse('http://localhost:' + proxyPort + '/public/shoppyautho.js')));
+    app.use('/shoppylife.js',proxy(url.parse('http://localhost:' + proxyPort + '/public/shoppylife.js')));
+    app.use('/shoppyautho.js.map',proxy(url.parse('http://localhost:' + proxyPort + '/public/shoppyautho.js.map')));
+    app.use('/shoppylife.js.map',proxy(url.parse('http://localhost:' + proxyPort + '/public/shoppylife.js.map')));
 }else if(env ==="production"){
     app.get('*.js', function (req, res, next) {
       req.url = req.url + '.gz';
@@ -106,19 +106,19 @@ if(env==="development"){
       next();
     });
 }else if(env==="test"){
-    app.use('/admin.bundle.js',function (req, res, next) {
+    app.use('/shoppyautho.js',function (req, res, next) {
       req.url ='/admin.bundle.test.js'
       next();
     });
-    app.use('/site.bundle.js',function (req, res, next) {
+    app.use('/shoppylife.js',function (req, res, next) {
       req.url ='/site.bundle.test.js'
       next();
     });
-    app.use('/admin.bundle.js.map',function (req, res, next) {
+    app.use('/shoppyautho.js.map',function (req, res, next) {
       req.url ='/admin.bundle.test.js.map'
       next();
     });
-    app.use('/site.bundle.js.map',function (req, res, next) {
+    app.use('/shoppylife.js.map',function (req, res, next) {
       req.url ='/site.bundle.test.js.map'
       next();
     });
@@ -301,7 +301,7 @@ app.get('/ping',passport.authenticate('bearer-graphql',{session:false}),(req,res
         res.status(401).send("Not authenticated");
 });
 
-app.get('/authorize*',csrfProtection,passport.authenticate('cookie-admin',{session:false,failureRedirect:'/authorize/Login'}),(req, res) => {
+app.get('/authorize*',csrfProtection,passport.authenticate('shoppylife-autho',{session:false,failureRedirect:'/authorize/Login'}),(req, res) => {
     req.headers.authorization =  `Bearer ${req.cookies.access_token}`;
     match({ routes, location: req.originalUrl }, (error, redirectLocation, renderProps) => {
         if (redirectLocation) {
@@ -317,7 +317,7 @@ app.get('/authorize*',csrfProtection,passport.authenticate('cookie-admin',{sessi
     });
 });
 
-app.get('*',csrfProtection,passport.authenticate('cookie-site',{session:false}),(req, res) => {
+app.get('*',csrfProtection,passport.authenticate('shoppylife-customer',{session:false}),(req, res) => {
     if(req.user.isAuthenticated)
         req.headers.authorization =  `Bearer ${req.cookies.access_token}`;
     match({routes:siteRoutes,location:req.originalUrl},(error,redirectLocation,renderProps)=>{

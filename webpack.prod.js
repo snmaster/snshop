@@ -3,8 +3,8 @@ var webpack = require('webpack');
 var CompressionPlugin = require('compression-webpack-plugin');
 module.exports = {
     entry: {
-        admin: ['./client/admin/browser.js'],
-        site:['./client/site/browser.js']
+        shoppyautho: ['./client/admin/browser.js'],
+        shoppylife:['./client/site/browser.js']
     },
     module: {
         loaders: [{
@@ -21,7 +21,7 @@ module.exports = {
     },
     output: {
         path: './public/',
-        filename: '[name].bundle.js'
+        filename: '[name].js'
     },
     plugins: [
         new webpack.optimize.OccurenceOrderPlugin(),

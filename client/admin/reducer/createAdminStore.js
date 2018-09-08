@@ -5,6 +5,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import AdminSite from './AdminSite';
 import Login from "./Login";
 import Category from "./Category";
+import UserProfile from './UserProfile';
 
 export default ({client})=>{
     const store = createStore(
@@ -13,6 +14,7 @@ export default ({client})=>{
             AdminSite,
             Login,
             Category,
+            UserProfile,
             apollo: client.reducer()
         }),
         client.initialState, // initial state

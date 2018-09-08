@@ -1,8 +1,8 @@
 var webpack = require('webpack');
 module.exports = {
     entry: {
-        admin: ['react-hot-loader/patch','./client/admin/browser.js'],
-        site:['react-hot-loader/patch','./client/site/browser.js']
+        shoppyautho: ['react-hot-loader/patch','./client/admin/browser.js'],
+        shoppylife:['react-hot-loader/patch','./client/site/browser.js']
     },
     module: {
         loaders: [{
@@ -19,7 +19,7 @@ module.exports = {
     output: {
         path: __dirname,
         publicPath: './',
-        filename: '[name].bundle.js'
+        filename: '[name].js'
     },
     plugins: [
         new webpack.HotModuleReplacementPlugin()

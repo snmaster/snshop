@@ -48,7 +48,7 @@
 //     }
 //   ));
 
-// passport.use('cookie-site',new CustomStrategy(
+// passport.use('shoppylife-customer',new CustomStrategy(
 //     (req,done)=>{
 //         findSession(req.cookies.access_token,(error,userAccount)=>{
 //           if(error)
@@ -69,7 +69,7 @@
         
 //     }
 //   ));
-// passport.use('cookie-admin',new CustomStrategy(
+// passport.use('shoppylife-autho',new CustomStrategy(
 //     (req,done)=>{
 //         findSession(req.cookies.access_token,(error,userAccount)=>{
 //           if(error)
@@ -151,7 +151,7 @@ passport.use('bearer-graphql',new CustomStrategy(
     }
   ));
 
-passport.use('cookie-site',new CustomStrategy(
+passport.use('shoppylife-customer',new CustomStrategy(
    async (req,done)=>{
         try{
           const sessionData = await verifySession(req.cookies.access_token);
@@ -166,7 +166,7 @@ passport.use('cookie-site',new CustomStrategy(
         }        
     }
   ));
-passport.use('cookie-admin',new CustomStrategy(
+passport.use('shoppylife-autho',new CustomStrategy(
     async (req,done)=>{
         
       try{
