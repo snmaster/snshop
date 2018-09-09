@@ -25,6 +25,8 @@ class NavDrawer extends React.Component{
                     <Menu>
                         <MenuItem primaryText="Product" onClick={()=>{router.push('/authorize/Product');onDrawerChange(false);}} />
                         <MenuItem primaryText="Category" onClick={()=>{router.push('/authorize/category');onDrawerChange(false);}} />
+                        <MenuItem primaryText="Customer Order" onClick={()=>{router.push('/authorize/order');onDrawerChange(false);}} />
+                        <MenuItem primaryText="User Account" onClick={()=>{router.push('/authorize/user');onDrawerChange(false);}} />
                         {userName? <MenuItem primaryText="Log out" onClick={()=>{logout();onDrawerChange(false);router.push('/authorize/Login');resetUserProfile();}} leftIcon={<ActionLock/>}/>: <MenuItem primaryText="Log in" onClick={()=>{router.push('/authorize/Login');onDrawerChange(false);}} leftIcon={<CommunicationVpnKey/>}/>}
                     </Menu>
                 </div>

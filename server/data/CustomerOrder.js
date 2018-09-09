@@ -8,6 +8,7 @@ export const type=`
         OrderDate:Date!
         OrderNo:String!
         UserAccountId:Int!
+        Customer:UserAccount
         ShippingAddress:String
         ShippingCost:Float
         TotalAmount:Float
@@ -46,6 +47,7 @@ export const query=`
 
 export const mutation=`
     createCustomerOrder(order:InputCustomerOrder):CustomerOrderMutationResult
+    deleteCustomerOrder(id:Int!):CustomerOrder
 `;
 
 export const resolver ={
@@ -55,6 +57,9 @@ export const resolver ={
             OrderDate:property('OrderDate'),
             OrderNo:property('OrderNo'),
             UserAccountId:property('UserAccountId'),
+            Customer:(order)=>{
+                return order.getUserAccount();
+            },
             ShippingAddress:property('ShippingAddress'),
             ShippingCost:property('ShippingCost'),
             TotalAmount:(order)=>{
@@ -96,6 +101,18 @@ export const resolver ={
                      });
             });
             
+        },
+        deleteCustomerOrder(_,{id}){
+            return db.sequelize.transaction(t=>{
+                return db.CustomerOrder.findById(id,{transaction:t})
+                     .then(customerOrder=>{
+                        return db.CustomerOrderDetail.destroy({where:{CustomerOrderId:id},transaction:t}).then(()=>{
+                            return db.CustomerOrder.destroy({where:{id:id},transaction:t});
+                        }).then(()=>{
+                            return db.CustomerOrder.findById(id,{transaction:t});
+                        })
+                     });
+            });
         }
     }
 }

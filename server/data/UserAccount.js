@@ -83,10 +83,7 @@ export const resolver={
                 return db.UserAccount.destroy({where:{id:id},transaction:t})
                 .then((rowsDeleted)=>{
                     if(rowsDeleted>0)
-                        return db.UserAccount.findById(id,{paranoid:false,transaction:t}).
-                            then((result)=>{
-                                return result;
-                            });
+                        return {id};
                     else
                         return null;
                 });
