@@ -48,10 +48,10 @@ class Home extends React.Component{
 		return(
 				<div className="layout fullheight">
 					<AppBar title="Home Screen"/>									
-					<FloatingActionButton ref="chatButton" style={{margin: 0,top: 'auto',right: 20,bottom: 20,left: 'auto',position: 'fixed'}} 
+					{/* <FloatingActionButton ref="chatButton" style={{margin: 0,top: 'auto',right: 20,bottom: 20,left: 'auto',position: 'fixed'}} 
 						backgroundColor={blue600} onClick={()=>{this.props.setChatPopupTarget(ReactDOM.findDOMNode(this.refs.chatButton));this.props.onPopoverToggle()}}>
 						{this.props.chatOpen ? <CloseIcon /> : <ChatIcon />}
-					</FloatingActionButton>	
+					</FloatingActionButton>	 */}
 					<div className="fullheight scrollable">
 						<div className="row justify-content-md-center">	
 							<div className="col-sm-3 d-none d-sm-block" style={{height:'300px'}}>

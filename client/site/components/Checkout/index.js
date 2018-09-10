@@ -24,6 +24,7 @@ class CheckOut extends React.Component{
             UserAccountId:id,
             ShippingCost:shippingCost,
             ShippingAddress:shippingAddress,
+            OrderStatus:'Pending',
             detail
         };
 

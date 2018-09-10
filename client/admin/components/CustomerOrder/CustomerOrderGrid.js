@@ -44,6 +44,7 @@ import {deleteCutomerOrderMutation, deleteCustomerOrderMutation} from '../../apo
                             <TableHeaderColumn tooltip="Customer">Customer</TableHeaderColumn>
                             <TableHeaderColumn tooltip="TotalAmount">Total Amount</TableHeaderColumn>
                             <TableHeaderColumn tooltip="TotalQty">TotalQty</TableHeaderColumn>
+                            <TableHeaderColumn tooltip="OrderStatus">OrderStatus</TableHeaderColumn>
                         </TableRow>
                     </TableHeader>
                     <TableBody
@@ -59,6 +60,7 @@ import {deleteCutomerOrderMutation, deleteCustomerOrderMutation} from '../../apo
                             <TableRowColumn>{p.Customer ? p.Customer.FullName ? p.Customer.FullName : p.Customer.UserName : ''}</TableRowColumn>
                             <TableRowColumn>{Accounting.formatMoney(p.TotalAmount)}</TableRowColumn>
                             <TableRowColumn>{Accounting.formatMoney(p.TotalQty)}</TableRowColumn>
+                            <TableRowColumn>{p.OrderStatus}</TableRowColumn>
                             <TableRowColumn><div className="row"><IconButton onClick={()=>{router.push(`/authorize/CustomerOrderDetail/${p.id}`)}}><ImageEdit style={{color:'#fff'}} /></IconButton><IconButton onClick={()=>{this.props.deleteCustomerOrder({variables:{id:p.id}});}}><DeleteForever style={{color:'#fff'}} /></IconButton></div></TableRowColumn>                            
                         </TableRow>
                         )): null}

@@ -15,7 +15,7 @@ class CustomerOrderItem extends React.Component{
 
     render(){
         let {order,router} = this.props;
-        let {id,OrderDate,OrderNo,TotalAmount,ShippingCost,TotalQty} = order ? order : {};
+        let {id,OrderDate,OrderNo,TotalAmount,ShippingCost,TotalQty,OrderStatus} = order ? order : {};
 
         return(
             <div className="col-lg-2 col-md-3 col-sm-4 col-xs-12" >
@@ -36,6 +36,9 @@ class CustomerOrderItem extends React.Component{
                             </div>
                             <div className="row">
                                 <span>TotalQty </span>: {TotalQty} 
+                            </div>
+                            <div className="row">
+                                <span>OrderStatus </span>: {OrderStatus} 
                             </div>
                         </div>
                     </CardText>                    

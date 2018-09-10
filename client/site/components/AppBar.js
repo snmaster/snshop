@@ -112,7 +112,7 @@ class AppBar extends React.Component{
 	};
 
 	render(){
-		let {muiTheme,onSearchChange,onSearchModeChange,isSearchMode,title,toggleDrawer,onFilterDrawerToggle,productSearchResult,searchingProductByKeyWord,router,userProfile,cartItems,ProductCategory} = this.props;
+		let {muiTheme,onSearchChange,onSearchModeChange,isSearchMode,title,toggleDrawer,onFilterDrawerToggle,productSearchResult,searchingProductByKeyWord,router,userProfile,cartItems,ProductCategory,resetUserProfile} = this.props;
 		let {userName} = userProfile? userProfile : {};
 		let {searchText} = this.state;
 		let cartItemsCount = cartItems? cartItems.length: 0;
@@ -279,7 +279,7 @@ class AppBar extends React.Component{
 							icon={<OrderIcon color={blue900}/>}
 							/><br/>
 						<FlatButton
-							onClick={()=>{logout()}}
+							onClick={()=>{logout();resetUserProfile();}}
 							labelPosition="after"
 							label="Log Out"
 							style={{color:'black',width:'100%'}}
@@ -295,7 +295,8 @@ class AppBar extends React.Component{
 							icon={<SocialPersonAdd color={blue900}/>}
 							/><br/>
 						<FlatButton
-							onClick={()=>{this.props.openLoginDialog();this.setState({openAccount:false})}}
+							onClick={()=>{window.location="/customer/login"}}
+							//onClick={()=>{this.props.openLoginDialog();this.setState({openAccount:false})}}
 							labelPosition="after"
 							label="Log In"
 							style={{color:'blue',width:'100%'}}

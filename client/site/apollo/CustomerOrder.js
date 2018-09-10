@@ -14,6 +14,7 @@ const CUSTOMER_ORDER_QUERY = gql `
                 ShippingCost
                 TotalAmount
                 TotalQty
+                OrderStatus
                 detail{
                     id
                     Product{

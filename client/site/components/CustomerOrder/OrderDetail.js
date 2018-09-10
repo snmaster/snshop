@@ -11,7 +11,7 @@ class OrderDetail extends React.Component{
 
     render(){
         let {CustomerOrder} = this.props;
-        let {OrderNo,OrderDate,TotalAmount,ShippingCost,TotalQty,detail} = CustomerOrder ? CustomerOrder : {};
+        let {OrderNo,OrderDate,TotalAmount,ShippingCost,TotalQty,OrderStatus,detail} = CustomerOrder ? CustomerOrder : {};
 
         return(
             <div className="fullheight layout">
@@ -34,6 +34,9 @@ class OrderDetail extends React.Component{
                             </div>
                             <div className="row">
                                 <span>TotalQty </span>: {TotalQty} 
+                            </div>
+                            <div className="row">
+                                <span>OrderStatus </span>: {OrderStatus} 
                             </div>
                         </div>
                     </CardText>
