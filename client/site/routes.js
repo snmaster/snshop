@@ -13,7 +13,11 @@ import OrderBrowser from './components/CustomerOrder/index';
 import OrderDetail from './components/CustomerOrder/OrderDetail';
 import ConfirmOrder from './components/CustomerOrder/confirmOrder';
 export default (
-    <Route component={Layout} path="/">
+    <Route onChange={(p,n)=>{
+        if(window.en === 'production'){
+            setTimeout(()=>{gtag('config','UA-125686595-1',{'page_path':n.location.pathname,'page_title':document.title,'page_location':window.location.href});},1000);
+        }
+    }} component={Layout} path="/">
         <IndexRoute component={Home}/>
         <Route component={ProductBrowser} path="/Product(/:id)"/>
         <Route component={ProductDetail} path="/detail(/:id)"/>

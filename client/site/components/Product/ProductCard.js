@@ -29,6 +29,10 @@ class ProductCard extends React.Component{
 				Qty = Qty + 1;
 			}
 		}
+
+		if(window.env === "production")
+			gtag('event','add_to_cart');
+			
 			addCartItem({id,Alias,Name,Thumb,Price,UOM,Qty});
 			//closeMe();
 			showSnackbar(`${Name} has been added to cart.`);	

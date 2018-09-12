@@ -41,7 +41,11 @@ class CartItem extends React.Component{
 								{Qty} 
 							</div>
 							<IconButton
-								onClick={()=>{removeItem(index);}}
+								onClick={()=>{
+									if(window.env === "production")
+										gtag('event','remove_cart_item');
+									removeItem(index);
+								}}
 								style={{color:'black'}}
 								className="col-auto"
 								primary={true}>
@@ -63,7 +67,11 @@ class CartItem extends React.Component{
 							</div>
 							<div className="col-auto">
 								<IconButton
-									onClick={()=>{addCartItem({id,Alias,Name,Thumb,Price,UOM,Qty:Qty+1});}}
+									onClick={()=>{
+										addCartItem({id,Alias,Name,Thumb,Price,UOM,Qty:Qty+1});
+										if(window.env === "production")
+											gtag('event','add_cart_item');
+									}}
 									style={{color:'black'}}
 									primary={true}>
 									<AddItem color='red'/>					

@@ -17,7 +17,8 @@ class CheckOut extends React.Component{
     checkOut(){
         let {UserAccount,createCustomerOrder,cartItems,id,shipping,showSnackbar,clearCart,router} = this.props;
         let {shippingAddress} = shipping ? shipping :{};
-
+        if(window.env === "production")
+            gtag('event','process_checkout');
         let detail = cartItems.map(({id,Qty,Price})=>({ProductId:id,Qty,Price}));
         let shippingCost = 2000;
         let order ={

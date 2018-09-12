@@ -22,6 +22,9 @@ class Cart extends React.Component{
 		let {userProfile,router,cart,showSnackbar} = this.props;
 		let {items} = cart? cart:{};
 		let {userId} = userProfile;
+		if(window.env === "production")
+			gtag('event','click_checkout');
+
 		if(userId == "")
 		{
 			window.location=`/customer/login?redirectUrlOnSuccess=${encodeURIComponent("/checkout/process")}`;

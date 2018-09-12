@@ -27,6 +27,25 @@ const siteHtml = ({ content, state,title,muiTheme }) => (
 
         <title>Shoppylife - Online Store</title>
         {/* {helmet.title.toComponent()} */}
+        {
+            env === 'production'?
+            <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125686595-1"/>
+            :null            
+        }
+        {
+            env==='production'?
+        <script dangerouslySetInnerHTML={{__html:`
+        window.env ='${env}';
+        window.isSSR=true;
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-125686595-1');`}}/>
+        :
+        null
+        }
+
 
     </head>
     <body>
