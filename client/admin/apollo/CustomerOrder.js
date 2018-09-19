@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import {default as immutableUpdate} from 'react-addons-update';
 
 const CUSTOMER_ORDER_QUERY = gql `
-    query CustomerOrder($customerId:Int,$page:Int!,$pageSize:Int){
+    query customerOrderQuery($customerId:Int,$page:Int!,$pageSize:Int){
         CustomerOrders:CustomerOrder(customerId:$customerId,page:$page,pageSize:$pageSize){
             CustomerOrder{
                 id
@@ -178,7 +178,7 @@ props:({mutate})=>{
                         return prev;
                         
                     let index = null;
-                    prev.CustomerOrder.every((g,i)=>{
+                    prev.CustomerOrders.CustomerOrder.every((g,i)=>{
                         if(g.id===mutatedInstance.id){
                             index=i;
                             return false;
@@ -186,9 +186,11 @@ props:({mutate})=>{
                             return true;
                     });
 
-                    return index != null? immutableUpdate({
-                        CustomerOrder:{
-                            $splice:[[index,1]]
+                    return index != null? immutableUpdate(prev,{
+                        CustomerOrders:{
+                            CustomerOrder:{
+                                $splice:[[index,1]]
+                            }
                         }
                     }): prev;
 

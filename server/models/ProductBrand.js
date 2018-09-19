@@ -13,8 +13,7 @@ module.exports=(sequelize,DataTypes)=>{
                 }
             }
         },
-        ImagePath:DataTypes.STRING(255),
-        PhotoFormat:DataTypes.STRING(10)
+        ImagePath:DataTypes.STRING(255)
     },{
         paranoid:true
     });

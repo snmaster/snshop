@@ -23,9 +23,9 @@ class FooterBar extends React.Component{
                 </div>
                 <div className="col-sm-4 col-xs-4">
                     <h4>Shoppylife - Online Store</h4>
-                    <p><i className="fa fa-fw fa-map-marker"></i> SourceNet Solution</p>
-                    <p><i className="fa fa-fw fa-phone"></i> +959797525977</p>
-                    <p><i className="fa fa-fw fa-envelope"></i> sourcenet@gmail.com</p>
+                    {/* <p><i className="fa fa-fw fa-map-marker"></i> SourceNet Solution</p> */}
+                    {/* <p><i className="fa fa-fw fa-phone"></i> +959797525977</p>
+                    <p><i className="fa fa-fw fa-envelope"></i> sourcenet@gmail.com</p> */}
                 </div>
             </div>
         </footer>

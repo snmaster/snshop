@@ -14,8 +14,11 @@ class ProductGrid extends React.Component{
 
     }
 
-    componentWillReceiveProps(){
-
+    componentWillReceiveProps(nextProps){
+        let {refetch,page} = this.props;
+        if(this.props.search !== nextProps.search || this.props.productCategoryId !== nextProps.productCategoryId){
+            refetch({productCategoryId:nextProps.productCategoryId,search:nextProps.search,page});
+        }
     }
 
     componentDidUpdate(prevProps){

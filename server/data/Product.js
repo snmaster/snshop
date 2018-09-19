@@ -115,9 +115,19 @@ export const resolver={
         Product(_,{productCategoryId,page,pageSize,search}){
             search = '%' + search + '%';
 			page = page? page: 1;
-            let where = true;
-            if(productCategoryId)
-                where = {ProductCategoryId:productCategoryId};
+            let where = {
+                $and:{
+                    $or: search ==='%' ? true: {
+                        Alias:{
+                            $like:search
+                        },
+                        Name:{
+                            $like:search
+                        }
+                    }                    
+                },
+                ProductCategoryId:productCategoryId
+            };
 			return PaginationHelper.getResult({db,baseQuery:db.Product,page,pageSize,where,listKey:'Product',paranoid:false});
 		},
 

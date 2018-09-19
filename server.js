@@ -32,7 +32,7 @@ import webpack from 'webpack';
 import devConfig from './webpack.dev';
 import testConfig from './webpack.test';
 import prodConfig from './webpack.prod';
-import latency from 'express-simulate-latency';
+//import latency from 'express-simulate-latency';
 import {default as adminTheme} from './common/adminMuiTheme';
 import {default as siteTheme} from './common/siteMuiTheme';
 import createAdminStore from './client/admin/reducer/createAdminStore';
@@ -94,7 +94,7 @@ app.use(passport.initialize());
 app.use(cookieParser());
 app.disable('x-powered-by');
 if(env==="development"){
-    app.use(latency({ min: 100, max: 500 }));
+    //app.use(latency({ min: 100, max: 500 }));
     app.use('/shoppyautho.js',proxy(url.parse('http://localhost:' + proxyPort + '/public/shoppyautho.js')));
     app.use('/shoppylife.js',proxy(url.parse('http://localhost:' + proxyPort + '/public/shoppylife.js')));
     app.use('/shoppyautho.js.map',proxy(url.parse('http://localhost:' + proxyPort + '/public/shoppyautho.js.map')));

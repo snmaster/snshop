@@ -10,6 +10,7 @@ export const type=`
         Image:String
         ParentCategoryId:Int
         Thumb:String
+        level:Int
         SubCategories:[ProductCategory]
     }
 
@@ -36,6 +37,8 @@ export const type=`
 export const query=`
     searchCategoryByKeyWord(keyWord:String,limit:Int!):[ProductCategory]
     ProductCategory(parentCategoryId:Int,page:Int,pageSize:Int):[ProductCategory]
+    getRootProductCategory(categoryId:Int):[ProductCategory]
+    ProductCategoryById(id:Int!):ProductCategory
     CategoryList:[ProductCategory]
 `;
 
@@ -58,6 +61,7 @@ export const resolver={
                 return group.ImagePath ? cloudinary.thumb(group.ImagePath):``;
             },
             ParentCategoryId:property('ParentCategoryId'),
+            level:property('level'),
             SubCategories:(category)=>{
                 return category.ChildCategory;
             }
@@ -88,6 +92,17 @@ export const resolver={
         },
         CategoryList(_,{}){
             return db.ProductCategory.findAll();
+        },
+        getRootProductCategory(_,{categoryId}){
+            return db.sequelize.transaction(t=>{
+                return db.sequelize.query(`SELECT * FROM rootProductCategory($categoryId);`,{
+                    bind:{categoryId:categoryId},
+                    type:db.sequelize.QueryTypes.SELECT
+                }).then((result)=>(result));
+            });
+        },
+        ProductCategoryById(_,{id}){
+            return db.ProductCategory.findById(id,{include:[{model:db.ProductCategory,as:'ChildCategory',include:[{model:db.ProductCategory,as:'ChildCategory'}]}]});
         }
     },
     mutation:{

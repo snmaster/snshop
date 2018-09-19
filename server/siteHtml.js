@@ -51,10 +51,10 @@ const siteHtml = ({ content, state,title,muiTheme }) => (
     <body>
     <div className="row" style={{background:'blue',height:'50px'}}>
         <div className="col-1"></div>   
-        <div className="col-2" style={{fontSize:'14px',color:'white',borderRight:'1px solid',borderColor:'black'}}>
+        <div className="col-xs-5 col-md-2" style={{fontSize:'16px',fontStyle:'Bold',color:'white',borderRight:'1px solid',borderColor:'darkblue',paddingTop:'10px'}}>
         Welcome to Shoppylife!! 
         </div>
-        <div className="col-6" style={{fontSize:'14px',color:'white',borderRight:'1px solid',borderColor:'black'}}>
+        <div className="col-xs-6 col-md-8" style={{fontSize:'16px',color:'white',borderRight:'1px solid',borderColor:'darkblue',paddingTop:'10px',float:'right'}}>
             (+959448025333)
         </div>
     </div>

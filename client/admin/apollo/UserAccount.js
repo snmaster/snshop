@@ -15,7 +15,7 @@ import {default as immutableUpdate} from 'react-addons-update';
 // };
 
 const USERACCOUNT_QUERY = gql `
-query UserAccount{
+query userAccountQuery{
     UserAccounts:UserAccount{
         id
         UserName
@@ -97,7 +97,7 @@ props:({mutate})=>{
                             return true;
                     });
 
-                    return index != null? immutableUpdate({
+                    return index != null? immutableUpdate(prev,{
                         UserAccounts:{
                             $splice:[[index,1]]
                         }

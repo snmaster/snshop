@@ -78,7 +78,7 @@ const deleteProductCategoryMutation = graphql(DELETE_PRODUCTCATEGORY_MUTATION,{
         return {
 			deleteProductCategory:(args)=>{
 				args.updateQueries={
-					query:(prev,{mutationResult})=>{
+					productCategoryQuery:(prev,{mutationResult})=>{
 						let mutatedInstance = mutationResult.data.deleteProductCategory;
 						if(!mutatedInstance)
                             return prev;
@@ -92,7 +92,7 @@ const deleteProductCategoryMutation = graphql(DELETE_PRODUCTCATEGORY_MUTATION,{
                                 return true;
                         });
 
-                        return index != null? immutableUpdate({
+                        return index != null? immutableUpdate(prev,{
 							ProductCategory:{
 								$splice:[[index,1]]
 							}
@@ -124,8 +124,8 @@ const saveProductCategoryQuery = graphql(SAVE_PRODUCTCATEGORY_QUERY,{
         return {
             saveProductCategory:(args)=>{
                 args.updateQueries={
-                    query:(prev,{mutationResult})=>{
-						let mutatedInstance = mutationResult.data.saveProductCategory;
+                    productCategoryQuery:(prev,{mutationResult})=>{
+						let mutatedInstance = mutationResult.data.saveProductCategory.mutatedInstance;
 						if(!mutatedInstance)
                             return prev;
 

@@ -53,6 +53,53 @@ const query = graphql(GROUP_QUERY,{
     }
 });
 
+const GET_ROOT_CATEGORY_QUERY = gql `
+    query getRootCategory($categoryId:Int!){
+        rootCategories:getRootProductCategory(categoryId:$categoryId){
+            id
+            Name
+            Thumb
+            ParentCategoryId
+            level
+        }
+    }
+`;
+
+const getRootCategoryQuery = graphql(GET_ROOT_CATEGORY_QUERY,{
+    options({categoryId}){
+        return {
+            variables:{
+                categoryId
+            }
+        }
+    },
+    props({ownProps,data:{loading,rootCategories,refetch}}){
+        return {
+            loading,
+            rootCategories,
+            refetch
+        }
+    }
+});
+
+const PRODUCT_CATEGORY_BYID = gql `
+    query productCategorybyId($id:Int!){
+        ProductCategoryById(id:$id){
+            ...ProductCategoryItem
+        }
+    }
+    ${fragments.ProductCategory}
+`;
+
+const productCategorybyIdQuery = graphql(PRODUCT_CATEGORY_BYID,{
+    props({ownProps,data:{loading,ProductCategoryById,refetch}}){
+        return {
+            ProductCategoryById,
+            loading,
+            refetch
+        }
+    }
+});
 
 // const ProductCategory_QUERY = gql`
 // query ProductCategoryQuery($page:Int!,$pageSize:Int!,$parentCategoryId:Int){
@@ -113,5 +160,6 @@ const query = graphql(GROUP_QUERY,{
 // });
 
 
+export {getRootCategoryQuery,productCategorybyIdQuery};
 
 export default query;
