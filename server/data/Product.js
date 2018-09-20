@@ -2,6 +2,7 @@ import db from '../models/index';
 import {property} from 'lodash';
 import cloudinary from '../cloudinary';
 import PaginationHelper from  '../database/PaginationHelper';
+import ProductCategory from '../../client/site/apollo/ProductCategory';
 
 export const type=`
     type Product{
@@ -52,7 +53,7 @@ export const type=`
 `;
 export const query=`
     searchProductByKeyWord(keyWord:String,limit:Int!):[Product]
-    Product(productCategoryId:Int,page:Int,pageSize:Int,search:String):Products
+    Product(productCategoryId:Int,brandId:Int,page:Int,pageSize:Int,search:String):Products
     ProductById(id:Int!):Product
 `;
 
@@ -79,6 +80,9 @@ export const resolver={
             },
             ProductBrand(product){
                 return product.getProductBrand();
+            },
+            ProductCategory(product){
+                return product.getProductCategory();
             },
             // Supplier(product){
             //     return product.getSupplier();
@@ -112,22 +116,66 @@ export const resolver={
         ProductById(_,{id}){
             return db.Product.findById(id);
         },
-        Product(_,{productCategoryId,page,pageSize,search}){
+        Product(_,{productCategoryId,page,pageSize,search,brandId}){
             search = '%' + search + '%';
-			page = page? page: 1;
-            let where = {
-                $and:{
-                    $or: search ==='%' ? true: {
-                        Alias:{
-                            $like:search
+            page = page? page: 1;
+            let where = {};
+            if(productCategoryId && brandId)
+                where = {
+                    $and:{
+                        $or: search ==='%' ? true: {
+                            Alias:{
+                                $like:search
+                            },
+                            Name:{
+                                $like:search
+                            }
                         },
-                        Name:{
-                            $like:search
+                        ProductCategoryId:productCategoryId,
+                        ProductBrandId:brandId
+                    }
+                };
+            if(!productCategoryId && brandId)
+                where = {
+                    $and:{
+                        $or: search ==='%' ? true: {
+                            Alias:{
+                                $like:search
+                            },
+                            Name:{
+                                $like:search
+                            }
+                        },
+                        ProductBrandId:brandId
+                    }
+                };
+            if(productCategoryId && !brandId)
+                where = {
+                    $and:{
+                        $or: search ==='%' ? true: {
+                            Alias:{
+                                $like:search
+                            },
+                            Name:{
+                                $like:search
+                            }
+                        },
+                        ProductCategoryId:productCategoryId
+                    }
+                }; 
+            if(!productCategoryId && !brandId)
+                where = {
+                    $and:{
+                        $or: search ==='%' ? true: {
+                            Alias:{
+                                $like:search
+                            },
+                            Name:{
+                                $like:search
+                            }
                         }
-                    }                    
-                },
-                ProductCategoryId:productCategoryId
-            };
+                    }
+                };  
 			return PaginationHelper.getResult({db,baseQuery:db.Product,page,pageSize,where,listKey:'Product',paranoid:false});
 		},
 

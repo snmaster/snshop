@@ -4,8 +4,8 @@ import {default as immutableUpdate} from 'react-addons-update';
 
 
 const PRODUCT_QUERY = gql `
-query Product($productCategoryId:Int,$page:Int,$pageSize:Int,$search:String){
-    Products:Product(productCategoryId:$productCategoryId,page:$page,pageSize:$pageSize,search:$search){
+query Product($productCategoryId:Int,$brandId:Int,$page:Int,$pageSize:Int,$search:String){
+    Products:Product(productCategoryId:$productCategoryId,brandId:$brandId,page:$page,pageSize:$pageSize,search:$search){
         page
         pageSize
         totalRows
@@ -25,20 +25,22 @@ query Product($productCategoryId:Int,$page:Int,$pageSize:Int,$search:String){
 `;
 
 const productQuery = graphql(PRODUCT_QUERY,{
-    options({productCategoryId,page,pageSize,search}){
+    options({productCategoryId,brandId,page,pageSize,search}){
         return {
             variables:{
                 productCategoryId,
+                brandId,
                 page,
                 pageSize:pageSize ? pageSize: 10,
                 search
             }
         }
     },
-    props({ownProps:{productCategoryId,search},data:{loading,Products,fetchMore,refetch}}){
+    props({ownProps:{productCategoryId,brandId,search},data:{loading,Products,fetchMore,refetch}}){
         let {page,pageSize,hasMore,Product} = Products ? Products : {};
         return {
             productCategoryId,
+            brandId,
             loading,
             page:page? page: 1,
             pageSize,
@@ -50,6 +52,7 @@ const productQuery = graphql(PRODUCT_QUERY,{
                         page,
                         pageSize,
                         productCategoryId,
+                        brandId,
                         search
                     },                
                     updeateQuery:(previousResult,{fetchMoreResult})=>{

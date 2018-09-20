@@ -26,7 +26,8 @@ class ProductBrowser extends React.Component{
 		super(...arguments);
 		this.state = {
 			search:'',
-			searchText:''
+			searchText:'',
+			brandId:null
 		};
 	}
 
@@ -38,7 +39,7 @@ class ProductBrowser extends React.Component{
 
 	render(){
 		let {productCategoryId,ProductCategoryById,rootCategories,ProductBrand,router} = this.props ? this.props: {};
-		let {search,searchText} = this.state ? this.state : {};
+		let {search,searchText,brandId} = this.state ? this.state : {};
 		let {SubCategories,Name} = ProductCategoryById ? ProductCategoryById : [];
 
 		return(
@@ -56,17 +57,17 @@ class ProductBrowser extends React.Component{
 						</div>
 						<div className="row" style={{width:'100%'}}>
 							<div className="col-md-2">
-								<div>Sub Categories</div>
+								<div style={SubCategories.length > 0 ? {marginTop:'10px'} : {display:'none'}} >Sub Categories</div>
 								{
 									SubCategories ? SubCategories.map((c,i)=>(<ListItem key={i} primaryText={c.Name} style={{width:'100%'}} leftIcon={<RightArrow />} onClick={()=>{router.push(`/Product/${c.id}`);}} />)) : null
 								}
 								<div>Top Brands</div>
 								{
-									ProductBrand ? ProductBrand.map((b,i)=>(<ListItem key={i} primaryText={b.Name} style={{width:'100%'}} />)) : null
+									ProductBrand ? ProductBrand.map((b,i)=>(<ListItem key={i} primaryText={b.Name} style={{width:'100%'}} onClick={()=>{this.setState({brandId:b.id});}} />)) : null
 								}
 							</div>
 							<div className="col-md-10">
-								<ProductGrid productCategoryId={productCategoryId} search={search} style={{margin:'10px'}}/>
+								<ProductGrid productCategoryId={productCategoryId} brandId={brandId} search={search} style={{margin:'10px'}}/>
 							</div>
 						</div>
 					</div>					
