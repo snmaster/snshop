@@ -15,8 +15,8 @@ import {default as immutableUpdate} from 'react-addons-update';
 // };
 
 const PRODUCT_QUERY = gql `
-query Product($productCategoryId:Int,$brandId:Int,$page:Int,$pageSize:Int,$search:String){
-    Products:Product(productCategoryId:$productCategoryId,brandId:$brandId,page:$page,pageSize:$pageSize,search:$search){
+query Product($productCategoryId:Int,$brandId:Int,$minAmount:Float,$maxAmount:Float,$sortOrder:String,$page:Int,$pageSize:Int,$search:String){
+    Products:Product(productCategoryId:$productCategoryId,brandId:$brandId,minAmount:$minAmount,maxAmount:$maxAmount,sortOrder:$sortOrder,page:$page,pageSize:$pageSize,search:$search){
         page
         pageSize
         totalRows
@@ -36,22 +36,28 @@ query Product($productCategoryId:Int,$brandId:Int,$page:Int,$pageSize:Int,$searc
 `;
 
 const productQuery = graphql(PRODUCT_QUERY,{
-    options({productCategoryId,brandId,page,pageSize,search}){
+    options({productCategoryId,brandId,minAmount,maxAmount,sortOrder,page,pageSize,search}){
         return {
             variables:{
                 productCategoryId,
                 brandId,
+                minAmount,
+                maxAmount,
+                sortOrder,
                 page,
                 pageSize:pageSize ? pageSize: 10,
                 search
             }
-        }
+        }   
     },
-    props({ownProps:{productCategoryId,brandId,search},data:{loading,Products,fetchMore,refetch}}){
+    props({ownProps:{productCategoryId,brandId,minAmount,maxAmount,sortOrder,search},data:{loading,Products,fetchMore,refetch}}){
         let {page,pageSize,hasMore,Product} = Products ? Products : {};
         return {
             productCategoryId,
             brandId,
+            minAmount,
+            maxAmount,
+            sortOrder,
             loading,
             page:page? page: 1,
             pageSize,
@@ -63,6 +69,9 @@ const productQuery = graphql(PRODUCT_QUERY,{
                         page,
                         pageSize,
                         productCategoryId,
+                        minAmount,
+                        maxAmount,
+                        sortOrder,
                         brandId,
                         search
                     },                
@@ -85,8 +94,8 @@ const productQuery = graphql(PRODUCT_QUERY,{
 });
 
 const SEARCH_PRODUCT_QUERY = gql `
-query Product($productCategoryId:Int,$brandId:Int,$page:Int,$pageSize:Int,$search:String){
-    SearchProducts:Product(productCategoryId:$productCategoryId,brandId:$brandId,page:$page,pageSize:$pageSize,search:$search){
+query Product($productCategoryId:Int,$brandId:Int,$minAmount:Float,$maxAmount:Float,$sortOrder:String,$page:Int,$pageSize:Int,$search:String){
+    SearchProducts:Product(productCategoryId:$productCategoryId,brandId:$brandId,minAmount:$minAmount,maxAmount:$maxAmount,sortOrder:$sortOrder,page:$page,pageSize:$pageSize,search:$search){
         page
         pageSize
         totalRows
@@ -106,22 +115,28 @@ query Product($productCategoryId:Int,$brandId:Int,$page:Int,$pageSize:Int,$searc
 `;
 
 const searchProductQuery = graphql(SEARCH_PRODUCT_QUERY,{
-    options({productCategoryId,brandId,page,pageSize,search}){
+    options({productCategoryId,brandId,minAmount,maxAmount,sortOrder,page,pageSize,search}){
         return {
             variables:{
                 productCategoryId,
                 brandId,
+                minAmount:minAmount ? minAmount: 0,
+                maxAmount:maxAmount ? maxAmount: 1000000,
+                sortOrder,
                 page,
                 pageSize:pageSize ? pageSize: 10,
                 search
             }
         }
     },
-    props({ownProps:{productCategoryId,brandId,search},data:{loading,Products,fetchMore,refetch}}){
+    props({ownProps:{productCategoryId,brandId,minAmount,maxAmount,sortOrder,search},data:{loading,Products,fetchMore,refetch}}){
         let {page,pageSize,hasMore,Product} = SearchProducts ? SearchProducts : {};
         return {
             productCategoryId,
             brandId,
+            minAmount,
+            maxAmount,
+            sortOrder,
             loading,
             page:page? page: 1,
             pageSize,
@@ -133,6 +148,9 @@ const searchProductQuery = graphql(SEARCH_PRODUCT_QUERY,{
                         page,
                         pageSize,
                         productCategoryId,
+                        minAmount,
+                        maxAmount,
+                        sortOrder,
                         brandId,
                         search
                     },                

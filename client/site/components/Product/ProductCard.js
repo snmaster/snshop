@@ -80,7 +80,7 @@ class ProductCard extends React.Component{
 							<CardText>
 								<div style={{padding:'10px 5px'}}>
 									<div className="text-title" onClick={(e)=>{e.preventDefault();router.push(`/detail/${id}`);}}>{Name}</div>
-									<div className="text-subtitle">{Alias}</div>
+									{/* <div className="text-subtitle">{Alias}</div> */}
 									<div className="text-price">{Accounting.formatMoney(Price)}</div>
 								</div>
 							</CardText>

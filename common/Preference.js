@@ -6,9 +6,9 @@ const Preference = {
         currency: {
             symbol: "MMK", // default currency symbol is '$'
             format: {
-                pos: "%v %s ",
-                neg: "(%v %s)",
-                zero: "-- %s"
+                pos: "%s %v ",
+                neg: "(%s %v)",
+                zero: "%s --"
             },
             decimal: ".", // decimal point separator
             thousand: ",", // thousands separator

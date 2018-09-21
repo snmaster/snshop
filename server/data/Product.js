@@ -53,7 +53,7 @@ export const type=`
 `;
 export const query=`
     searchProductByKeyWord(keyWord:String,limit:Int!):[Product]
-    Product(productCategoryId:Int,brandId:Int,page:Int,pageSize:Int,search:String):Products
+    Product(productCategoryId:Int,brandId:Int,minAmount:Float,maxAmount:Float,sortOrder:String,page:Int,pageSize:Int,search:String):Products
     ProductById(id:Int!):Product
 `;
 
@@ -116,9 +116,15 @@ export const resolver={
         ProductById(_,{id}){
             return db.Product.findById(id);
         },
-        Product(_,{productCategoryId,page,pageSize,search,brandId}){
+        Product(_,{productCategoryId,page,pageSize,search,brandId,minAmount,maxAmount,sortOrder}){
             search = '%' + search + '%';
             page = page? page: 1;
+            let order={};
+            if(sortOrder && sortOrder === "priceASC")
+                order = [['Price','ASC']];
+            else
+                order = [['Price','DESC']];
+
             let where = {};
             if(productCategoryId && brandId)
                 where = {
@@ -132,7 +138,10 @@ export const resolver={
                             }
                         },
                         ProductCategoryId:productCategoryId,
-                        ProductBrandId:brandId
+                        ProductBrandId:brandId,
+                        Price:{
+                            $between:[minAmount,maxAmount]
+                        }
                     }
                 };
             if(!productCategoryId && brandId)
@@ -146,7 +155,10 @@ export const resolver={
                                 $like:search
                             }
                         },
-                        ProductBrandId:brandId
+                        ProductBrandId:brandId,
+                        Price:{
+                            $between:[minAmount,maxAmount]
+                        }
                     }
                 };
             if(productCategoryId && !brandId)
@@ -160,7 +172,10 @@ export const resolver={
                                 $like:search
                             }
                         },
-                        ProductCategoryId:productCategoryId
+                        ProductCategoryId:productCategoryId,
+                        Price:{
+                            $between:[minAmount,maxAmount]
+                        }
                     }
                 }; 
             if(!productCategoryId && !brandId)
@@ -173,10 +188,13 @@ export const resolver={
                             Name:{
                                 $like:search
                             }
+                        },
+                        Price:{
+                            $between:[minAmount,maxAmount]
                         }
                     }
                 };  
-			return PaginationHelper.getResult({db,baseQuery:db.Product,page,pageSize,where,listKey:'Product',paranoid:false});
+			return PaginationHelper.getResult({db,baseQuery:db.Product,page,pageSize,where,order,listKey:'Product',paranoid:false});
 		},
 
         // Product(_,{productCategoryId,criteria}){
