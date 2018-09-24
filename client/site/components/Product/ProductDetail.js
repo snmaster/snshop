@@ -8,6 +8,8 @@ import AddCart from 'material-ui/svg-icons/action/add-shopping-cart';
 import RaisedButton from 'material-ui/RaisedButton';
 import Accounting from 'accounting';
 import { productByIdQuery } from '../../apollo/Product';
+import CategoryPath from './CategoryPath';
+import ProductCategory from '../../apollo/ProductCategory';
 //import {Helmet} from 'react-helmet';
 
 class ProductDetail extends React.Component{
@@ -21,7 +23,8 @@ class ProductDetail extends React.Component{
 
     addCartItem(){
 		let {Product,addToCartQty,addCartItem,closeMe,showSnackbar,cartItems} = this.props;
-        let {id,Alias,Name,Thumb,Price,UOM} = Product;
+        let {id,Alias,Name,Thumb,Price,UOM,ProductCategory} = Product;
+
         let Qty = 1;
         for(let item of cartItems){
 			if(item.id == id){
@@ -36,7 +39,7 @@ class ProductDetail extends React.Component{
 
     render(){
         let {Product} = this.props ? this.props : {};
-        let {id,Name,Alias,Description,Image,Thumb,Price,UOM} = Product ? Product : {};
+        let {id,Name,Alias,Description,Image,Thumb,Price,UOM,ProductCategory} = Product ? Product : {};
 
         return(
             <div className="layout fullheight"> 
@@ -47,6 +50,12 @@ class ProductDetail extends React.Component{
                 <div className={`fullheight scrollable `}>
                     <div style={{padding:'10px'}}>
                         <Card>
+                            <div className="row">
+                                <CategoryPath className="col-xs-8" categoryId={ProductCategory ? ProductCategory.id : null} />
+                                <div className="col-xs-2" style={{marginTop:'20px'}}>
+                                    <h4>{Name}</h4>
+                                </div>
+                            </div>
                             <div className="row" >
                                 <div className="col-md-offset-1 col-sm-6 col-xs-12">
                                     <img style={{width:'100%'}} src={Image} />

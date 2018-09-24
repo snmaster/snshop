@@ -21,8 +21,9 @@ import Slider from 'material-ui/Slider';
 import SelectField from 'material-ui/SelectField';
 import {withRouter} from 'react-router';
 import Accounting from 'accounting';
-import {getRootCategoryQuery,productCategorybyIdQuery} from '../../apollo/ProductCategory';
+import {productCategorybyIdQuery} from '../../apollo/ProductCategory';
 import productBrandQuery from '../../apollo/ProductBrand';
+import CategoryPath from './CategoryPath';
 import { white } from 'material-ui/styles/colors';
 import { blue500 } from 'material-ui/styles/colors';
 //import AppBar from 'material-ui/AppBar';
@@ -34,7 +35,7 @@ class ProductBrowser extends React.Component{
 			search:'',
 			searchText:'',
 			minAmount:0,
-			maxAmount:100000,
+			maxAmount:1000000,
 			sortOrder:'priceASC',
 			brandId:null
 		};
@@ -47,7 +48,7 @@ class ProductBrowser extends React.Component{
 	}
 
 	render(){
-		let {productCategoryId,ProductCategoryById,rootCategories,ProductBrand,router} = this.props ? this.props: {};
+		let {id,productCategoryId,ProductCategoryById,rootCategories,ProductBrand,router} = this.props ? this.props: {};
 		let {search,searchText,brandId,minAmount,maxAmount,sortOrder} = this.state ? this.state : {};
 		let {SubCategories,Name} = ProductCategoryById ? ProductCategoryById : [];
 
@@ -56,13 +57,11 @@ class ProductBrowser extends React.Component{
 					<AppBar title="Product Browser"/>
 					<div className="fullheight scrollable"
 						style={{flexWrap:'nowrap'}}>
-						<div className="row" style={{width:'100%',height:'55px',marginLeft:'20px',marginTop:'10px'}}>
-							{
-								rootCategories ? rootCategories.map((c,i)=>(<ListItem key={i} primaryText={c.Name} style={{width:'180px'}} height={20} rightIcon={<RightArrow />} onClick={()=>{router.push(`/Product/${c.id}`);}}/>)): null
-							}
-							<TextField id="search" name="search" onChange={(e)=>{this.setState({searchText:e.target.value})}} style={{width:'200px'}} hintText="search product..." />
+						<div className="row" style={{width:'100%',height:'55px',marginLeft:'20px',marginBottom:'10px'}}>
+							<CategoryPath className="col-xs-8" categoryId={id} />
+							<TextField id="search" name="search" onChange={(e)=>{this.setState({searchText:e.target.value})}} style={{width:'200px',marginTop:'10px'}} hintText="search product..." />
 							{/* <RaisedButton id="searchButton" name="searchButton" onClick={()=>{this.setState({search:searchText})}} /> */}
-							<IconButton id="searchButton" name="searchButton" onClick={()=>{this.setState({search:searchText})}}><ActionSearch color={blue500}/></IconButton>													
+							<IconButton id="searchButton" name="searchButton" style={{marginTop:'10px'}} onClick={()=>{this.setState({search:searchText})}}><ActionSearch color={blue500}/></IconButton>													
 						</div>
 						<div className="row" style={{width:'100%',marginLeft:'10px'}}>
 							<div className="col-md-2">
@@ -135,11 +134,10 @@ const TheComponet = compose(
 	),
 	withRouter,
 	productBrandQuery,
-	productCategorybyIdQuery,
-	getRootCategoryQuery
+	productCategorybyIdQuery
 )(ProductBrowser);
 
 export default ({params})=>{
 	let {id} = params ? params: {};
-	return (<TheComponet productCategoryId={id} id={id} categoryId={id} page={1}/>)
+	return (<TheComponet productCategoryId={id} id={id} page={1}/>)
 }

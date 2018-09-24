@@ -182,6 +182,10 @@ query ProductById($id:Int!){
         UOM{
             Name
         }
+        ProductCategory{
+            id
+            Name
+        }
         Price
         Image
         Thumb
