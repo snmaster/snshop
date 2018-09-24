@@ -264,6 +264,8 @@ app.get('/customer/register',csrfProtection, function(request, response){
       appId: account_kit.app_id,
       csrf: request.csrfToken(),
       version: account_kit.api_version,
+      redirectUrlOnSuccess:request.query.redirectUrlOnSuccess,
+      message:request.query.message
     };
   
     var html = Mustache.to_html(fs.readFileSync(`${appRoot}/public/html/register.html`).toString(), view);

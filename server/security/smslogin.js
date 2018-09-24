@@ -96,7 +96,7 @@ function smsloginHandler(req,res){
                         //         t.commit();
                         //         return null;
                         //     });
-                        res.redirect(`/register?message=${encodeURIComponent("Please register with phone no!")}&redirectUrlOnSuccess=${redirectUrlOnSuccess?redirectUrlOnSuccess:''}`);
+                        res.redirect(`/customer/register?message=${encodeURIComponent("Please register with phone no!")}&redirectUrlOnSuccess=${redirectUrlOnSuccess?redirectUrlOnSuccess:''}`);
 					}
 				})
 				.catch(error=>({message:error,success:false}));

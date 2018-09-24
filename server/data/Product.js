@@ -131,10 +131,10 @@ export const resolver={
                     $and:{
                         $or: search ==='%' ? true: {
                             Alias:{
-                                $like:search
+                                $ilike:search
                             },
                             Name:{
-                                $like:search
+                                $ilike:search
                             }
                         },
                         ProductCategoryId:productCategoryId,

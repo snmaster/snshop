@@ -62,43 +62,7 @@ class ProductBrowser extends React.Component{
 							}
 							<TextField id="search" name="search" onChange={(e)=>{this.setState({searchText:e.target.value})}} style={{width:'200px'}} hintText="search product..." />
 							{/* <RaisedButton id="searchButton" name="searchButton" onClick={()=>{this.setState({search:searchText})}} /> */}
-							<IconButton id="searchButton" name="searchButton" onClick={()=>{this.setState({search:searchText})}}><ActionSearch color={blue500}/></IconButton>
-							<div style={{fontSize:'12px',marginTop:'10px',marginLeft:'10px'}}>Min :</div>
-							<div className="row" style={{marginTop:'3px',fontSize:'12px',textAlign:'center'}}>
-								<div className="col-xs-6" style={{marginTop:'10px'}}>{Accounting.formatMoney(minAmount)}</div>
-								<Slider min={0} max={1000000} step={1000} className="col-xs-6" style={{width:'130px'}} value={minAmount} onChange={(e,value)=>{this.setState({minAmount:value});}}>
-								</Slider>
-							</div>
-							<div style={{fontSize:'12px',marginTop:'10px'}}>Max :</div>
-							<div className="row" style={{marginTop:'3px',fontSize:'10px',textAlign:'center'}}>
-								<div className="col-xs-6" style={{marginTop:'10px'}}>{Accounting.formatMoney(maxAmount)}</div>
-								<Slider min={0} max={1000000} step={1000} className="col-xs-6" style={{width:'130px'}} value={maxAmount} onChange={(e,value)=>{this.setState({maxAmount:value});}}>
-								</Slider>
-							</div>
-							<div className="row" style={{margin:'1px solid'}}>
-								<div style={{fontSize:'12px',marginTop:'10px',marginLeft:'10px',width:'70px'}}>Sort By:</div>
-								<SelectField 
-									id="sortOrder"
-									name="sortOrder" 
-									style={{width:'100px',marginLeft:'5px'}}
-									value={sortOrder} 
-									onChange={
-										(e,index,value)=>{
-											this.setState({sortOrder:value});
-										}
-									}
-									hintText="Branch"
-									dropDownMenuProps={
-										{
-											targetOrigin:{vertical:'bottom',horizontal:'left'},
-											anchorOrigin:{vertical:'top',horizontal:'left'}
-										}
-									}
-								>
-									<MenuItem primaryText="Price" rightIcon={<ArrowDown />} value="priceASC" />
-									<MenuItem primaryText="Price" rightIcon={<ArrowUp />} value="priceDESC"/>
-								</SelectField>
-							</div>							
+							<IconButton id="searchButton" name="searchButton" onClick={()=>{this.setState({search:searchText})}}><ActionSearch color={blue500}/></IconButton>													
 						</div>
 						<div className="row" style={{width:'100%',marginLeft:'10px'}}>
 							<div className="col-md-2">
@@ -112,7 +76,47 @@ class ProductBrowser extends React.Component{
 								}
 							</div>
 							<div className="col-md-10">
-								<ProductGrid productCategoryId={productCategoryId} brandId={brandId} minAmount={minAmount} maxAmount={maxAmount} sortOrder={sortOrder} search={search} style={{margin:'10px'}}/>
+								<div className="row justify-content-end" style={{height:'50px',borderTop:'1px solid',borderBottom:'1px solid'}}>
+									<div className="col-xs-6" style={{alignContent:'center',height:'50px'}}>
+										{/* <div style={{fontSize:'12px',marginTop:'10px',marginLeft:'10px'}}>Min :</div> */}
+										<div className="row" style={{marginTop:'3px',fontSize:'12px',textAlign:'center'}}>
+											<div style={{marginTop:'10px',height:'30px',border:'1px solid',width:'120px'}}>{Accounting.formatMoney(minAmount)}</div>
+											<Slider min={0} max={1000000} step={1000} style={{width:'130px',marginLeft:'10px'}} value={minAmount} onChange={(e,value)=>{this.setState({minAmount:value});}}>
+											</Slider>
+											<div style={{marginTop:'10px',height:'30px',border:'1px solid',width:'120px',marginLeft:'10px'}}>{Accounting.formatMoney(maxAmount)}</div>
+											<Slider min={0} max={1000000} step={1000} style={{width:'130px',marginLeft:'10px'}} value={maxAmount} onChange={(e,value)=>{this.setState({maxAmount:value});}}>
+											</Slider>
+										</div>
+									</div>
+									<div className="col-xs-3">
+										<div className="row">
+											<div className="col-xs-3" style={{fontSize:'12px',marginTop:'15px',marginLeft:'10px'}}>Sort By:</div>
+											<SelectField 
+												id="sortOrder"
+												name="sortOrder" 
+												className="col-xs-7"
+												style={{fontSize:'12px',width:'100%'}}
+												value={sortOrder} 
+												onChange={
+													(e,index,value)=>{
+														this.setState({sortOrder:value});
+													}
+												}
+												hintText="Branch"
+												dropDownMenuProps={
+													{
+														targetOrigin:{vertical:'bottom',horizontal:'left'},
+														anchorOrigin:{vertical:'top',horizontal:'left'}
+													}
+												}
+											>
+												<MenuItem primaryText="Lowest Price" style={{fontSize:'12px'}} rightIcon={<ArrowDown />} value="priceASC" />
+												<MenuItem primaryText="Highest Price" style={{fontSize:'12px'}} rightIcon={<ArrowUp />} value="priceDESC"/>
+											</SelectField>
+										</div>
+									</div>	
+								</div>
+								<ProductGrid productCategoryId={productCategoryId} brandId={brandId} minAmount={minAmount} maxAmount={maxAmount} sortOrder={sortOrder} search={search} style={{padding:'10px'}}/>
 							</div>
 						</div>
 					</div>					
