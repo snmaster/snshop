@@ -67,11 +67,11 @@ class ProductBrowser extends React.Component{
 							<div className="col-md-2">
 								<div style={SubCategories && SubCategories.length > 0 ? {marginTop:'10px'} : {display:'none'}} >Sub Categories</div>
 								{
-									SubCategories ? SubCategories.map((c,i)=>(<ListItem key={i} primaryText={c.Name} style={{width:'100%'}} leftIcon={<RightArrow />} onClick={()=>{router.push(`/Product/${c.id}`);}} />)) : null
+									SubCategories ? SubCategories.map((c,i)=>(<ListItem key={i} primaryText={c.Name} style={{width:'100%',height:'40px'}} leftIcon={<RightArrow />} onClick={()=>{router.push(`/Product/${c.id}`);}} />)) : null
 								}
 								<div>Top Brands</div>
 								{
-									ProductBrand ? ProductBrand.map((b,i)=>(<ListItem key={i} primaryText={b.Name} leftAvatar={<Avatar src={b.Thumb} size={30} />} style={brandId && brandId == b.id ? {width:'100%',border:'1px solid'}:{width:'100%'}} onClick={()=>{this.setState({brandId:b.id});}} />)) : null
+									ProductBrand ? ProductBrand.map((b,i)=>(<ListItem key={i} primaryText={b.Name} leftAvatar={<Avatar src={b.Thumb} size={30} />} style={brandId && brandId == b.id ? {width:'100%',border:'1px solid',height:'40px'}:{width:'100%',height:'40px'}} onClick={()=>{this.setState({brandId:b.id});}} />)) : null
 								}
 							</div>
 							<div className="col-md-10">

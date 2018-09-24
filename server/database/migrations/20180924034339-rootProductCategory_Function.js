@@ -3,8 +3,6 @@
 module.exports = {
   up: function (queryInterface, Sequelize) {
     return queryInterface.sequelize.query(`
-    DROP FUNCTION public.rootproductcategory(integer);
-    
     CREATE OR REPLACE FUNCTION public.rootproductcategory(IN categoryid integer)
       RETURNS TABLE(id integer, "Name" character varying, "ImagePath" character varying, "createdAt" timestamp with time zone, "updatedAt" timestamp with time zone, "deletedAt" timestamp with time zone, "ParentCategoryId" integer, level integer) AS
     $BODY$
@@ -32,6 +30,7 @@ module.exports = {
 
   down: function (queryInterface, Sequelize) {
     return queryInterface.sequelize.query(`
+      DROP FUNCTION public.rootproductcategory(integer);
     `);
   }
 };

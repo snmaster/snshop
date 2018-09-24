@@ -117,85 +117,116 @@ export const resolver={
             return db.Product.findById(id);
         },
         Product(_,{productCategoryId,page,pageSize,search,brandId,minAmount,maxAmount,sortOrder}){
-            search = '%' + search + '%';
+            search = search? `%${search}%`: '%';
             page = page? page: 1;
             let order={};
             if(sortOrder && sortOrder === "priceASC")
                 order = [['Price','ASC']];
             else
                 order = [['Price','DESC']];
+            
+            let offset = (page - 1) * pageSize;
+            let searchFilter = ` WHERE (P."Name" ILIKE '${search}' OR P."Alias" ILIKE '${search}')`
+            let amountFilter = ` AND P."Price" BETWEEN ${minAmount} AND ${maxAmount}`
+            let brandFilter = brandId ? ` AND P."ProductBrandId"=${brandId}` : '';
+            let categoryFilter = productCategoryId ? ` AND P."ProductCategoryId" IN (SELECT DISTINCT "id" FROM "ProductCategory" WHERE ("ParentCategoryId"=${productCategoryId} Or "id"=${productCategoryId}))` : ``;
 
-            let where = {};
-            if(productCategoryId && brandId)
-                where = {
-                    $and:{
-                        $or: search ==='%' ? true: {
-                            Alias:{
-                                $ilike:search
-                            },
-                            Name:{
-                                $ilike:search
-                            }
-                        },
-                        ProductCategoryId:productCategoryId,
-                        ProductBrandId:brandId,
-                        Price:{
-                            $between:[minAmount,maxAmount]
-                        }
-                    }
-                };
-            if(!productCategoryId && brandId)
-                where = {
-                    $and:{
-                        $or: search ==='%' ? true: {
-                            Alias:{
-                                $like:search
-                            },
-                            Name:{
-                                $like:search
-                            }
-                        },
-                        ProductBrandId:brandId,
-                        Price:{
-                            $between:[minAmount,maxAmount]
-                        }
-                    }
-                };
-            if(productCategoryId && !brandId)
-                where = {
-                    $and:{
-                        $or: search ==='%' ? true: {
-                            Alias:{
-                                $like:search
-                            },
-                            Name:{
-                                $like:search
-                            }
-                        },
-                        ProductCategoryId:productCategoryId,
-                        Price:{
-                            $between:[minAmount,maxAmount]
-                        }
-                    }
-                }; 
-            if(!productCategoryId && !brandId)
-                where = {
-                    $and:{
-                        $or: search ==='%' ? true: {
-                            Alias:{
-                                $like:search
-                            },
-                            Name:{
-                                $like:search
-                            }
-                        },
-                        Price:{
-                            $between:[minAmount,maxAmount]
-                        }
-                    }
-                };  
-			return PaginationHelper.getResult({db,baseQuery:db.Product,page,pageSize,where,order,listKey:'Product',paranoid:false});
+            let baseQuery = db.sequelize.query(`SELECT * FROM "Product" as P ${searchFilter} ${amountFilter} ${brandFilter} 
+                                                ${categoryFilter} limit ${pageSize} offset ${offset}`,{
+                                                model:db.Product
+                                                });
+            let rowCountQuery = db.sequelize.query(`SELECT COUNT(*) AS "totalRows" FROM "Product" as P ${searchFilter} ${amountFilter} ${brandFilter}
+                                                ${categoryFilter}`,{
+                                                    type:db.sequelize.QueryTypes.SELECT
+                                                });                                               
+                                                
+            return Promise.all([baseQuery,rowCountQuery]).then((results)=>{
+                const totalRows = results[1][0].totalRows;
+                let pagination = PaginationHelper.getPagination({page,pageSize,totalRows});
+                return {...pagination,Product:results[0]};
+            });
+			
 		},
+        // Product(_,{productCategoryId,page,pageSize,search,brandId,minAmount,maxAmount,sortOrder}){
+        //     search = '%' + search + '%';
+        //     page = page? page: 1;
+        //     let order={};
+        //     if(sortOrder && sortOrder === "priceASC")
+        //         order = [['Price','ASC']];
+        //     else
+        //         order = [['Price','DESC']];
+
+        //     let where = {};
+        //     if(productCategoryId && brandId)
+        //         where = {
+        //             $and:{
+        //                 $or: search ==='%' ? true: {
+        //                     Alias:{
+        //                         $ilike:search
+        //                     },
+        //                     Name:{
+        //                         $ilike:search
+        //                     }
+        //                 },
+        //                 ProductCategoryId:productCategoryId,
+        //                 ProductBrandId:brandId,
+        //                 Price:{
+        //                     $between:[minAmount,maxAmount]
+        //                 }
+        //             }
+        //         };
+        //     if(!productCategoryId && brandId)
+        //         where = {
+        //             $and:{
+        //                 $or: search ==='%' ? true: {
+        //                     Alias:{
+        //                         $like:search
+        //                     },
+        //                     Name:{
+        //                         $like:search
+        //                     }
+        //                 },
+        //                 ProductBrandId:brandId,
+        //                 Price:{
+        //                     $between:[minAmount,maxAmount]
+        //                 }
+        //             }
+        //         };
+        //     if(productCategoryId && !brandId)
+        //         where = {
+        //             $and:{
+        //                 $or: search ==='%' ? true: {
+        //                     Alias:{
+        //                         $like:search
+        //                     },
+        //                     Name:{
+        //                         $like:search
+        //                     }
+        //                 },
+        //                 ProductCategoryId:productCategoryId,
+        //                 Price:{
+        //                     $between:[minAmount,maxAmount]
+        //                 }
+        //             }
+        //         }; 
+        //     if(!productCategoryId && !brandId)
+        //         where = {
+        //             $and:{
+        //                 $or: search ==='%' ? true: {
+        //                     Alias:{
+        //                         $like:search
+        //                     },
+        //                     Name:{
+        //                         $like:search
+        //                     }
+        //                 },
+        //                 Price:{
+        //                     $between:[minAmount,maxAmount]
+        //                 }
+        //             }
+        //         };  
+		// 	return PaginationHelper.getResult({db,baseQuery:db.Product,page,pageSize,where,order,listKey:'Product',paranoid:false});
+		// },
 
         // Product(_,{productCategoryId,criteria}){
 		// 	let {pagination,orderBy} = criteria? criteria:{};
