@@ -7,7 +7,7 @@ import {compose} from 'react-apollo';
 import IconButton from 'material-ui/IconButton';
 import ProductCard from './ProductCard';
 import Accounting from 'accounting';
-import searchProductQuery from '../../apollo/Product';
+import { recursiveProductQuery } from '../../apollo/Product';
 
 class ProductGrid extends React.Component{
     componentDidMount(){
@@ -103,7 +103,7 @@ export default compose(
         })
     ),
     withRouter,
-    searchProductQuery
+    recursiveProductQuery
 )(ProductGrid);
 
 

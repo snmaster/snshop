@@ -172,6 +172,85 @@ const searchProductQuery = graphql(SEARCH_PRODUCT_QUERY,{
     }
 });
 
+const RECURSIVE_PRODUCT_OF_CATEGORY_QUERY = gql `
+query RecursiveProduct($productCategoryId:Int,$brandId:Int,$minAmount:Float,$maxAmount:Float,$sortOrder:String,$page:Int,$pageSize:Int,$search:String){
+    RecursiveProducts:recursiveProduct(productCategoryId:$productCategoryId,brandId:$brandId,minAmount:$minAmount,maxAmount:$maxAmount,sortOrder:$sortOrder,page:$page,pageSize:$pageSize,search:$search){
+        page
+        pageSize
+        totalRows
+        hasMore
+        Product{
+                id
+                Alias
+                Name
+                Thumb
+                Price
+                UOM{
+                    Name
+                }
+        }
+    }
+}
+`;
+
+const recursiveProductQuery = graphql(RECURSIVE_PRODUCT_OF_CATEGORY_QUERY,{
+    options({productCategoryId,brandId,minAmount,maxAmount,sortOrder,page,pageSize,search}){
+        return {
+            variables:{
+                productCategoryId,
+                brandId,
+                minAmount:minAmount ? minAmount: 0,
+                maxAmount:maxAmount ? maxAmount: 1000000,
+                sortOrder,
+                page,
+                pageSize:pageSize ? pageSize: 10,
+                search
+            }
+        }
+    },
+    props({ownProps:{productCategoryId,brandId,minAmount,maxAmount,sortOrder,search},data:{loading,RecursiveProducts,fetchMore,refetch}}){
+        let {page,pageSize,hasMore,Product} = RecursiveProducts ? RecursiveProducts : {};
+        return {
+            productCategoryId,
+            brandId,
+            minAmount,
+            maxAmount,
+            sortOrder,
+            loading,
+            page:page? page: 1,
+            pageSize,
+            hasMore,
+            Product,
+            loadMore(page){
+                return fetchMore({
+                    variables:{
+                        page,
+                        pageSize,
+                        productCategoryId,
+                        minAmount,
+                        maxAmount,
+                        sortOrder,
+                        brandId,
+                        search
+                    },                
+                    updeateQuery:(previousResult,{fetchMoreResult})=>{
+                        if(!fetchMoreResult){
+                            return previousResult;
+                        }
+                        const result =  Object.assign({},previousResult,{
+                            RecursiveProducts:Object.assign({},previousResult.RecursiveProducts,fetchMoreResult.RecursiveProducts,{
+                                Product:[...previousResult.RecursiveProducts.Product, ...fetchMoreResult.RecursiveProducts.Product]
+                            })
+                        });
+                        return result;
+                    }
+                });
+        },
+        refetch
+    }
+    }
+});
+
 const PRODUCT_BYID_QUERY = gql `
 query ProductById($id:Int!){
     Product:ProductById(id:$id){
@@ -233,4 +312,4 @@ const searchProductByKeyWord = graphql(SEARCH_PRODUCT_BY_KEYWORD_QUERY,{
 });
 
 export default productQuery;
-export  {searchProductByKeyWord,productByIdQuery,searchProductQuery};
+export  {searchProductByKeyWord,productByIdQuery,searchProductQuery,recursiveProductQuery};

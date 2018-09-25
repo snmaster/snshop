@@ -57,7 +57,7 @@ class CategoryMenu extends React.Component{
 		let {ProductCategory,router,targetOrigin,anchorOrigin,className} = this.props;
 		          
 		return (
-				<div ref="menuItem"  onMouseLeave={()=>{
+				<div ref="menuItem" style={{height:'100%'}}  onMouseLeave={()=>{
 					setTimeout(() => {
 						this.setState({open:false})
 					}, 0);
@@ -65,8 +65,8 @@ class CategoryMenu extends React.Component{
 					{/* <div className="catHead" ref="menuItem">Category</div> */}
 					<div className={className}>
 					{
-						ProductCategory? ProductCategory.map(p=>(<ListItem key={p.id} leftAvatar={<Avatar src={p.Thumb} size={30} />} primaryText={p.Name} rightIcon={className === "row" ? <ArrowDown/> : <ArrowDropRight />} onMouseEnter={()=>{this.setState({open:true,parentName:p.Name,childItems:p.SubCategories ? p.SubCategories : []});}}
-						 className="CatItem" height={30} onClick={()=>{router.push(`/Product/${p.id}`);this.setState({open:false});}}
+						ProductCategory? ProductCategory.map(p=>(<ListItem key={p.id} style={{height:'40px'}} leftAvatar={<Avatar src={p.Thumb} size={25} />} primaryText={p.Name} rightIcon={className === "row" ? <ArrowDown/> : <ArrowDropRight />} onMouseEnter={()=>{this.setState({open:true,parentName:p.Name,childItems:p.SubCategories ? p.SubCategories : []});}}
+						 className="CatItem" height={25} onClick={()=>{router.push(`/Product/${p.id}`);this.setState({open:false});}}
 						/>)):null
 					}				
 

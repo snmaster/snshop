@@ -54,7 +54,7 @@ export const type=`
 export const query=`
     searchProductByKeyWord(keyWord:String,limit:Int!):[Product]
     Product(productCategoryId:Int,brandId:Int,minAmount:Float,maxAmount:Float,sortOrder:String,page:Int,pageSize:Int,search:String):Products
-    RecursiveProduct(productCategoryId:Int,brandId:Int,minAmount:Float,maxAmount:Float,sortOrder:String,page:Int,pageSize:Int,search:String):Products
+    recursiveProduct(productCategoryId:Int,brandId:Int,minAmount:Float,maxAmount:Float,sortOrder:String,page:Int,pageSize:Int,search:String):Products
     ProductById(id:Int!):Product
 `;
 
@@ -107,7 +107,7 @@ export const resolver={
                     Alias:{
                         $ilike:keyWord
                     },
-                    Name:{
+                    Name:{  
                         $ilike:keyWord
                     }
                 }
@@ -117,14 +117,14 @@ export const resolver={
         ProductById(_,{id}){
             return db.Product.findById(id);
         },
-        RecursiveProduct(_,{productCategoryId,page,pageSize,search,brandId,minAmount,maxAmount,sortOrder}){
+        recursiveProduct(_,{productCategoryId,page,pageSize,search,brandId,minAmount,maxAmount,sortOrder}){
             search = search? `%${search}%`: '%';
             page = page? page: 1;
             let order={};
             if(sortOrder && sortOrder === "priceASC")
-                order = [['Price','ASC']];
+                order = ` Order By P."Price" ASC`;//[['Price','ASC']];
             else
-                order = [['Price','DESC']];
+                order = ` Order By P."Price" DESC`;//[['Price','DESC']];
             
             let offset = (page - 1) * pageSize;
             let searchFilter = ` WHERE (P."Name" ILIKE '${search}' OR P."Alias" ILIKE '${search}')`
@@ -133,7 +133,7 @@ export const resolver={
             //let categoryFilter = productCategoryId ? ` AND P."ProductCategoryId" IN (SELECT DISTINCT "id" FROM "ProductCategory" WHERE ("ParentCategoryId"=${productCategoryId} Or "id"=${productCategoryId}))` : ``;
 
             let baseQuery = db.sequelize.query(`SELECT * FROM getrecusiveproductofcategory($categoryId) as P ${searchFilter} ${amountFilter} ${brandFilter} 
-                                                    limit ${pageSize} offset ${offset}`,{
+                                                    ${order} limit ${pageSize} offset ${offset}`,{
                                                     bind:{categoryId:productCategoryId},
                                                     model:db.Product
                                                 });

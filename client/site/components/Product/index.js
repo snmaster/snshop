@@ -8,7 +8,7 @@ import AppBar from '../AppBar';
 import CategoryMenu from '../CategoryMenu';
 import ProductGrid from './ProductGrid';
 import MenuItem from 'material-ui/MenuItem';
-import ListItem from 'material-ui/List/ListItem';
+import {List,ListItem} from 'material-ui/List';
 import TextField from 'material-ui/TextField';
 import RightArrow from 'material-ui/svg-icons/navigation/chevron-right';
 import ArrowUp from 'material-ui/svg-icons/navigation/arrow-upward';
@@ -21,7 +21,7 @@ import Slider from 'material-ui/Slider';
 import SelectField from 'material-ui/SelectField';
 import {withRouter} from 'react-router';
 import Accounting from 'accounting';
-import {productCategorybyIdQuery} from '../../apollo/ProductCategory';
+import query,{productCategorybyIdQuery} from '../../apollo/ProductCategory';
 import productBrandQuery from '../../apollo/ProductBrand';
 import CategoryPath from './CategoryPath';
 import { white } from 'material-ui/styles/colors';
@@ -48,7 +48,7 @@ class ProductBrowser extends React.Component{
 	}
 
 	render(){
-		let {id,productCategoryId,ProductCategoryById,rootCategories,ProductBrand,router} = this.props ? this.props: {};
+		let {id,productCategoryId,ProductCategoryById,rootCategories,ProductCategory,ProductBrand,router} = this.props ? this.props: {};
 		let {search,searchText,brandId,minAmount,maxAmount,sortOrder} = this.state ? this.state : {};
 		let {SubCategories,Name} = ProductCategoryById ? ProductCategoryById : [];
 
@@ -57,6 +57,14 @@ class ProductBrowser extends React.Component{
 					<AppBar title="Product Browser"/>
 					<div className="fullheight scrollable"
 						style={{flexWrap:'nowrap'}}>
+						<div className="row" style={{width:'100%',height:'35px',marginLeft:'20px',marginBottom:'10px'}}>
+						{
+							ProductCategory? ProductCategory.map(p=>(<ListItem key={p.id} style={id && Number(id) === p.id ? {display:'none'}:{height:'40px',width:'auto'}} primaryText={p.Name} 
+							className="CatItem" height={25} onClick={()=>{router.push(`/Product/${p.id}`);}}
+							/>)):null
+						}
+						</div>
+						{/* <CategoryMenu style={{width:'100%',height:'35px',marginLeft:'20px',marginBottom:'10px'}} className="row" targetOrigin={{vertical:'top',horizontal:'left'}} anchorOrigin={{vertical:'bottom',horizontal:'left'}}  parentCategoryId={null} /> */}
 						<div className="row" style={{width:'100%',height:'55px',marginLeft:'20px',marginBottom:'10px'}}>
 							<CategoryPath className="col-xs-8" categoryId={id} />
 							<TextField id="search" name="search" onChange={(e)=>{this.setState({searchText:e.target.value})}} style={{width:'200px',marginTop:'10px'}} hintText="search product..." />
@@ -65,10 +73,12 @@ class ProductBrowser extends React.Component{
 						</div>
 						<div className="row" style={{width:'100%',marginLeft:'10px'}}>
 							<div className="col-md-2">
-								<div style={SubCategories && SubCategories.length > 0 ? {marginTop:'10px'} : {display:'none'}} >Sub Categories</div>
-								{
-									SubCategories ? SubCategories.map((c,i)=>(<ListItem key={i} primaryText={c.Name} style={{width:'100%',height:'40px'}} leftIcon={<RightArrow />} onClick={()=>{router.push(`/Product/${c.id}`);}} />)) : null
-								}
+								<div style={SubCategories && SubCategories.length > 0 ? {marginTop:'10px',borderBottom:'1px solid',borderTop:'1px solid',borderColor:'gray',marginBottom:'10px'} : {display:'none'}} >
+									<div>Sub Categories</div>
+									{
+										SubCategories ? SubCategories.map((c,i)=>(<ListItem key={i} primaryText={c.Name} style={{width:'100%',height:'40px'}} leftIcon={<RightArrow />} onClick={()=>{router.push(`/Product/${c.id}`);}} />)) : null
+									}
+								</div>
 								<div>Top Brands</div>
 								{
 									ProductBrand ? ProductBrand.map((b,i)=>(<ListItem key={i} primaryText={b.Name} leftAvatar={<Avatar src={b.Thumb} size={30} />} style={brandId && brandId == b.id ? {width:'100%',border:'1px solid',height:'40px'}:{width:'100%',height:'40px'}} onClick={()=>{this.setState({brandId:b.id});}} />)) : null
@@ -133,11 +143,12 @@ const TheComponet = compose(
 		})
 	),
 	withRouter,
+	query,
 	productBrandQuery,
 	productCategorybyIdQuery
 )(ProductBrowser);
 
 export default ({params})=>{
 	let {id} = params ? params: {};
-	return (<TheComponet productCategoryId={id} id={id} page={1}/>)
+	return (<TheComponet productCategoryId={id} parentCategoryId={null} id={id} page={1}/>)
 }
