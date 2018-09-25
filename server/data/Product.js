@@ -54,6 +54,7 @@ export const type=`
 export const query=`
     searchProductByKeyWord(keyWord:String,limit:Int!):[Product]
     Product(productCategoryId:Int,brandId:Int,minAmount:Float,maxAmount:Float,sortOrder:String,page:Int,pageSize:Int,search:String):Products
+    RecursiveProduct(productCategoryId:Int,brandId:Int,minAmount:Float,maxAmount:Float,sortOrder:String,page:Int,pageSize:Int,search:String):Products
     ProductById(id:Int!):Product
 `;
 
@@ -116,7 +117,7 @@ export const resolver={
         ProductById(_,{id}){
             return db.Product.findById(id);
         },
-        Product(_,{productCategoryId,page,pageSize,search,brandId,minAmount,maxAmount,sortOrder}){
+        RecursiveProduct(_,{productCategoryId,page,pageSize,search,brandId,minAmount,maxAmount,sortOrder}){
             search = search? `%${search}%`: '%';
             page = page? page: 1;
             let order={};
@@ -129,14 +130,16 @@ export const resolver={
             let searchFilter = ` WHERE (P."Name" ILIKE '${search}' OR P."Alias" ILIKE '${search}')`
             let amountFilter = ` AND P."Price" BETWEEN ${minAmount} AND ${maxAmount}`
             let brandFilter = brandId ? ` AND P."ProductBrandId"=${brandId}` : '';
-            let categoryFilter = productCategoryId ? ` AND P."ProductCategoryId" IN (SELECT DISTINCT "id" FROM "ProductCategory" WHERE ("ParentCategoryId"=${productCategoryId} Or "id"=${productCategoryId}))` : ``;
+            //let categoryFilter = productCategoryId ? ` AND P."ProductCategoryId" IN (SELECT DISTINCT "id" FROM "ProductCategory" WHERE ("ParentCategoryId"=${productCategoryId} Or "id"=${productCategoryId}))` : ``;
 
-            let baseQuery = db.sequelize.query(`SELECT * FROM "Product" as P ${searchFilter} ${amountFilter} ${brandFilter} 
-                                                ${categoryFilter} limit ${pageSize} offset ${offset}`,{
-                                                model:db.Product
+            let baseQuery = db.sequelize.query(`SELECT * FROM getrecusiveproductofcategory($categoryId) as P ${searchFilter} ${amountFilter} ${brandFilter} 
+                                                    limit ${pageSize} offset ${offset}`,{
+                                                    bind:{categoryId:productCategoryId},
+                                                    model:db.Product
                                                 });
-            let rowCountQuery = db.sequelize.query(`SELECT COUNT(*) AS "totalRows" FROM "Product" as P ${searchFilter} ${amountFilter} ${brandFilter}
-                                                ${categoryFilter}`,{
+            let rowCountQuery = db.sequelize.query(`SELECT COUNT(*) AS "totalRows" FROM getrecusiveproductofcategory($categoryId) as P ${searchFilter} ${amountFilter} ${brandFilter}
+                                                `,{
+                                                    bind:{categoryId:productCategoryId},
                                                     type:db.sequelize.QueryTypes.SELECT
                                                 });                                               
                                                 
@@ -147,96 +150,96 @@ export const resolver={
             });
 			
 		},
-        // Product(_,{productCategoryId,page,pageSize,search,brandId,minAmount,maxAmount,sortOrder}){
-        //     search = '%' + search + '%';
-        //     page = page? page: 1;
-        //     let order={};
-        //     if(sortOrder && sortOrder === "priceASC")
-        //         order = [['Price','ASC']];
-        //     else
-        //         order = [['Price','DESC']];
+        Product(_,{productCategoryId,page,pageSize,search,brandId,minAmount,maxAmount,sortOrder}){
+            search = '%' + search + '%';
+            page = page? page: 1;
+            let order={};
+            if(sortOrder && sortOrder === "priceASC")
+                order = [['Price','ASC']];
+            else
+                order = [['Price','DESC']];
 
-        //     let where = {};
-        //     if(productCategoryId && brandId)
-        //         where = {
-        //             $and:{
-        //                 $or: search ==='%' ? true: {
-        //                     Alias:{
-        //                         $ilike:search
-        //                     },
-        //                     Name:{
-        //                         $ilike:search
-        //                     }
-        //                 },
-        //                 ProductCategoryId:productCategoryId,
-        //                 ProductBrandId:brandId,
-        //                 Price:{
-        //                     $between:[minAmount,maxAmount]
-        //                 }
-        //             }
-        //         };
-        //     if(!productCategoryId && brandId)
-        //         where = {
-        //             $and:{
-        //                 $or: search ==='%' ? true: {
-        //                     Alias:{
-        //                         $like:search
-        //                     },
-        //                     Name:{
-        //                         $like:search
-        //                     }
-        //                 },
-        //                 ProductBrandId:brandId,
-        //                 Price:{
-        //                     $between:[minAmount,maxAmount]
-        //                 }
-        //             }
-        //         };
-        //     if(productCategoryId && !brandId)
-        //         where = {
-        //             $and:{
-        //                 $or: search ==='%' ? true: {
-        //                     Alias:{
-        //                         $like:search
-        //                     },
-        //                     Name:{
-        //                         $like:search
-        //                     }
-        //                 },
-        //                 ProductCategoryId:productCategoryId,
-        //                 Price:{
-        //                     $between:[minAmount,maxAmount]
-        //                 }
-        //             }
-        //         }; 
-        //     if(!productCategoryId && !brandId)
-        //         where = {
-        //             $and:{
-        //                 $or: search ==='%' ? true: {
-        //                     Alias:{
-        //                         $like:search
-        //                     },
-        //                     Name:{
-        //                         $like:search
-        //                     }
-        //                 },
-        //                 Price:{
-        //                     $between:[minAmount,maxAmount]
-        //                 }
-        //             }
-        //         };  
-		// 	return PaginationHelper.getResult({db,baseQuery:db.Product,page,pageSize,where,order,listKey:'Product',paranoid:false});
-		// },
+            let where = {};
+            if(productCategoryId && brandId)
+                where = {
+                    $and:{
+                        $or: search ==='%' ? true: {
+                            Alias:{
+                                $ilike:search
+                            },
+                            Name:{
+                                $ilike:search
+                            }
+                        },
+                        ProductCategoryId:productCategoryId,
+                        ProductBrandId:brandId,
+                        Price:{
+                            $between:[minAmount,maxAmount]
+                        }
+                    }
+                };
+            if(!productCategoryId && brandId)
+                where = {
+                    $and:{
+                        $or: search ==='%' ? true: {
+                            Alias:{
+                                $like:search
+                            },
+                            Name:{
+                                $like:search
+                            }
+                        },
+                        ProductBrandId:brandId,
+                        Price:{
+                            $between:[minAmount,maxAmount]
+                        }
+                    }
+                };
+            if(productCategoryId && !brandId)
+                where = {
+                    $and:{
+                        $or: search ==='%' ? true: {
+                            Alias:{
+                                $like:search
+                            },
+                            Name:{
+                                $like:search
+                            }
+                        },
+                        ProductCategoryId:productCategoryId,
+                        Price:{
+                            $between:[minAmount,maxAmount]
+                        }
+                    }
+                }; 
+            if(!productCategoryId && !brandId)
+                where = {
+                    $and:{
+                        $or: search ==='%' ? true: {
+                            Alias:{
+                                $like:search
+                            },
+                            Name:{
+                                $like:search
+                            }
+                        },
+                        Price:{
+                            $between:[minAmount,maxAmount]
+                        }
+                    }
+                };  
+			return PaginationHelper.getResult({db,baseQuery:db.Product,page,pageSize,where,order,listKey:'Product',paranoid:false});
+		},
 
-        // Product(_,{productCategoryId,criteria}){
-		// 	let {pagination,orderBy} = criteria? criteria:{};
-		// 	let {page,pageSize} = pagination? pagination:{page:1,pageSize:10};
-		// 	page = page? page: 1;
-        //     let where = true;
-        //     if(productCategoryId)
-        //         where = {ProductCategoryId:productCategoryId};
-		// 	return PaginationHelper.getResult({db,baseQuery:db.Product,page,pageSize,where,listKey:'Product',paranoid:false,order:orderBy});
-		// },
+        Product(_,{productCategoryId,criteria}){
+			let {pagination,orderBy} = criteria? criteria:{};
+			let {page,pageSize} = pagination? pagination:{page:1,pageSize:10};
+			page = page? page: 1;
+            let where = true;
+            if(productCategoryId)
+                where = {ProductCategoryId:productCategoryId};
+			return PaginationHelper.getResult({db,baseQuery:db.Product,page,pageSize,where,listKey:'Product',paranoid:false,order:orderBy});
+		},
     },
     mutation:{
         createProduct(_,{product}){
