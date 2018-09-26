@@ -15,7 +15,7 @@ export const type=`
         ProductGroup:ProductGroup
         ProductBrand:ProductBrand
         ProductCategory:ProductCategory
-        
+        ParentCategoryId:Int
         UserAccount:UserAccount
         Image:String
         Thumb:String
@@ -85,6 +85,7 @@ export const resolver={
             ProductCategory(product){
                 return product.getProductCategory();
             },
+            ParentCategoryId:property('ParentCategoryId'),
             // Supplier(product){
             //     return product.getSupplier();
             // },

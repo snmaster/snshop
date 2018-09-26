@@ -50,7 +50,7 @@ class ProductBrowser extends React.Component{
 	render(){
 		let {id,productCategoryId,ProductCategoryById,rootCategories,ProductCategory,ProductBrand,router} = this.props ? this.props: {};
 		let {search,searchText,brandId,minAmount,maxAmount,sortOrder} = this.state ? this.state : {};
-		let {SubCategories,Name} = ProductCategoryById ? ProductCategoryById : [];
+		let {SubCategories,Name,ParentCategoryId} = ProductCategoryById ? ProductCategoryById : [];
 
 		return(
 				<div className="layout fullheight">
@@ -59,7 +59,7 @@ class ProductBrowser extends React.Component{
 						style={{flexWrap:'nowrap'}}>
 						<div className="row" style={{width:'100%',height:'35px',marginLeft:'20px',marginBottom:'10px'}}>
 						{
-							ProductCategory? ProductCategory.map(p=>(<ListItem key={p.id} style={id && Number(id) === p.id ? {display:'none'}:{height:'40px',width:'auto'}} primaryText={p.Name} 
+							ProductCategory? ProductCategory.map(p=>(<ListItem key={p.id} style={id && (Number(id) === p.id || p.id === ParentCategoryId) ? {display:'none'}:{height:'40px',width:'auto'}} primaryText={p.Name} 
 							className="CatItem" height={25} onClick={()=>{router.push(`/Product/${p.id}`);}}
 							/>)):null
 						}

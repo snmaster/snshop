@@ -9,14 +9,17 @@ const fragments = {
         id
         Name
         Thumb
+        ParentCategoryId
         SubCategories{
             id
             Name
             Thumb
+            ParentCategoryId
             SubCategories{
                 id
                 Name
                 Thumb
+                ParentCategoryId
             }
         }
     }
