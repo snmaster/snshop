@@ -146,7 +146,7 @@ app.post('/graphql',passport.authenticate('bearer-graphql',{session:false}), apo
 
 //if(env !=="production" ){
     // graphiql endpoint
-    app.use('/graphiql', graphiqlExpress({
+    app.use('/graphiql',passport.authenticate("shoppylife-autho",{session:false}),graphiqlExpress({
         endpointURL: '/graphql',
     }));
 //}
